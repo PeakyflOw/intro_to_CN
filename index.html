@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imperial Chinese Studies - Examination Portal</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Imperial Chinese Studies - Examination & Training Portal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -23,10 +26,16 @@
             --bg-paper: #fbf9f5;
             --bg-card: #ffffff;
             --border-color: #e5e0d4;
-            --text-main: #2d2a26;
-            --text-muted: #6e675f;
+            --text-main: #111827;
+            --text-muted: #2f2f2f;
             --tag-bg: #f4efe2;
             --highlight-bg: #fdfaf2;
+            --study-surface: #fffdf8;
+            --study-surface-alt: #fffef7;
+            --study-card-bg: linear-gradient(135deg, #fff7c2 0%, #fde68a 100%);
+            --study-text: #111827;
+            --study-muted: #6b7280;
+            --study-accent: #6b1515;
         }
 
         .dark-mode {
@@ -35,25 +44,48 @@
             --bg-card: #181715;
             --border-color: #2e2b26;
             --text-main: #e8e3dc;
-            --text-muted: #b0a79d;
+            --text-muted: #c6c2be;
             --tag-bg: #2a251f;
             --highlight-bg: #1e1a14;
+            --study-surface: #181715;
+            --study-surface-alt: #221f1b;
+            --study-card-bg: linear-gradient(135deg, #2a241f 0%, #3f3528 100%);
+            --study-text: #f7efe2;
+            --study-muted: #c6c2be;
+            --study-accent: #f5c451;
         }
 
         body {
             background-color: var(--bg-paper) !important;
-            color: var(--text-main) !important;
+            color: var(--text-main);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* Standardized class rules to override Tailwind for absolute styling safety */
         .app-bg { background-color: var(--bg-paper); }
-        .card-bg { background-color: var(--bg-card); border-color: var(--border-color); }
-        .text-main { color: var(--text-main); }
-        .text-muted { color: var(--text-muted); }
+        .card-bg { background-color: var(--bg-card); border-color: var(--border-color); color: var(--text-main); }
+        .text-main { color: var(--text-main) !important; }
+        .text-muted { color: var(--text-muted) !important; }
         .border-theme { border-color: var(--border-color); }
         .bg-tag { background-color: var(--tag-bg); }
-        .bg-highlight { background-color: var(--highlight-bg); }
+        .bg-highlight { background-color: var(--highlight-bg); color: var(--text-main); }
+
+        /* Force high contrast for readability inside light mode inputs */
+        input, select, textarea {
+            color: var(--text-muted) !important;
+            background-color: var(--bg-card) !important;
+        }
+
+        /* Ensure correct rendering for white-text inside burgundy or dark banners in light mode */
+        .burgundy-banner, .burgundy-banner * {
+            color: #ffffff !important;
+        }
+        .burgundy-banner .text-amber-300, .burgundy-banner * .text-amber-300 {
+            color: #fcd34d !important;
+        }
+        .burgundy-banner .text-stone-300 {
+            color: #d6d3d1 !important;
+        }
 
         /* Custom scrollbar matching the imperial theme */
         .custom-scrollbar::-webkit-scrollbar {
@@ -78,7 +110,128 @@
         /* Elegant deep burgundy header rules */
         .burgundy-banner {
             background: linear-gradient(135deg, var(--primary-burgundy-dark) 0%, var(--primary-burgundy) 100%) !important;
-            color: #ffffff !important;
+        }
+
+        /* 3D Flashcard flip animations exactly matching image_6e57f6.jpg layout */
+        .perspective-container {
+            perspective: 1200px;
+        }
+        .flashcard-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flashcard-inner.flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .flashcard-back {
+            transform: rotateY(180deg);
+        }
+        body:not(.dark-mode) #study-guide-screen .flashcard-front,
+        body:not(.dark-mode) #study-guide-screen .flashcard-back {
+            background: linear-gradient(135deg, #fff7c2 0%, #fde68a 100%) !important;
+            color: #111827 !important;
+        }
+        body.dark-mode #study-guide-screen .flashcard-front,
+        body.dark-mode #study-guide-screen .flashcard-back {
+            background: linear-gradient(135deg, #2a241f 0%, #3f3528 100%) !important;
+            color: #f7efe2 !important;
+        }
+        body:not(.dark-mode) #study-guide-screen .bg-highlight {
+            background: #fff8d6 !important;
+            color: #111827 !important;
+        }
+        body.dark-mode #study-guide-screen .bg-highlight {
+            background: #1e1a14 !important;
+            color: #f7efe2 !important;
+        }
+        body:not(.dark-mode) #study-guide-screen .card-bg,
+        body:not(.dark-mode) #study-guide-screen .lesson-book-card {
+            background: #fffdf8 !important;
+            color: #111827 !important;
+        }
+        body.dark-mode #study-guide-screen .card-bg,
+        body.dark-mode #study-guide-screen .lesson-book-card {
+            background: #181715 !important;
+            color: #f7efe2 !important;
+        }
+        body:not(.dark-mode) #study-guide-screen .lesson-item {
+            background: #fffef7 !important;
+            color: #111827 !important;
+        }
+        body.dark-mode #study-guide-screen .lesson-item {
+            background: #221f1b !important;
+            color: #f7efe2 !important;
+        }
+        body:not(.dark-mode) #study-guide-screen .text-stone-500,
+        body:not(.dark-mode) #study-guide-screen .text-stone-600,
+        body:not(.dark-mode) #study-guide-screen .text-stone-700,
+        body:not(.dark-mode) #study-guide-screen .text-stone-800,
+        body:not(.dark-mode) #study-guide-screen .text-stone-400,
+        body:not(.dark-mode) #study-guide-screen p,
+        body:not(.dark-mode) #study-guide-screen h1,
+        body:not(.dark-mode) #study-guide-screen h2,
+        body:not(.dark-mode) #study-guide-screen h3,
+        body:not(.dark-mode) #study-guide-screen h4,
+        body:not(.dark-mode) #study-guide-screen span {
+            color: #111827 !important;
+        }
+        body.dark-mode #study-guide-screen .text-stone-500,
+        body.dark-mode #study-guide-screen .text-stone-600,
+        body.dark-mode #study-guide-screen .text-stone-700,
+        body.dark-mode #study-guide-screen .text-stone-800,
+        body.dark-mode #study-guide-screen .text-stone-400,
+        body.dark-mode #study-guide-screen p,
+        body.dark-mode #study-guide-screen h1,
+        body.dark-mode #study-guide-screen h2,
+        body.dark-mode #study-guide-screen h3,
+        body.dark-mode #study-guide-screen h4,
+        body.dark-mode #study-guide-screen span {
+            color: #f7efe2 !important;
+        }
+        .cinzel-title {
+            font-family: 'Cinzel', serif;
+        }
+        .raw-text-search-shell {
+            background: linear-gradient(135deg, rgba(107, 21, 21, 0.05), rgba(207, 168, 50, 0.08));
+            border: 1px solid var(--border-color);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+        .raw-text-search-shell:focus-within {
+            border-color: var(--primary-burgundy);
+            box-shadow: 0 0 0 3px rgba(107, 21, 21, 0.12);
+        }
+        .raw-text-filter-btn {
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-muted);
+        }
+        .raw-text-filter-btn.active {
+            background: var(--primary-burgundy);
+            color: #fff;
+            border-color: var(--primary-burgundy);
+        }
+        .lesson-book-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(250,245,232,0.95));
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 24px rgba(15, 14, 13, 0.06);
+        }
+        .dark-mode .lesson-book-card {
+            background: linear-gradient(135deg, rgba(24, 23, 21, 0.98), rgba(42, 37, 31, 0.95));
+        }
+        .lesson-item {
+            border-left: 3px solid transparent;
+            background: rgba(255,255,255,0.6);
+        }
+        .dark-mode .lesson-item {
+            background: rgba(12, 10, 8, 0.5);
+        }
+        .lesson-item:hover {
+            border-left-color: var(--primary-burgundy);
+            background: rgba(107, 21, 21, 0.06);
         }
     </style>
 </head>
@@ -90,13 +243,13 @@
     <!-- Header Navigation -->
     <header class="card-bg border-b border-theme sticky top-0 z-40 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goToHome()">
                 <div class="bg-red-900 text-amber-400 p-2.5 rounded-lg shadow-md border border-amber-500/20">
                     <i class="fa-solid fa-graduation-cap text-2xl"></i>
                 </div>
                 <div>
-                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-wider text-red-900 dark:text-amber-400 block" style="font-family: 'Cinzel', serif;">CHINESE STUDIES</span>
-                    <span class="block text-[10px] sm:text-xs uppercase tracking-widest text-muted font-semibold">National Comprehensive Exam Portal</span>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-wider text-red-900 dark:text-amber-400 block cinzel-title">CHINESE STUDIES</span>
+                    <span class="block text-[10px] sm:text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 font-semibold">Comprehensive Portal</span>
                 </div>
             </div>
             
@@ -106,6 +259,11 @@
                     <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
                 </button>
                 
+                <button onclick="toggleTrainingHub()" id="training-btn" class="flex items-center space-x-2 px-3 py-2 text-xs sm:text-sm font-semibold text-amber-800 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:text-amber-300 dark:hover:bg-amber-950 rounded-lg transition">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span class="hidden sm:inline">Practice Workouts</span>
+                </button>
+
                 <button onclick="toggleStudyMode()" id="study-mode-btn" class="flex items-center space-x-2 px-3 py-2 text-xs sm:text-sm font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-200 dark:hover:bg-stone-700 rounded-lg transition">
                     <i class="fa-solid fa-book-open"></i>
                     <span class="hidden sm:inline">Reference Materials</span>
@@ -119,147 +277,272 @@
         </div>
     </header>
 
+    <!-- Main Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
 
         <!-- Page A: Welcome / Registration Screen -->
-        <section id="welcome-screen" class="space-y-8 max-w-3xl mx-auto w-full my-auto transition-all duration-500 transform opacity-100">
+        <section id="welcome-screen" class="space-y-8 max-w-4xl mx-auto w-full my-auto transition-all duration-500 transform opacity-100">
             <div class="card-bg rounded-2xl shadow-xl border border-theme overflow-hidden">
                 <div class="burgundy-banner p-8 text-center relative overflow-hidden">
                     <div class="absolute -right-16 -bottom-16 opacity-10 text-stone-200 pointer-events-none">
                         <i class="fa-solid fa-dragon text-[15rem]"></i>
                     </div>
                     <div class="inline-block px-3 py-1 bg-white/10 text-amber-300 rounded-full text-[10px] font-semibold uppercase tracking-widest mb-4 border border-amber-300/30">
-                        Official Curriculum Syllabus
+                        Official Curriculum Syllabus Assessment
                     </div>
-                    <h1 class="font-serif text-3xl sm:text-4xl font-extrabold text-white tracking-wide" style="font-family: 'Cinzel', serif;">COMPREHENSIVE EXAMINATION</h1>
+                    <h1 class="font-serif text-3xl sm:text-4xl font-extrabold text-white tracking-wide cinzel-title">CHINESE STUDIES PORTAL</h1>
                     <p class="text-stone-200 mt-2 max-w-xl mx-auto text-sm sm:text-base">
                         Evaluated directly from certified study sources <span class="text-amber-300 font-semibold">"rev.pdf"</span> and <span class="text-amber-300 font-semibold">"Review (the final one).pdf"</span>.
                     </p>
                 </div>
 
                 <div class="p-8 space-y-6">
-                    <div class="bg-highlight border border-theme rounded-xl p-5 space-y-3">
-                        <h3 class="text-main font-bold text-base flex items-center space-x-2">
-                            <i class="fa-solid fa-circle-info text-amber-500"></i>
-                            <span>Official Examination Scoring Criteria</span>
-                        </h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-muted">
-                            <div class="flex justify-between border-b border-theme pb-1">
-                                <span>Part 1: Fill in the Blanks</span>
-                                <strong class="text-main">35 Marks (35 Qs)</strong>
+                    <!-- Interactive Hub Navigation Selector -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="border border-theme bg-stone-50/50 dark:bg-stone-900/40 rounded-xl p-5 text-center space-y-3 flex flex-col justify-between">
+                            <div>
+                                <div class="text-red-900 dark:text-amber-400 text-3xl"><i class="fa-solid fa-book-open"></i></div>
+                                <h4 class="font-bold text-base mt-2 text-stone-800 dark:text-stone-100">1. Learn</h4>
+                                <p class="text-muted dark:text-stone-400 text-xs mt-1">Read through classified flashcards and learning topics compiled from rev.pdf & the final review document.</p>
                             </div>
-                            <div class="flex justify-between border-b border-theme pb-1">
-                                <span>Part 2: Right or Wrong</span>
-                                <strong class="text-main">25 Marks (25 Qs)</strong>
+                            <button onclick="toggleStudyMode()" class="w-full py-2 bg-stone-200 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 text-xs font-bold text-stone-800 dark:text-stone-200 rounded-lg transition">Open Study Guide</button>
+                        </div>
+
+                        <div class="border-2 border-amber-500/40 bg-amber-500/5 rounded-xl p-5 text-center space-y-3 flex flex-col justify-between shadow-sm">
+                            <div>
+                                <div class="text-amber-500 text-3xl"><i class="fa-solid fa-dumbbell"></i></div>
+                                <h4 class="font-bold text-base mt-2 text-amber-800 dark:text-amber-400">2. Practice</h4>
+                                <p class="text-stone-500 dark:text-stone-400 text-xs mt-1">Train with targeted drills on Geography, Dynasties, Philosophies, and Idioms before starting the exam.</p>
                             </div>
-                            <div class="flex justify-between border-b border-theme pb-1">
-                                <span>Part 3: Multiple Choice</span>
-                                <strong class="text-main">20 Marks (20 Qs)</strong>
+                            <button onclick="toggleTrainingHub()" class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-stone-950 text-xs font-bold rounded-lg transition shadow-sm">Start Practice Drills</button>
+                        </div>
+
+                        <div class="border border-theme bg-stone-50/50 dark:bg-stone-900/40 rounded-xl p-5 text-center space-y-3 flex flex-col justify-between">
+                            <div>
+                                <div class="text-red-800 dark:text-amber-500 text-3xl"><i class="fa-solid fa-award"></i></div>
+                                <h4 class="font-bold text-base mt-2 text-stone-800 dark:text-stone-100">3. Test</h4>
+                                <p class="text-muted dark:text-stone-400 text-xs mt-1">Launch the grand comprehensive exam (100 Marks + 2 Bonus Marks) under official exam limits.</p>
                             </div>
-                            <div class="flex justify-between border-b border-theme pb-1">
-                                <span>Part 4: Short Answer Questions</span>
-                                <strong class="text-main">20 Marks (4 Qs)</strong>
-                            </div>
-                            <div class="flex justify-between sm:col-span-2 text-red-800 dark:text-amber-400 font-semibold pt-1">
-                                <span>Part 5: Visual Bonus Question</span>
-                                <span>+2 Marks (Page 9 Illustrations)</span>
-                            </div>
+                            <button onclick="scrollToExamReg()" class="w-full py-2 bg-red-900 hover:bg-red-950 text-white text-xs font-bold rounded-lg transition">Go to Examination</button>
                         </div>
                     </div>
 
-                    <!-- User Information Formulation -->
-                    <div class="space-y-4">
+                    <!-- User Information Formulation for Exam Board -->
+                    <div id="exam-registration-box" class="space-y-4 pt-6 border-t border-theme">
+                        <h3 class="font-serif font-bold text-lg text-red-900 dark:text-amber-400 flex items-center space-x-2 cinzel-title">
+                            <i class="fa-solid fa-pen-nib"></i>
+                            <span>Register for Official Examination</span>
+                        </h3>
                         <div>
-                            <label for="student-name" class="block text-sm font-semibold text-muted mb-1">Candidate Full Name</label>
+                            <label for="student-name" class="block text-sm font-semibold text-stone-500 dark:text-stone-400 mb-1">Candidate Full Name</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-stone-400">
                                     <i class="fa-solid fa-user-pen"></i>
                                 </span>
-                                <input type="text" id="student-name" placeholder="Enter your full name to start" class="w-full pl-10 pr-4 py-3 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-2 focus:ring-red-800 focus:border-red-800 outline-none transition text-main font-medium">
+                                <input type="text" id="student-name" placeholder="Enter your full name to enroll" class="w-full pl-10 pr-4 py-3 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-2 focus:ring-red-800 outline-none transition font-medium">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label for="exam-timer-duration" class="block text-sm font-semibold text-muted mb-1">Time Limit</label>
-                                <select id="exam-timer-duration" class="w-full px-3 py-3 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-2 focus:ring-red-800 outline-none text-main">
+                                <label for="exam-timer-duration" class="block text-sm font-semibold text-stone-500 dark:text-stone-400 mb-1">Time Limit Setting</label>
+                                <select id="exam-timer-duration" class="w-full px-3 py-3 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-2 focus:ring-red-800 outline-none">
                                     <option value="60">60 Minutes (Standard)</option>
                                     <option value="45">45 Minutes (Express)</option>
                                     <option value="999">No Time Limit (Practice)</option>
                                 </select>
                             </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-muted mb-1">Syllabus Dossier</label>
-                                <button onclick="toggleStudyMode()" class="w-full px-4 py-3 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-main font-semibold rounded-xl text-center transition flex items-center justify-center space-x-2 border border-theme">
-                                    <i class="fa-solid fa-book"></i>
-                                    <span>Read Study Guide First</span>
+                            <div class="flex items-end">
+                                <button onclick="startStandardExam()" class="w-full py-3.5 bg-red-900 hover:bg-red-950 text-amber-300 font-bold rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 border-b-4 border-red-950">
+                                    <span>LAUNCH EXAMINATION BOARD</span>
+                                    <i class="fa-solid fa-circle-play"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-
-                    <button onclick="startExamination()" class="w-full py-4 bg-red-900 hover:bg-red-950 text-amber-300 font-bold text-lg rounded-xl shadow-lg transition-all flex items-center justify-center space-x-3 border-b-4 border-red-950">
-                        <span>LAUNCH EXAMINATION SYSTEM</span>
-                        <i class="fa-solid fa-circle-play text-xl"></i>
-                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- Page B: Study Materials / Reference Guide (Verbatim Lesson Reader) -->
-        <section id="study-guide-screen" class="hidden space-y-6 transition-all duration-300">
+        <!-- Page E: Practice Training Hub Screen -->
+        <section id="training-hub-screen" class="hidden space-y-6 transition-all duration-300">
             <div class="card-bg rounded-2xl p-6 sm:p-8 shadow-lg border border-theme">
                 <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-theme pb-5 mb-6 gap-4">
                     <div>
-                        <div class="flex items-center space-x-2 text-red-800 dark:text-amber-400 font-bold text-sm uppercase tracking-wider">
-                            <span class="w-2.5 h-2.5 bg-amber-500 rounded-full"></span>
-                            <span>Comprehensive Academic Notes</span>
+                        <div class="flex items-center space-x-2 text-amber-600 dark:text-amber-400 font-bold text-sm uppercase tracking-wider">
+                            <i class="fa-solid fa-dumbbell"></i>
+                            <span>Interactive Warm-up Drills</span>
                         </div>
-                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-main mt-1">Interactive Learning Syllabus</h2>
-                        <p class="text-muted text-xs sm:text-sm mt-1">This Textbook holds the entire text of <code class="font-bold">rev.pdf</code> and <code class="font-bold">Review (the final one).pdf</code>. Study thoroughly before beginning the exam.</p>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-muted dark:text-stone-100 mt-1">Practice Training Hub</h2>
+                        <p class="text-stone-500 dark:text-stone-400 text-xs sm:text-sm mt-1">Train on fundamental topics from <code class="font-bold">rev.pdf</code> & <code class="font-bold">Review (the final one).pdf</code>. Ideal for testing yourself before taking the official exam!</p>
                     </div>
-                    <button onclick="toggleStudyMode()" class="px-5 py-2.5 bg-stone-900 text-white dark:bg-amber-500 dark:text-stone-950 hover:bg-stone-800 dark:hover:bg-amber-400 font-bold rounded-xl text-sm transition self-start flex items-center space-x-2 shadow-sm">
-                        <i class="fa-solid fa-arrow-left"></i>
+                    <button onclick="goToHome()" class="px-5 py-2.5 bg-stone-950 text-white dark:bg-amber-500 dark:text-stone-950 hover:bg-stone-800 font-bold rounded-xl text-sm transition self-start flex items-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-house"></i>
                         <span>Return to Main Portal</span>
                     </button>
                 </div>
 
-                <!-- Live Document Search Bar -->
-                <div class="mb-6">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-stone-400">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </span>
-                        <input type="text" id="lesson-search-input" onkeyup="searchLessons()" placeholder="Search terms (e.g. 'Sui', 'Qin', 'm mooncakes', 'opium')..." class="w-full pl-10 pr-4 py-2.5 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl outline-none focus:ring-1 focus:ring-red-800 transition text-sm text-main">
-                    </div>
-                </div>
-
-                <!-- Book Selector Tabs -->
-                <div class="flex overflow-x-auto pb-2 border-b border-theme gap-2 custom-scrollbar">
-                    <button onclick="switchStudyBook('book1')" id="book-tab-1" class="px-4 py-2 text-sm font-bold rounded-lg bg-red-900 text-white whitespace-nowrap">
-                        <i class="fa-solid fa-file-pdf mr-1"></i> Document 1: rev.pdf Summary
+                <!-- Workout Module Tabs -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 border-b border-theme pb-4">
+                    <button onclick="switchWorkout('geography')" id="workout-tab-geography" class="workout-tab-btn py-3 px-2 text-xs sm:text-sm font-bold rounded-xl bg-amber-500 text-stone-950 shadow-sm">
+                        <i class="fa-solid fa-earth-asia mr-1"></i> Geography Drills
                     </button>
-                    <button onclick="switchStudyBook('book2')" id="book-tab-2" class="px-4 py-2 text-sm font-bold rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 whitespace-nowrap">
-                        <i class="fa-solid fa-file-pdf mr-1"></i> Document 2: Review (the final one).pdf
+                    <button onclick="switchWorkout('dynasties')" id="workout-tab-dynasties" class="workout-tab-btn py-3 px-2 text-xs sm:text-sm font-bold rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200">
+                        <i class="fa-solid fa-timeline mr-1"></i> Dynasty Matcher
+                    </button>
+                    <button onclick="switchWorkout('philosophies')" id="workout-tab-philosophies" class="workout-tab-btn py-3 px-2 text-xs sm:text-sm font-bold rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200">
+                        <i class="fa-solid fa-yin-yang mr-1"></i> Philosophies
+                    </button>
+                    <button onclick="switchWorkout('idioms')" id="workout-tab-idioms" class="workout-tab-btn py-3 px-2 text-xs sm:text-sm font-bold rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200">
+                        <i class="fa-solid fa-puzzle-piece mr-1"></i> Idioms & Culture
                     </button>
                 </div>
 
-                <!-- Document Verbatim Viewports -->
+                <!-- Workout Content Area -->
                 <div class="pt-6">
-                    <!-- Book 1 Context: rev.pdf verbatim lessons -->
-                    <div id="study-book-1" class="book-viewport space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="book1-lessons-grid">
-                            <!-- Populated in JavaScript verbatim from rev.pdf -->
+                    <!-- WORKOUT 1: GEOGRAPHY -->
+                    <div id="workout-geography" class="workout-section space-y-6">
+                        <div class="bg-highlight p-4 rounded-xl border border-theme space-y-2">
+                            <h3 class="font-bold text-lg text-muted dark:text-stone-100">Geography, Borders, & Territorial Waters</h3>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Test your memory of key statistics and geographical milestones compiled from the curriculum.</p>
+                        </div>
+                        <div id="workout-geo-container" class="space-y-6">
+                            <!-- Populated in JS -->
                         </div>
                     </div>
 
-                    <!-- Book 2 Context: Review (the final one).pdf verbatim lessons -->
-                    <div id="study-book-2" class="book-viewport hidden space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="book2-lessons-grid">
-                            <!-- Populated in JavaScript verbatim from the final review.pdf -->
+                    <!-- WORKOUT 2: DYNASTIES -->
+                    <div id="workout-dynasties" class="workout-section hidden space-y-6">
+                        <div class="bg-highlight p-4 rounded-xl border border-theme space-y-2">
+                            <h3 class="font-bold text-lg text-muted dark:text-stone-100">Dynastic Match-Up Game</h3>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Match each historic event, invention, or sovereign action to the correct ruling dynasty (Qin, Han, Sui, Tang, Song, Yuan, Ming, Qing).</p>
+                        </div>
+                        <div id="workout-dynasty-container" class="space-y-6">
+                            <!-- Populated in JS -->
+                        </div>
+                    </div>
+
+                    <!-- WORKOUT 3: PHILOSOPHIES -->
+                    <div id="workout-philosophies" class="workout-section hidden space-y-6">
+                        <div class="bg-highlight p-4 rounded-xl border border-theme space-y-2">
+                            <h3 class="font-bold text-lg text-muted dark:text-stone-100">Philosophies & Ancient Wisdom Drills</h3>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Connect quotes, tenets, and principles of balanced harmony to Confucianism, Daoism, Legalism, and Sun Tzu's Strategic Thought.</p>
+                        </div>
+                        <div id="workout-philo-container" class="space-y-6">
+                            <!-- Populated in JS -->
+                        </div>
+                    </div>
+
+                    <!-- WORKOUT 4: IDIOMS -->
+                    <div id="workout-idioms" class="workout-section hidden space-y-6">
+                        <div class="bg-highlight p-4 rounded-xl border border-theme space-y-2">
+                            <h3 class="font-bold text-lg text-muted dark:text-stone-100">Decoding Idioms & Leaf Puzzles</h3>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Identify the true meaning of fixed Chinese idioms, metaphors, and the Page 9 Leaf Illustrations.</p>
+                        </div>
+                        <div id="workout-culture-container" class="space-y-6">
+                            <!-- Populated in JS -->
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Page B: Study Materials / Reference Guide (Verbatim Lesson Reader with interactive categories) -->
+        <section id="study-guide-screen" class="hidden space-y-6 transition-all duration-300">
+            <div class="card-bg rounded-2xl p-6 sm:p-8 shadow-lg border border-theme">
+                
+                <!-- Category Page Header exactly matching image_6e57f6.jpg -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-5 border-b border-theme mb-6 gap-4">
+                    <div>
+                        <div class="flex items-center space-x-2 text-red-800 dark:text-amber-400 font-bold text-xs uppercase tracking-widest">
+                            <span class="w-2 h-2 rounded-full bg-red-800 dark:bg-amber-400"></span>
+                            <span>Comprehensive Academic Notes</span>
+                        </div>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-extrabold text-stone-900 dark:text-amber-400 mt-1 cinzel-title">STUDY & REFERENCE GUIDE</h2>
+                        <p class="text-stone-500 dark:text-stone-400 text-xs sm:text-sm mt-1">
+                            Sourced directly from certified PDF dossiers: <strong class="text-red-900 dark:text-amber-400 font-semibold">rev.pdf</strong> and <strong class="text-red-900 dark:text-amber-400 font-semibold">Review (the final one).pdf</strong>.
+                        </p>
+                    </div>
+                    <button onclick="goToHome()" class="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 dark:bg-amber-500 dark:text-stone-950 font-bold text-white rounded-xl text-sm transition self-start flex items-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Back to Portal</span>
+                    </button>
+                </div>
+
+                <!-- Classified Category Selector Tabs matching exactly image_6e57f6.jpg layout -->
+                <div class="flex overflow-x-auto pb-4 gap-2 custom-scrollbar border-b border-theme">
+                    <button onclick="switchStudyCategory('geography')" id="cat-tab-geography" class="study-cat-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition whitespace-nowrap bg-red-900 text-white shadow-sm">
+                        <i class="fa-solid fa-earth-asia mr-1.5 text-amber-300"></i> Geography & Demographics
+                    </button>
+                    <button onclick="switchStudyCategory('dynastic')" id="cat-tab-dynastic" class="study-cat-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition whitespace-nowrap bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200">
+                        <i class="fa-solid fa-timeline mr-1.5"></i> Dynastic Chronology
+                    </button>
+                    <button onclick="switchStudyCategory('philosophy')" id="cat-tab-philosophy" class="study-cat-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition whitespace-nowrap bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200">
+                        <i class="fa-solid fa-yin-yang mr-1.5"></i> Philosophy & Culture
+                    </button>
+                    <button onclick="switchStudyCategory('modern')" id="cat-tab-modern" class="study-cat-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition whitespace-nowrap bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200">
+                        <i class="fa-solid fa-landmark mr-1.5"></i> Modern Era & Policy
+                    </button>
+                    <button onclick="switchStudyCategory('idioms')" id="cat-tab-idioms" class="study-cat-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition whitespace-nowrap bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200">
+                        <i class="fa-solid fa-quote-left mr-1.5"></i> Idioms & Leaf Cartoons
+                    </button>
+                </div>
+
+                <!-- Flashcard vs Dossier View Switcher -->
+                <div class="flex items-center justify-between pt-4 pb-2">
+                    <span class="text-xs font-semibold text-stone-500 dark:text-stone-400">Interactive Training Options</span>
+                    <div class="flex space-x-2">
+                        <button onclick="setStudyViewMode('cards')" id="btn-view-cards" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-500 text-stone-950 flex items-center space-x-1">
+                            <i class="fa-solid fa-layer-group"></i> <span>Flashcards Grid</span>
+                        </button>
+                        <button onclick="setStudyViewMode('textbook')" id="btn-view-textbook" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-200 flex items-center space-x-1">
+                            <i class="fa-solid fa-book"></i> <span>Raw Text Dossier</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Category Summary / General Reading Material -->
+                <div id="category-summary-box" class="p-4 bg-highlight border border-theme rounded-xl text-xs sm:text-sm text-stone-700 dark:text-stone-200 leading-relaxed space-y-2 mt-2">
+                    <!-- Populated dynamically based on category -->
+                </div>
+
+                <!-- Active Flashcard Viewport -->
+                <div id="study-cards-view" class="pt-6">
+                    <div id="flashcards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Populated dynamically with interactive flipping cards -->
+                    </div>
+                </div>
+
+                <!-- Raw Textbook List Viewport (Fallback search) -->
+                <div id="study-textbook-view" class="hidden pt-6 space-y-4">
+                    <div class="lesson-book-card rounded-2xl p-4 sm:p-5">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
+                            <div>
+                                <div class="flex items-center gap-2 text-red-900 dark:text-amber-400 font-semibold text-xs uppercase tracking-[0.25em]">
+                                    <i class="fa-solid fa-book-open-reader"></i>
+                                    <span>Raw Text Materials</span>
+                                </div>
+                                <h3 class="font-serif text-lg font-bold text-stone-800 dark:text-stone-100 mt-1 cinzel-title">Lesson Reader for Book 1 & Book 2</h3>
+                                <p class="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">Search the exact syllabus wording from the study dossiers and read both lesson books side by side.</p>
+                            </div>
+                            <div class="relative w-full lg:max-w-md">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"></i>
+                                <input type="text" id="raw-text-search" onkeyup="filterRawSyllabusText()" placeholder="Search lessons, events, dynasties, or terms..." class="raw-text-search-shell w-full rounded-xl py-2.5 pl-10 pr-3 border-none outline-none text-sm text-stone-800 dark:text-stone-100">
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <button onclick="setRawTextFilter('all')" id="raw-filter-all" class="raw-text-filter-btn active px-3 py-1.5 rounded-full text-xs font-semibold">All lessons</button>
+                            <button onclick="setRawTextFilter('book1')" id="raw-filter-book1" class="raw-text-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold">Book 1 lessons</button>
+                            <button onclick="setRawTextFilter('book2')" id="raw-filter-book2" class="raw-text-filter-btn px-3 py-1.5 rounded-full text-xs font-semibold">Book 2 lessons</button>
+                        </div>
+
+                        <div id="raw-textbook-list" class="space-y-4">
+                            <!-- Populated dynamically with exact matching rules -->
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </section>
 
@@ -268,7 +551,7 @@
             <!-- Left Side / Navigation Bar (Sticky helper for students) -->
             <div class="lg:col-span-1 space-y-6">
                 <div class="card-bg rounded-xl p-5 shadow-md border border-theme space-y-4 sticky top-24">
-                    <h3 class="font-serif font-bold text-red-900 dark:text-amber-400 border-b border-theme pb-2 text-base uppercase tracking-wider flex items-center justify-between" style="font-family: 'Cinzel', serif;">
+                    <h3 class="font-serif font-bold text-red-900 dark:text-amber-400 border-b border-theme pb-2 text-base uppercase tracking-wider flex items-center justify-between cinzel-title">
                         <span>EXAM OUTLINE</span>
                         <i class="fa-solid fa-list-check text-stone-400"></i>
                     </h3>
@@ -296,11 +579,11 @@
                     </div>
 
                     <div class="pt-4 border-t border-theme">
-                        <div class="text-xs text-muted font-medium">Global Completion</div>
+                        <div class="text-xs text-stone-500 dark:text-stone-400 font-medium">Global Completion</div>
                         <div class="w-full bg-stone-200 dark:bg-stone-800 h-2.5 rounded-full mt-1.5 overflow-hidden">
                             <div id="exam-global-progress" class="bg-gradient-to-r from-red-600 to-red-950 h-full w-0 transition-all duration-300"></div>
                         </div>
-                        <div class="text-[10px] text-right text-muted mt-1 font-mono font-bold" id="progress-percentage">0% Answered</div>
+                        <div class="text-[10px] text-right text-stone-500 dark:text-stone-400 mt-1 font-mono font-bold" id="progress-percentage">0% Answered</div>
                     </div>
 
                     <div class="pt-2">
@@ -317,10 +600,10 @@
                     <div class="flex items-center justify-between border-b border-theme pb-4 mb-6">
                         <div>
                             <span class="text-xs uppercase tracking-widest text-red-900 dark:text-amber-400 font-bold">Liaoning Normal Academic Review</span>
-                            <h2 class="text-xl sm:text-2xl font-serif font-extrabold text-main mt-1" style="font-family: 'Cinzel', serif;">Official Written Exam</h2>
+                            <h2 class="text-xl sm:text-2xl font-serif font-extrabold text-stone-900 dark:text-stone-100 mt-1 cinzel-title">Official Written Exam</h2>
                         </div>
                         <div class="text-right">
-                            <span class="text-xs font-semibold text-muted">Examinee</span>
+                            <span class="text-xs font-semibold text-stone-400">Examinee</span>
                             <span class="block text-sm font-bold text-red-800 dark:text-amber-400" id="display-student-name">Candidate Name</span>
                         </div>
                     </div>
@@ -329,13 +612,13 @@
                     <div id="sec-part1" class="space-y-6 scroll-mt-24">
                         <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
                             <div class="flex items-center space-x-2">
-                                <span class="font-serif font-bold text-lg">PART I</span>
+                                <span class="font-serif font-bold text-lg text-white">PART I</span>
                                 <span class="text-stone-300 font-light text-sm">|</span>
-                                <span class="text-xs sm:text-sm font-semibold tracking-wide">FILL IN THE BLANKS</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide text-white">FILL IN THE BLANKS</span>
                             </div>
-                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">35 Marks (35 Qs)</span>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20 text-white">35 Marks (35 Qs)</span>
                         </div>
-                        <p class="text-xs text-muted italic">Enter the single correct word or exact numbers in the text boxes. Letter casing does not matter.</p>
+                        <p class="text-xs text-stone-500 dark:text-stone-400 italic">Enter the single correct word or exact numbers in the text boxes. Letter casing does not matter.</p>
 
                         <div id="part1-questions-container" class="divide-y divide-theme">
                             <!-- Injected programmatically -->
@@ -346,13 +629,13 @@
                     <div id="sec-part2" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
                         <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
                             <div class="flex items-center space-x-2">
-                                <span class="font-serif font-bold text-lg">PART II</span>
+                                <span class="font-serif font-bold text-lg text-white">PART II</span>
                                 <span class="text-stone-300 font-light text-sm">|</span>
-                                <span class="text-xs sm:text-sm font-semibold tracking-wide">RIGHT OR WRONG (TRUE/FALSE)</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide text-white">RIGHT OR WRONG (TRUE/FALSE)</span>
                             </div>
-                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">25 Marks (25 Qs)</span>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20 text-white">25 Marks (25 Qs)</span>
                         </div>
-                        <p class="text-xs text-muted italic">Determine whether the following statements are historically and geographically correct (True) or incorrect (False).</p>
+                        <p class="text-xs text-stone-500 dark:text-stone-400 italic">Determine whether the following statements are historically and geographically correct (True) or incorrect (False).</p>
 
                         <div id="part2-questions-container" class="space-y-4 pt-2">
                             <!-- Injected programmatically -->
@@ -363,13 +646,13 @@
                     <div id="sec-part3" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
                         <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
                             <div class="flex items-center space-x-2">
-                                <span class="font-serif font-bold text-lg">PART III</span>
+                                <span class="font-serif font-bold text-lg text-white">PART III</span>
                                 <span class="text-stone-300 font-light text-sm">|</span>
-                                <span class="text-xs sm:text-sm font-semibold tracking-wide">CHOOSE THE RIGHT ANSWER</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide text-white">CHOOSE THE RIGHT ANSWER</span>
                             </div>
-                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">20 Marks (20 Qs)</span>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20 text-white">20 Marks (20 Qs)</span>
                         </div>
-                        <p class="text-xs text-muted italic">Select the single correct option for each question based on the reference PDF documents.</p>
+                        <p class="text-xs text-stone-500 dark:text-stone-400 italic">Select the single correct option for each question based on the reference PDF documents.</p>
 
                         <div id="part3-questions-container" class="space-y-6 pt-2">
                             <!-- Injected programmatically -->
@@ -380,13 +663,13 @@
                     <div id="sec-part4" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
                         <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
                             <div class="flex items-center space-x-2">
-                                <span class="font-serif font-bold text-lg">PART IV</span>
+                                <span class="font-serif font-bold text-lg text-white">PART IV</span>
                                 <span class="text-stone-300 font-light text-sm">|</span>
-                                <span class="text-xs sm:text-sm font-semibold tracking-wide">SHORT ANSWER QUESTIONS</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide text-white">SHORT ANSWER QUESTIONS</span>
                             </div>
-                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">20 Marks (4 Qs)</span>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20 text-white">20 Marks (4 Qs)</span>
                         </div>
-                        <p class="text-xs text-muted italic">Compose concise, complete textual responses. Key historical vocabulary words will be evaluated upon submission.</p>
+                        <p class="text-xs text-stone-500 dark:text-stone-400 italic">Compose concise, complete textual responses. Key historical vocabulary words will be evaluated upon submission.</p>
 
                         <div id="part4-questions-container" class="space-y-6 pt-2">
                             <!-- Injected programmatically -->
@@ -397,13 +680,13 @@
                     <div id="sec-part5" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
                         <div class="bg-gradient-to-r from-amber-500 to-yellow-600 p-4 rounded-xl text-stone-900 flex justify-between items-center shadow-sm">
                             <div class="flex items-center space-x-2">
-                                <span class="font-serif font-bold text-lg">PART V</span>
+                                <span class="font-serif font-bold text-lg text-stone-950">PART V</span>
                                 <span class="text-stone-950 font-light text-sm">|</span>
-                                <span class="text-xs sm:text-sm font-bold tracking-wide">VISUAL BONUS QUESTION</span>
+                                <span class="text-xs sm:text-sm font-bold tracking-wide text-stone-950">VISUAL BONUS QUESTION</span>
                             </div>
-                            <span class="text-xs sm:text-sm font-bold bg-black/10 px-2.5 py-1 rounded border border-black/10">+2 Extra Marks (1 Q)</span>
+                            <span class="text-xs sm:text-sm font-bold bg-black/10 px-2.5 py-1 rounded border border-black/10 text-stone-950">+2 Extra Marks (1 Q)</span>
                         </div>
-                        <p class="text-xs text-muted italic">Analyze the visual recreation of the Page 9 Leaf Illustrations from the study dossier to earn your extra credit.</p>
+                        <p class="text-xs text-stone-500 dark:text-stone-400 italic">Analyze the visual recreation of the Page 9 Leaf Illustrations from the study dossier to earn your extra credit.</p>
 
                         <div id="part5-questions-container" class="space-y-6 pt-2">
                             <!-- Injected programmatically -->
@@ -412,7 +695,7 @@
 
                     <!-- Bottom Action Bar -->
                     <div class="pt-10 border-t border-theme mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div class="text-muted text-sm">
+                        <div class="text-stone-500 dark:text-stone-400 text-sm">
                             <i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Ensure all sections are answered before submitting.
                         </div>
                         <button onclick="confirmSubmitExam()" class="px-8 py-4 bg-red-900 hover:bg-red-950 text-white font-bold text-lg rounded-xl shadow-lg transition flex items-center space-x-3 border-b-4 border-red-950">
@@ -433,7 +716,7 @@
                         <i class="fa-solid fa-award text-[12rem] absolute -right-10 -bottom-10"></i>
                     </div>
                     <span class="text-xs uppercase tracking-widest text-amber-300 font-bold">Comprehensive Exam Score Report</span>
-                    <h2 class="font-serif text-3xl font-bold mt-1">Official Academic Assessment</h2>
+                    <h2 class="font-serif text-3xl font-bold mt-1 text-white">Official Academic Assessment</h2>
                     
                     <div class="mt-6 inline-flex flex-col sm:flex-row items-center justify-center gap-6 bg-white/5 border border-white/10 p-6 rounded-2xl">
                         <div class="text-center sm:border-r sm:border-white/10 sm:pr-8">
@@ -446,39 +729,39 @@
                         </div>
                         <div class="text-center">
                             <span class="text-xs text-stone-300 uppercase tracking-widest block">Evaluation Result</span>
-                            <div class="text-xl sm:text-2xl font-bold mt-1.5 px-4 py-1.5 rounded-full inline-block" id="evaluation-badge">PASS</div>
+                            <div class="text-xl sm:text-2xl font-bold mt-1.5 px-4 py-1.5 rounded-full inline-block text-white" id="evaluation-badge">PASS</div>
                         </div>
                     </div>
 
                     <div class="mt-4 text-xs text-stone-300">
-                        Candidate Name: <strong class="text-white" id="results-candidate-name">N/A</strong> &nbsp;|&nbsp; 
-                        Time Elapsed: <strong class="text-white" id="results-time-elapsed">0 mins</strong>
+                        Candidate Name: <strong class="text-white font-bold" id="results-candidate-name">N/A</strong> &nbsp;|&nbsp; 
+                        Time Elapsed: <strong class="text-white font-bold" id="results-time-elapsed">0 mins</strong>
                     </div>
                 </div>
 
                 <div class="p-6 sm:p-8 space-y-8">
                     <!-- Subsection scores -->
                     <div class="bg-highlight border border-theme p-5 rounded-xl">
-                        <h3 class="font-serif font-bold text-main text-base mb-4 flex items-center space-x-2">
+                        <h3 class="font-serif font-bold text-stone-800 dark:text-stone-100 text-base mb-4 flex items-center space-x-2">
                             <i class="fa-solid fa-chart-pie text-red-900"></i>
                             <span>Detailed Breakdown by Part</span>
                         </h3>
                         <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                             <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
-                                <span class="text-xs text-muted block font-medium">Part I: Blanks</span>
-                                <strong class="text-main text-base font-mono block mt-1" id="score-p1">0 / 35</strong>
+                                <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Part I: Blanks</span>
+                                <strong class="text-stone-800 dark:text-stone-100 text-base font-mono block mt-1" id="score-p1">0 / 35</strong>
                             </div>
                             <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
-                                <span class="text-xs text-muted block font-medium">Part II: T/F</span>
-                                <strong class="text-main text-base font-mono block mt-1" id="score-p2">0 / 25</strong>
+                                <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Part II: T/F</span>
+                                <strong class="text-stone-800 dark:text-stone-100 text-base font-mono block mt-1" id="score-p2">0 / 25</strong>
                             </div>
                             <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
-                                <span class="text-xs text-muted block font-medium">Part III: MCQs</span>
-                                <strong class="text-main text-base font-mono block mt-1" id="score-p3">0 / 20</strong>
+                                <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Part III: MCQs</span>
+                                <strong class="text-stone-800 dark:text-stone-100 text-base font-mono block mt-1" id="score-p3">0 / 20</strong>
                             </div>
                             <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
-                                <span class="text-xs text-muted block font-medium">Part IV: Short Ans</span>
-                                <strong class="text-main text-base font-mono block mt-1" id="score-p4">0 / 20</strong>
+                                <span class="text-xs text-stone-500 dark:text-stone-400 block font-medium">Part IV: Short Ans</span>
+                                <strong class="text-stone-800 dark:text-stone-100 text-base font-mono block mt-1" id="score-p4">0 / 20</strong>
                             </div>
                             <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center col-span-2 md:col-span-1 bg-amber-500/10 border-amber-500/30">
                                 <span class="text-xs text-amber-500 block font-semibold">Part V: Bonus</span>
@@ -490,7 +773,7 @@
                     <!-- Exam review details -->
                     <div class="space-y-6">
                         <div class="flex items-center justify-between border-b border-theme pb-3">
-                            <h3 class="font-serif font-bold text-lg text-main flex items-center space-x-2">
+                            <h3 class="font-serif font-bold text-lg text-stone-800 dark:text-stone-100 flex items-center space-x-2">
                                 <i class="fa-solid fa-clipboard-question text-stone-400"></i>
                                 <span>Verification & Answer Key Sheet</span>
                             </h3>
@@ -507,14 +790,14 @@
                         </div>
 
                         <!-- Verification items -->
-                        <div class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar border border-theme rounded-xl p-3 bg-highlight" id="results-questions-verification">
+                        <div class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar border border-theme rounded-xl p-3 bg-highlight animate-fade-in" id="results-questions-verification">
                             <!-- Injected dynamically with precise score tags and explanations derived from review notes -->
                         </div>
                     </div>
 
                     <!-- Reset Options -->
                     <div class="pt-6 border-t border-theme flex flex-col sm:flex-row gap-4 justify-between">
-                        <button onclick="restartPortal()" class="px-6 py-3 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-main font-bold rounded-lg transition flex items-center justify-center space-x-2 border border-theme">
+                        <button onclick="triggerResetConfirm()" class="px-6 py-3 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-100 font-bold rounded-lg transition flex items-center justify-center space-x-2 border border-theme">
                             <i class="fa-solid fa-arrow-rotate-left"></i>
                             <span>Return to Main Portal</span>
                         </button>
@@ -534,20 +817,41 @@
             <div class="text-center text-red-800 dark:text-amber-400 text-4xl">
                 <i class="fa-solid fa-file-circle-exclamation animate-bounce"></i>
             </div>
-            <h3 class="font-serif font-bold text-xl text-main text-center">Submit Examination Sheet?</h3>
-            <p class="text-sm text-muted text-center">
+            <h3 class="font-serif font-bold text-xl text-stone-800 dark:text-stone-100 text-center">Submit Examination Sheet?</h3>
+            <p class="text-sm text-stone-500 dark:text-stone-400 text-center">
                 Are you sure you want to finish and submit your exam paper? You will not be able to revise your answers after submission.
             </p>
-            <div id="unanswered-warning" class="hidden bg-rose-50 border border-rose-200 rounded-lg p-3 text-xs text-rose-700 font-semibold space-y-1">
+            <div id="unanswered-warning" class="hidden bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 rounded-lg p-3 text-xs text-rose-700 dark:text-rose-400 font-semibold space-y-1">
                 <i class="fa-solid fa-triangle-exclamation mr-1 text-rose-500"></i>
                 <span>You have unanswered questions remaining!</span>
             </div>
             <div class="flex gap-3 pt-2">
-                <button onclick="closeConfirmModal()" class="w-1/2 py-2.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-main font-semibold rounded-lg text-sm transition border border-theme">
+                <button onclick="closeConfirmModal()" class="w-1/2 py-2.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-100 font-semibold rounded-lg text-sm transition border border-theme">
                     Keep Editing
                 </button>
-                <button onclick="gradeExam()" class="w-1/2 py-2.5 bg-red-900 hover:bg-red-950 text-white font-semibold rounded-lg text-sm transition">
+                <button onclick="gradeExam()" class="w-1/2 py-2.5 bg-red-900 hover:bg-red-950 text-white font-semibold rounded-lg text-sm transition border border-red-950">
                     Yes, Grade My Exam
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reusable Custom Modal for Reset Confirmation (Replaces confirm dialog) -->
+    <div id="reset-confirm-modal" class="hidden fixed inset-0 bg-stone-950/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="card-bg rounded-2xl max-w-md w-full p-6 shadow-2xl border border-theme space-y-4">
+            <div class="text-center text-amber-500 text-4xl">
+                <i class="fa-solid fa-circle-question animate-pulse"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl text-stone-800 dark:text-stone-100 text-center">Exit and Restart Portal?</h3>
+            <p class="text-sm text-stone-500 dark:text-stone-400 text-center">
+                Are you sure you want to exit the current assessment sheet and return to the main welcome dashboard? All typed answers on your active paper will be cleared.
+            </p>
+            <div class="flex gap-3 pt-2">
+                <button onclick="closeResetConfirmModal()" class="w-1/2 py-2.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-100 font-semibold rounded-lg text-sm transition border border-theme">
+                    Continue Exam
+                </button>
+                <button onclick="restartPortal()" class="w-1/2 py-2.5 bg-red-900 hover:bg-red-950 text-white font-semibold rounded-lg text-sm transition border border-red-950">
+                    Yes, Reset Portal
                 </button>
             </div>
         </div>
@@ -556,12 +860,13 @@
     <!-- Footer Decorative Lattice and Info -->
     <footer class="bg-stone-900 text-stone-400 py-8 border-t border-stone-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
-            <p class="font-serif text-sm text-stone-300">Imperial Chinese Studies Evaluation System</p>
+            <p class="font-serif text-sm text-stone-300">Imperial Chinese Studies Evaluation & Training System</p>
             <p class="text-xs text-stone-500">&copy; 2026 Academic Department. Study Guide Verbatim Database Powered.</p>
         </div>
     </footer>
 
     <!-- CODE SCRIPT -->
+    <!-- _STREAMING_CHUNK:Initializing verbatim review lessons... -->
     <script>
         // Verbatim lessons derived precisely from rev.pdf (100 items)
         const book1Lessons = [
@@ -607,7 +912,7 @@
             { num: "40", text: "The prosperity of the domestic economy and international trade made the Song Dynasty the richest dynasty in Chinese history." },
             { num: "41", text: "The Song Dynasty lasted more than 300 years, and its overthrow was due to foreign invasion. It was the only dynasty that did not die directly in civil strife." },
             { num: "42", text: "The Yuan Dynasty (1271-1368), the first unified dynasty established by the ethnic minority-Mongolia, has prosperous economy and owns the vastest territory in the world." },
-            { num: "43", text: "Zhu Di, the third emperor of the Ming Dynasty (1368-1644), sent the explorer Zheng He to the 'Western Oceans' in 1405. In the next 28 years, Zheng He sailed seven times." },
+            { num: "43", text: "Zhu Di, the third emperor of the Ming Dynasty (1368-1644), sent the explorer Zheng He to the 'Western Oceans' in 1405. In the next 28 years, Zheng He sailed times." },
             { num: "44", text: "The purposes of Zheng He's voyages were Diplomacy (showing strength & political influence) and Trade (overseas exchanges & foreign trade)." },
             { num: "45", text: "Established by Manchu people, Qing was China's final feudal dynasty. From 1872 to 1875, they sent 120 students to study in the United States." },
             { num: "46", text: "The policy of closing the door to the outside world in the Qing Dynasty was typical isolationism, causing China to lag severely behind Western countries." },
@@ -701,7 +1006,7 @@
             { num: "30", text: "The Capital of China is Beijing. The Five-Starred Red Flag represents the CPC (large star) and four revolutionary classes (small stars)." },
             { num: "31", text: "Chinese is the most used language globally, an official language of Singapore and Malaysia, and Putonghua is one of the six UN languages." },
             { num: "32", text: "Putonghua standardizes Beijing pronunciation as standard, the northern dialect as basic, and modern vernacular as grammatical norm." },
-            { num: "33", text: "China pays special attention to the protection of regional dialects so they are not lost." },
+            { num: "33", text: "China also pays special attention to the protection of regional dialects so they are not lost." },
             { num: "34", text: "Oracle bone inscriptions, or Jiaguwen, are the earliest characters. Pictophonetic characters make up over 80% of characters." },
             { num: "35", text: "Spring Festival customs include staying up late (shousui), couplets, pasting 'Fu' upside down, red envelopes, eating jiaozi and fish (yu/surplus)." },
             { num: "36", text: "Lantern Festival falls on the 15th day of the 1st lunar month. Activities include lantern viewing, Tangyuan, and lantern riddles." },
@@ -726,7 +1031,7 @@
             { num: "55", text: "President Xi Jinping advocates for a people-centered development: of, by, and for the people." },
             { num: "56", text: "From 1953 to 2025, China completed 14 successive 'five-year plans'." },
             { num: "57", text: "The east-west span of China is around 5,200 km, covering 5 time zones." },
-            { num: "58", text: "China has over 7,600 islands, of which Taiwan Island is the largest." },
+            { num: "58", text: "China's ocean area is also very broad, There are more than 7,600 islands in this vast sea area. Among them, Taiwan Island is China's largest island." },
             { num: "59", text: "As of 2025, China's population is estimated at 1.40489 billion, mostly living in the east." },
             { num: "60", text: "Accelerated economic development has caused a rapid increase in the urban population." },
             { num: "61", text: "China has 56 nationalities with the Han as the largest, while minorities maintain unique languages and traditions." },
@@ -744,15 +1049,63 @@
             { num: "73", text: "Most Chinese festivals are closely linked to agricultural culture because farming has been the core mode of production." }
         ];
 
-        // Global variables
-        let candidateName = "";
-        let timerSeconds = 3600; // 60 mins default
-        let timerInterval = null;
-        let examSubmitted = false;
-        let isPracticeMode = false;
-        let startEpoch = 0;
+        // Classified Category Study Cards
+        const studyCategories = {
+            geography: {
+                title: "Geography & Demographics",
+                intro: "China is located in Eastern Asia on the west coast of the Pacific Ocean. It features a vast territory of 9.6 million square kilometers, 14 land neighbors, and 5 separate time zones. The terrain features a distinctive high-west to low-east configuration, dominated by the Himalayas, Yangtze River, and Yellow River.",
+                cards: [
+                    { key: "1.1 Global Coordinates & Area", text: "China is located in Eastern Asia, on the west coast of the Pacific Ocean. It spans roughly 9.6 million square kilometers, ranking second globally after Russia and Canada, making it the third largest country in the world and the largest country in Asia. Traversing its entire perimeter is equivalent to exploring the total surface area of Europe." },
+                    { key: "1.2 Borders, Seas, & Terrain", text: "China's land border runs 22,800 kilometers shared with 14 neighboring states. It features an 18,000 km coastline containing more than 7,600 islands, of which Taiwan Island is the largest. Topography steps downward from west (Himalayas, 8844.43m) to east." },
+                    { key: "1.3 Rivers & Mother Rivers", text: "The Yangtze River (Changjiang) is the third longest river in the world (over 6,300 km). The Yellow River is celebrated as the 'Mother River' of Chinese civilization and is the second longest in the nation." },
+                    { key: "1.4 Demographics & Administration", text: "Home to 56 official ethnic groups, with the Han people making up 91.5% of the total population (1.408B in 2024 / 1.40489B in 2025). The nation features 34 provincial-level regions (23 provinces, 5 autonomous zones, 4 municipalities, 2 SARs)." }
+                ]
+            },
+            dynastic: {
+                title: "Dynastic Chronology",
+                intro: "Imperial Chinese history is marked by cyclical dynasties, beginning with Qin Shihuang's unification in 221 BC. Key epochs include the Han Dynasty (the source of the 'Han' language identity), the prosperous Tang, the wealthy Song, the vast Mongol Yuan, the maritime Ming voyages, and the final Manchu Qing Dynasty.",
+                cards: [
+                    { key: "2.1 Qin Imperial Unification", text: "In 221 BC, the State of Qin defeated all other Warring States. Emperor Qin Shihuang unified written script (Small Seal), weights, legal measures, currency, and ordered the initial Great Wall (distributed across 15 provinces) to guard the northern frontier." },
+                    { key: "2.2 Han Dynasty & Silk Road", text: "The Han Dynasty consolidated imperial identity (replacing 'Qin people' with 'Han people'). In 105 BC, formal trade was opened with Parthia. Envoys led by Zhang Qian's Two Missions to the West connected China with the Mediterranean." },
+                    { key: "2.3 Sui, Tang & Song Prosperity", text: "The Sui Dynasty introduced the Keju (Imperial Exam). The Tang Dynasty was the most prosperous, launching the term 'overseas students' (e.g. Silla, Japan) and elevating Empress Wu Zetian. The Song Dynasty was the richest through massive maritime trade." },
+                    { key: "2.4 Yuan, Ming & Qing Epochs", text: "Yuan (Mongol) possessed the vastest land area. Ming sent explorer Zheng He on 7 maritime voyages (1405-1433) using the compass. Qing (Manchu) was the final feudal dynasty, which collapsed following unequal treaties and the 1911 Xinhai Revolution." }
+                ]
+            },
+            philosophy: {
+                title: "Philosophy & Culture",
+                intro: "China's moral and ideological pillars are founded upon Confucianism, Daoism (natively native), Legalism, and strategic military thoughts like Sun Tzu. Traditional life remains profoundly rooted in these systems of balanced harmony and familial filial duty.",
+                cards: [
+                    { key: "3.1 Confucius & Moral Duty", text: "Confucius is recognized as the first teacher. He argued that heaven is the origin of all moral values, urged self-cultivation, and coined the maxim: 'Do not do to others what you do not want others to do to yourself.'" },
+                    { key: "3.2 Rite & Benevolence", text: "The core of Confucianism consists of Rite (lǐ, external form) and Benevolence (rén, inner essence). True harmony occurs when love allows individuals to follow rites voluntarily rather than as a strict constraint." },
+                    { key: "3.3 Mencius & Human Nature", text: "Mencius asserted that human nature is fundamentally good at birth. His mother famously moved their home three times to ensure a proper educational environment, inspiring the proverb: 'He that lies down with dogs must rise up with fleas.'" },
+                    { key: "3.4 Daoism, Yin-Yang & Legalism", text: "Daoism (founded by Lao Zi) represents the only native major religion. Opposites transform into each other (e.g. 'The Old Man and His Lost Horse'). Health relies on balancing active Yang and dark, passive Yin alongside the Five Elements." }
+                ]
+            },
+            modern: {
+                title: "Modern Era & Policy",
+                intro: "Following the Opium Wars in 1840, modern China emerged through intense social struggle, culminating in the 1919 May Fourth Movement, the War of Resistance ending in 1945, and the founding of the People's Republic of China on October 1, 1949.",
+                cards: [
+                    { key: "4.1 May 4th & Birth of CPC", text: "In 1919, China's proposals at the Paris Peace Conference were rejected. This triggered student protests in Beijing (the May Fourth Movement), which paved the way for the Communist Party of China. Commemorated as Youth Day." },
+                    { key: "4.2 War of Resistance & Civil War", text: "The War against Japanese aggression lasted 14 years (1931-1945), ending with Japan's surrender. The following Civil War ended in 1949 after the Liaoshen Campaign liberated the Northeast region." },
+                    { key: "4.3 PRC Founding & Symbols", text: "On October 1, 1949, Mao Zedong declared the PRC's founding. The Five-Starred Red Flag represents the CPC (large star) and four revolutionary classes (small stars). Foreign policy rests on the 5 Principles of Peaceful Coexistence." },
+                    { key: "4.4 Reform & Modern Inventions", text: "Launched in 1978 under Deng Xiaoping, Reform and Opening-up built a socialist market economy. Modern progress has created the 'New Four Inventions': high-speed rail, mobile payment, shared bikes, and e-commerce." }
+                ]
+            },
+            idioms: {
+                title: "Idioms & Leaf Cartoons",
+                intro: "The Chinese language is enriched with thousands of ancient proverbs (Chengyu) and two-part allegorical sayings (xiehouyu). Traditional culture also relies heavily on farming schedules (24 solar terms) and seasonal festive reunions.",
+                cards: [
+                    { key: "5.1 Common Slang & Idioms", text: "'Blowing cow skin' means bragging; 'Eating vinegar' (chī cù) represents jealousy; 'Carry a black pot' means taking blame for others; 'Regardless of 3x7=21' means acting without concern for consequences." },
+                    { key: "5.2 Two-Part Allegorical Sayings", text: "Xiehouyu are riddle-like: 'The monk opens an umbrella — no hair and no sky' (hair/fà sounds like law/fǎ, meaning lawless). 'The nephew carries a lantern — to light up the uncle' (sounds like 'as before')." },
+                    { key: "5.3 Page 9 Visual Leaf Puzzles", text: "Illustration A: 'A mute person takes bitter medicine (Huanglian) — they cannot say it is bitter' (suffering silently). Illustration B: 'Mice go to the street — everybody shouts and beats them' (describing someone universally hated)." },
+                    { key: "5.4 Agriculture & Solar Terms", text: "Traditional festivals are agricultural. The 24 solar terms are the 'fifth great invention'. Summer Solstice features the longest daylight, Winter Solstice the shortest, while Equinoxes have equal day and night." }
+                ]
+            }
+        };
+    </script>
 
-        // Structured Question Banks Sourced precisely from review materials
+    <script>
+        // Interactive official exam sheet items
         const part1Questions = [
             { id: "p1_1", text: "China is located in Eastern Asia, on the west coast of the ________ Ocean.", answer: "Pacific", explanation: "From rev.pdf: 'China is located in Eastern Asia, on the west coast of the Pacific Ocean.'" },
             { id: "p1_2", text: "China's territory is vividly portrayed as a golden ________, with its head facing east.", answer: "rooster", explanation: "From rev.pdf: 'China's territory is vividly portrayed as a golden rooster, and its head to east...'" },
@@ -785,7 +1138,7 @@
             { id: "p1_29", text: "The People's Republic of China was officially founded on October 1st, ________.", answer: "1949", explanation: "From rev.pdf: 'On October 1, 1949, Chairman Mao Zedong declared the founding of People's Republic of China...'" },
             { id: "p1_30", text: "Deng Xiaoping initiated the epoch-defining policy of ________ and Opening-up in 1978.", answer: "Reform", explanation: "From rev.pdf: 'The great policy of Reform and Opening up started in 1978 led by Deng Xiaoping...'" },
             { id: "p1_31", text: "In 2020, China historically achieved comprehensive ________ alleviation.", answer: "poverty", explanation: "From Review (the final one).pdf: 'In 2020, China achieved comprehensive poverty alleviation, becoming the first country in the world to do so.'" },
-            { id: "p1_32", text: "The natively home-grown religion of China is ________.", answer: "Daoism", explanation: "From rev.pdf: 'Out of these religions, only Daoism is home-grown.' (Taoism also accepted programmatically)" },
+            { id: "p1_32", text: "The natively home-grown religion of China is ________.", answer: "Daoism", explanation: "From rev.pdf: 'Out of these religions, only Daoism is home-grown.'" },
             { id: "p1_33", text: "The earliest known Chinese characters are called Oracle Bone Inscriptions or ________.", answer: "Jiaguwen", explanation: "From Review (the final one).pdf: 'Oracle bone inscriptions, also known as Jiaguwen, are the earliest known Chinese characters...'" },
             { id: "p1_34", text: "The round shape of mooncakes eaten during the Mid-Autumn Festival symbolizes family ________.", answer: "reunion", explanation: "From Review (the final one).pdf: 'Mooncakes are the traditional festival food, whose round shape symbolizes family reunion.'" },
             { id: "p1_35", text: "The '24 solar terms' are known as the '________ great invention of China'.", answer: "fifth", explanation: "From rev.pdf: 'The 24 solar terms... is known as the fifth great invention of China.'" }
@@ -807,7 +1160,7 @@
             { id: "p2_13", text: "The Song Dynasty lasted for more than 300 years and was entirely overthrown due to internal civil peasant rebellions.", correct: false, explanation: "From rev.pdf: 'The Song Dynasty... was the only dynasty that did not die directly in civil strife. Its overthrow was due to foreign invasion.'" },
             { id: "p2_14", text: "Qing was China's final feudal dynasty, established by the Manchu people.", correct: true, explanation: "From rev.pdf: 'Established by Manchu people, Qing was China's final feudal dynasty.'" },
             { id: "p2_15", text: "The First Opium War started in June 1840 when a British fleet sailed to Guangdong.", correct: true, explanation: "From rev.pdf: 'In June 1840, a British fleet came to Guangdong and started the First Opium War against China.'" },
-            { id: "p2_16", text: "Under the unequal treaties, Hong Kong was ceded to Portugal and Macau was ceded to Britain.", correct: false, explanation: "From rev.pdf: 'Hong Kong and Macau were respectively ceded to Britain and Portugal.' (Hong Kong to Britain, Macau to Portugal)" },
+            { id: "p2_16", text: "Under the unequal treaties, Hong Kong was ceded to Portugal and Macau was ceded to Britain.", correct: false, explanation: "From rev.pdf: 'Hong Kong and Macau were respectively ceded to Britain and Portugal.'" },
             { id: "p2_17", text: "China's Youth Day on May 4th derives from the historic May Fourth Movement of 1919.", correct: true, explanation: "From Review (the final one).pdf: 'China's Youth Day (May 4th) derives from the historic May Fourth Movement of 1919.'" },
             { id: "p2_18", text: "The big star on the Chinese flag represents the CPC, while the four small stars represent the four revolutionary classes.", correct: true, explanation: "From rev.pdf: 'The big star represents the Communist Party of China, and the four small stars represent the four classes.'" },
             { id: "p2_19", text: "China has an official state religion which has been dominant for centuries.", correct: false, explanation: "From rev.pdf: 'There has never been a religion, native or foreign, that is dominant over all population in China. In other words, there is no so-called state religion...'" },
@@ -1008,79 +1361,487 @@
             }
         ];
 
+        // Practice Workout Exercise Datasets
+        const practiceData = {
+            geography: [
+                {
+                    q: "What is the total land area of China, and its global ranking?",
+                    opts: [
+                        "About 17 million sq km, 1st globally",
+                        "About 9.6 million sq km, 3rd globally (largest entirely in Asia)",
+                        "About 5.2 million sq km, 5th globally",
+                        "About 22.8 million sq km, 2nd globally"
+                    ],
+                    correct: 1,
+                    exp: "Sourced from rev.pdf Summary #1: China possesses about 9.6 million square kilometers, ranking 3rd in the world."
+                },
+                {
+                    q: "How many countries share a direct land border with China, and how long is this border?",
+                    opts: [
+                        "10 countries, 12,000 kilometers",
+                        "12 countries, 18,000 kilometers",
+                        "14 countries, 22,800 kilometers",
+                        "15 countries, 21,196 kilometers"
+                    ],
+                    correct: 2,
+                    exp: "Sourced from rev.pdf #4: China's border is about 22,800 kilometers long and has 14 neighboring countries."
+                },
+                {
+                    q: "What island represents China's largest island territory?",
+                    opts: ["Hainan Island", "Hong Kong Island", "Taiwan Island", "Macau Island"],
+                    correct: 2,
+                    exp: "Sourced from rev.pdf #5: 'Among them, Taiwan is China's largest island.'"
+                }
+            ],
+            dynasties: [
+                {
+                    q: "Which dynasty was China's first unified feudal dynasty, founded by Qin Shi Huang in 221 BC?",
+                    opts: ["Han Dynasty", "Sui Dynasty", "Qin Dynasty", "Tang Dynasty"],
+                    correct: 2,
+                    exp: "Sourced from Review (the final one).pdf #2: 'The Qin Dynasty (221 BC-206 BC), China's first unified feudal dynasty, was founded by Qin Shi Huang.'"
+                },
+                {
+                    q: "Which dynasty introduced the Imperial Examination System (Keju)?",
+                    opts: ["Tang Dynasty", "Sui Dynasty", "Song Dynasty", "Qing Dynasty"],
+                    correct: 1,
+                    exp: "Sourced from rev.pdf #34: 'The foundation of the Imperial Examination System was the most influential contribution in the Sui Dynasty.'"
+                },
+                {
+                    q: "Under which dynasty did the term 'overseas students' originate?",
+                    opts: ["Ming Dynasty", "Han Dynasty", "Yuan Dynasty", "Tang Dynasty"],
+                    correct: 3,
+                    exp: "Sourced from rev.pdf #38 & Review #6: 'The term \"overseas students\" originated in the Tang Dynasty.'"
+                }
+            ],
+            philosophies: [
+                {
+                    q: "What are the two core concepts of Confucianism, acting as external expression and inner essence?",
+                    opts: [
+                        "Yin and Yang",
+                        "Rite (lǐ) and Benevolence (rén)",
+                        "Legalism and Filial piety",
+                        "The Five Elements"
+                    ],
+                    correct: 1,
+                    exp: "Sourced from rev.pdf #67: 'The core thought of Confucianism is rite (lǐ) and benevolence (rén). Rites are the external part of benevolence, and benevolence is the inner essence of rites.'"
+                },
+                {
+                    q: "Who believed that human nature is fundamentally good at birth?",
+                    opts: ["Confucius", "Lao Zi", "Mencius", "Deng Xiaoping"],
+                    correct: 2,
+                    exp: "Sourced from Review (the final one).pdf #47: 'Mencius believed that human nature was good when a person was born.'"
+                },
+                {
+                    q: "Lao Zi is the representative personage of which philosophical school?",
+                    opts: ["Confucianism", "Legalism", "Daoism (Taoism)", "Buddhism"],
+                    correct: 2,
+                    exp: "Sourced from rev.pdf #69 & Review #67: 'Lao Zi is the representative personage of Daoism. Taoism is the only major religion originating in China.'"
+                }
+            ],
+            idioms: [
+                {
+                    q: "What is the true figurative meaning of the common phrase 'blowing cow skin' (吹牛皮)?",
+                    opts: [
+                        "Being highly jealous in love",
+                        "Making things extremely hard for someone",
+                        "Bragging or boasting",
+                        "Taking the blame for other people's faults"
+                    ],
+                    correct: 2,
+                    exp: "Sourced from rev.pdf Page 8 & 9: 'blow cow skin' means bragging or boasting."
+                },
+                {
+                    q: "What figurative allegorical saying does the 'mice going to the street' illustration depict?",
+                    opts: [
+                        "A mute person taking medicine — can't say it is bitter.",
+                        "The monk opening an umbrella — lawless and without hair.",
+                        "Mice go to the street — everybody shouts and beats them (universally hated).",
+                        "Blowing cow skin — bragging loudly."
+                    ],
+                    correct: 2,
+                    exp: "Sourced from rev.pdf Page 9: 'Mice go to the street—everybody shouts and beats them' describes someone or something universally hated."
+                }
+            ]
+        };
+    </script>
+
+    <script>
+        let activeStudyCategory = "geography";
+        let studyViewMode = "textbook"; // default raw text materials view
+        let activeRawTextFilter = "all";
+        let candidateName = "";
+        let timerSeconds = 3600; // 60 mins default
+        let timerInterval = null;
+        let examSubmitted = false;
+        let isPracticeMode = false;
+        let startEpoch = 0;
+
         // On document load
         window.onload = function() {
-            renderVerbatimLessons();
+            renderPracticeDrills();
             renderQuestions();
+            updateStudyGuideDisplay();
+            setStudyViewMode(studyViewMode);
+            filterRawSyllabusText();
         };
 
         function toggleDarkMode() {
             const body = document.body;
             const icon = document.getElementById("theme-icon");
-            body.classList.toggle("dark-mode");
+            const isDark = body.classList.toggle("dark-mode");
             
-            if (body.classList.contains("dark-mode")) {
-                icon.className = "fa-solid fa-sun text-lg";
+            if (isDark) {
+                icon.className = "fa-solid fa-sun text-lg text-amber-400";
             } else {
-                icon.className = "fa-solid fa-moon text-lg";
+                icon.className = "fa-solid fa-moon text-lg text-stone-600";
+            }
+
+            document.documentElement.classList.toggle("dark-mode", isDark);
+            document.body.style.colorScheme = isDark ? "dark" : "light";
+
+            if (!document.getElementById("study-guide-screen").classList.contains("hidden")) {
+                updateStudyGuideDisplay();
+                filterRawSyllabusText();
             }
         }
 
-        // Render textbook summary lessons dynamically
-        function renderVerbatimLessons() {
-            const book1Grid = document.getElementById("book1-lessons-grid");
-            const book2Grid = document.getElementById("book2-lessons-grid");
-
-            book1Grid.innerHTML = "";
-            book1Lessons.forEach(l => {
-                book1Grid.innerHTML += `
-                    <div class="lesson-card p-4 rounded-xl border border-theme bg-stone-50 dark:bg-stone-900 shadow-sm hover:shadow transition" data-text="${l.text.toLowerCase()}">
-                        <span class="inline-block px-2 py-0.5 rounded bg-red-900 text-white font-mono text-[10px] font-bold mb-2">Rule #${l.num}</span>
-                        <p class="text-xs sm:text-sm text-main leading-relaxed font-medium">${l.text}</p>
-                    </div>
-                `;
-            });
-
-            book2Grid.innerHTML = "";
-            book2Lessons.forEach(l => {
-                book2Grid.innerHTML += `
-                    <div class="lesson-card p-4 rounded-xl border border-theme bg-stone-50 dark:bg-stone-900 shadow-sm hover:shadow transition" data-text="${l.text.toLowerCase()}">
-                        <span class="inline-block px-2 py-0.5 rounded bg-amber-500 text-stone-950 font-mono text-[10px] font-bold mb-2">Item #${l.num}</span>
-                        <p class="text-xs sm:text-sm text-main leading-relaxed font-medium">${l.text}</p>
-                    </div>
-                `;
-            });
+        function goToHome() {
+            document.getElementById("study-guide-screen").classList.add("hidden");
+            document.getElementById("training-hub-screen").classList.add("hidden");
+            document.getElementById("exam-screen").classList.add("hidden");
+            document.getElementById("results-screen").classList.add("hidden");
+            document.getElementById("exam-timer-wrapper").classList.add("hidden");
+            document.getElementById("welcome-screen").classList.remove("hidden");
+            
+            document.getElementById("study-mode-btn").innerHTML = `<i class="fa-solid fa-book-open"></i><span class="hidden sm:inline">Reference Materials</span>`;
         }
 
-        // Search through curriculum summaries
-        function searchLessons() {
-            const query = document.getElementById("lesson-search-input").value.trim().toLowerCase();
-            const cards = document.querySelectorAll(".lesson-card");
-            
-            cards.forEach(card => {
-                const text = card.getAttribute("data-text");
-                if (text.includes(query)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
+        function scrollToExamReg() {
+            goToHome();
+            document.getElementById("exam-registration-box").scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Switch between the two source PDFs
-        function switchStudyBook(bookId) {
-            document.getElementById("book-tab-1").className = "px-4 py-2 text-sm font-bold rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 whitespace-nowrap";
-            document.getElementById("book-tab-2").className = "px-4 py-2 text-sm font-bold rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 whitespace-nowrap";
+        function switchStudyCategory(catKey) {
+            activeStudyCategory = catKey;
             
-            document.getElementById("study-book-1").classList.add("hidden");
-            document.getElementById("study-book-2").classList.add("hidden");
+            // Adjust styling of Category Tab buttons
+            const buttons = document.querySelectorAll(".study-cat-btn");
+            buttons.forEach(btn => {
+                btn.className = "study-cat-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition whitespace-nowrap bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700";
+            });
 
-            if (bookId === 'book1') {
-                document.getElementById("book-tab-1").className = "px-4 py-2 text-sm font-bold rounded-lg bg-red-900 text-white whitespace-nowrap";
-                document.getElementById("study-book-1").classList.remove("hidden");
+            const activeBtn = document.getElementById(`cat-tab-${catKey}`);
+            if (activeBtn) {
+                activeBtn.className = "study-cat-btn px-4 py-2.5 text-xs sm:text-sm font-bold rounded-lg transition whitespace-nowrap bg-red-900 text-white shadow-sm";
+            }
+
+            updateStudyGuideDisplay();
+        }
+
+        function setStudyViewMode(mode) {
+            studyViewMode = mode;
+            const btnCards = document.getElementById("btn-view-cards");
+            const btnTextbook = document.getElementById("btn-view-textbook");
+
+            btnCards.className = "px-3 py-1.5 text-xs font-bold rounded-lg bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-200 flex items-center space-x-1";
+            btnTextbook.className = "px-3 py-1.5 text-xs font-bold rounded-lg bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-200 flex items-center space-x-1";
+
+            if (mode === "cards") {
+                btnCards.className = "px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-500 text-stone-950 flex items-center space-x-1";
+                document.getElementById("study-cards-view").classList.remove("hidden");
+                document.getElementById("study-textbook-view").classList.add("hidden");
             } else {
-                document.getElementById("book-tab-2").className = "px-4 py-2 text-sm font-bold rounded-lg bg-red-900 text-white whitespace-nowrap";
-                document.getElementById("study-book-2").classList.remove("hidden");
+                btnTextbook.className = "px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-500 text-stone-950 flex items-center space-x-1";
+                document.getElementById("study-cards-view").classList.add("hidden");
+                document.getElementById("study-textbook-view").classList.remove("hidden");
+                filterRawSyllabusText();
+            }
+        }
+
+        function updateStudyGuideDisplay() {
+            const data = studyCategories[activeStudyCategory];
+            if (!data) return;
+
+            // 1. Populate General Reading Overview Text
+            const summaryBox = document.getElementById("category-summary-box");
+            summaryBox.innerHTML = `
+                <div style="color:var(--study-text);">
+                    <div class="flex items-center space-x-2 font-serif text-base font-bold mb-1" style="color:var(--study-text);">
+                        <i class="fa-solid fa-graduation-cap" style="color:var(--study-accent);"></i>
+                        <span style="color:var(--study-text);">Syllabus Summary: ${data.title}</span>
+                    </div>
+                    <p class="font-medium leading-relaxed" style="color:var(--study-text);">${data.intro}</p>
+                    <div class="text-[11px] mt-2 flex items-center" style="color:var(--study-muted);">
+                        <i class="fa-solid fa-info-circle mr-1" style="color:var(--study-accent);"></i> Click any card below to rotate/flip and read detailed textbook findings!
+                    </div>
+                </div>
+            `;
+
+            // 2. Populate Interactive 3D Flip Flashcards
+            const cardsContainer = document.getElementById("flashcards-container");
+            cardsContainer.innerHTML = "";
+
+            data.cards.forEach((card, index) => {
+                const uniqueId = `fc_${activeStudyCategory}_${index}`;
+                cardsContainer.innerHTML += `
+                    <div class="perspective-container h-48 w-full cursor-pointer" onclick="flipFlashcard('${uniqueId}')">
+                        <div id="${uniqueId}" class="flashcard-inner relative w-full h-full shadow-md rounded-xl border border-theme transition duration-500 card-bg">
+                            
+                            <!-- Front of Card: Concept/Title matching image_6e57f6.jpg -->
+                            <div class="flashcard-front absolute inset-0 w-full h-full p-5 flex flex-col justify-between rounded-xl" style="background:var(--study-card-bg); color:var(--study-text);">
+                                <div class="flex items-center justify-between">
+                                    <span class="px-2.5 py-1 text-xs font-mono font-bold rounded-lg" style="background:rgba(107, 21, 21, 0.12); color:var(--study-accent); border:1px solid rgba(107, 21, 21, 0.18);">
+                                        ${card.key.split(" ")[0]}
+                                    </span>
+                                    <i class="fa-solid fa-rotate-right text-xs" style="color:var(--study-muted);"></i>
+                                </div>
+                                <h3 class="font-serif font-bold text-base sm:text-lg text-left" style="color:var(--study-text);">
+                                    ${card.key.substring(card.key.indexOf(" ") + 1)}
+                                </h3>
+                                <div class="text-[11px] uppercase tracking-wider font-semibold flex items-center justify-between" style="color:var(--study-muted);">
+                                    <span>Touch to reveal findings</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                            </div>
+
+                            <!-- Back of Card: Verbatim Syllabus Explanation -->
+                            <div class="flashcard-back absolute inset-0 w-full h-full p-5 flex flex-col justify-between rounded-xl overflow-y-auto custom-scrollbar border border-amber-500/20" style="background:var(--study-card-bg); color:var(--study-text);">
+                                <div class="flex items-center justify-between border-b border-theme pb-1.5 mb-1.5">
+                                    <span class="text-xs font-bold font-mono" style="color:var(--study-accent);">TEXTBOOK DOSSIER NOTE</span>
+                                    <i class="fa-solid fa-arrow-rotate-left text-xs" style="color:var(--study-muted);"></i>
+                                </div>
+                                <p class="text-xs sm:text-sm leading-relaxed font-medium text-left flex-grow" style="color:var(--study-text);">
+                                    ${card.text}
+                                </p>
+                                <div class="text-[10px] text-right italic pt-1" style="color:var(--study-muted);">
+                                    Source: Verified Study Dossier
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+            });
+
+            // 3. Populate raw text search dossier corresponding to active category
+            filterRawSyllabusText();
+        }
+
+        function flipFlashcard(cardId) {
+            const el = document.getElementById(cardId);
+            if (el) {
+                el.classList.toggle("flipped");
+            }
+        }
+
+        function setRawTextFilter(filter) {
+            activeRawTextFilter = filter;
+            const buttons = document.querySelectorAll(".raw-text-filter-btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            const activeBtn = document.getElementById(`raw-filter-${filter}`);
+            if (activeBtn) {
+                activeBtn.classList.add("active");
+            }
+            filterRawSyllabusText();
+        }
+
+        function filterRawSyllabusText() {
+            const query = document.getElementById("raw-text-search").value.trim().toLowerCase();
+            const container = document.getElementById("raw-textbook-list");
+            if (!container) return;
+            container.innerHTML = "";
+
+            const sections = [
+                {
+                    key: "book1",
+                    title: "Book 1 lessons",
+                    source: "rev.pdf",
+                    items: book1Lessons.map(l => ({ num: `rev.pdf Rule #${l.num}`, text: l.text }))
+                },
+                {
+                    key: "book2",
+                    title: "Book 2 lessons",
+                    source: "Review (the final one).pdf",
+                    items: book2Lessons.map(l => ({ num: `Review.pdf Item #${l.num}`, text: l.text }))
+                }
+            ];
+
+            const visibleSections = sections.filter(section => activeRawTextFilter === "all" || section.key === activeRawTextFilter);
+            let shownCount = 0;
+
+            visibleSections.forEach(section => {
+                const matches = query === ""
+                    ? section.items
+                    : section.items.filter(item => item.text.toLowerCase().includes(query));
+
+                if (matches.length === 0) {
+                    return;
+                }
+
+                shownCount += matches.length;
+                container.innerHTML += `
+                    <div class="rounded-xl border border-theme p-3 sm:p-4" style="background:var(--study-surface); color:var(--study-text);">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <h4 class="text-sm font-bold" style="color:var(--study-text);">${section.title}</h4>
+                                <p class="text-[11px]" style="color:var(--study-muted);">Source: ${section.source}</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full bg-red-900/10 text-[10px] font-semibold" style="color:var(--study-accent);">${matches.length} match${matches.length === 1 ? "" : "es"}</span>
+                        </div>
+                        <div class="space-y-2">
+                            ${matches.map(item => `
+                                <div class="lesson-item rounded-lg px-3 py-2" style="background:var(--study-surface-alt); color:var(--study-text);">
+                                    <span class="inline-block px-2 py-0.5 rounded bg-red-900/10 font-mono text-[10px] font-bold mr-2" style="color:var(--study-accent);">
+                                        ${item.num}
+                                    </span>
+                                    <p class="text-xs sm:text-sm font-medium inline leading-relaxed" style="color:var(--study-text);">${item.text}</p>
+                                </div>
+                            `).join("")}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (shownCount === 0) {
+                container.innerHTML = `<p class="text-sm text-stone-500 text-center py-6">No lesson text matches your query yet. Try another key term or clear the search box.</p>`;
+            }
+        }
+
+        function toggleStudyMode() {
+            const welcome = document.getElementById("welcome-screen");
+            const study = document.getElementById("study-guide-screen");
+            const exam = document.getElementById("exam-screen");
+            const results = document.getElementById("results-screen");
+            const training = document.getElementById("training-hub-screen");
+
+            if (study.classList.contains("hidden")) {
+                welcome.classList.add("hidden");
+                exam.classList.add("hidden");
+                results.classList.add("hidden");
+                training.classList.add("hidden");
+                study.classList.remove("hidden");
+                document.getElementById("study-mode-btn").innerHTML = `<i class="fa-solid fa-home"></i><span class="hidden sm:inline">Home Portal</span>`;
+                updateStudyGuideDisplay();
+            } else {
+                study.classList.add("hidden");
+                document.getElementById("study-mode-btn").innerHTML = `<i class="fa-solid fa-book-open"></i><span class="hidden sm:inline">Reference Materials</span>`;
+                
+                if (examSubmitted) {
+                    results.classList.remove("hidden");
+                } else if (startEpoch > 0) {
+                    exam.classList.remove("hidden");
+                } else {
+                    welcome.classList.remove("hidden");
+                }
+            }
+        }
+
+        // Practice Hub Management
+        function toggleTrainingHub() {
+            const welcome = document.getElementById("welcome-screen");
+            const study = document.getElementById("study-guide-screen");
+            const exam = document.getElementById("exam-screen");
+            const results = document.getElementById("results-screen");
+            const training = document.getElementById("training-hub-screen");
+
+            if (training.classList.contains("hidden")) {
+                welcome.classList.add("hidden");
+                study.classList.add("hidden");
+                exam.classList.add("hidden");
+                results.classList.add("hidden");
+                training.classList.remove("hidden");
+            } else {
+                training.classList.add("hidden");
+                if (examSubmitted) {
+                    results.classList.remove("hidden");
+                } else if (startEpoch > 0) {
+                    exam.classList.remove("hidden");
+                } else {
+                    welcome.classList.remove("hidden");
+                }
+            }
+        }
+
+        function switchWorkout(workoutId) {
+            // Reset Tab styling
+            const tabs = document.querySelectorAll(".workout-tab-btn");
+            tabs.forEach(tab => {
+                tab.className = "workout-tab-btn py-3 px-2 text-xs sm:text-sm font-bold rounded-xl bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200";
+            });
+
+            const activeTab = document.getElementById(`workout-tab-${workoutId}`);
+            activeTab.className = "workout-tab-btn py-3 px-2 text-xs sm:text-sm font-bold rounded-xl bg-amber-500 text-stone-950 shadow-sm";
+
+            // Hide all sections
+            const sections = document.querySelectorAll(".workout-section");
+            sections.forEach(sec => sec.classList.add("hidden"));
+
+            // Show active section
+            document.getElementById(`workout-${workoutId}`).classList.remove("hidden");
+        }
+
+        // Render Practice Drills
+        function renderPracticeDrills() {
+            const categories = ["geography", "dynasties", "philosophies", "idioms"];
+            categories.forEach(cat => {
+                const container = document.getElementById(`workout-${cat === 'idioms' ? 'culture' : cat === 'philosophies' ? 'philo' : cat === 'geography' ? 'geo' : 'dynasty'}-container`);
+                container.innerHTML = "";
+
+                practiceData[cat].forEach((item, idx) => {
+                    let optsHTML = "";
+                    item.opts.forEach((opt, optIdx) => {
+                        optsHTML += `
+                            <label class="flex items-center space-x-3 p-2.5 rounded-lg border border-theme bg-stone-50 dark:bg-stone-900 hover:bg-stone-100 cursor-pointer text-xs">
+                                <input type="radio" name="drill_${cat}_${idx}" value="${optIdx}" class="form-radio text-amber-500 focus:ring-amber-500 h-4 w-4">
+                                <span class="text-stone-800 dark:text-stone-100 font-medium">${opt}</span>
+                            </label>
+                        `;
+                    });
+
+                    container.innerHTML += `
+                        <div class="p-5 border border-theme rounded-xl space-y-3 bg-white dark:bg-stone-950">
+                            <h4 class="text-sm font-bold text-stone-800 dark:text-stone-100">
+                                <span class="text-amber-500 font-mono">Exercise ${idx + 1}:</span> ${item.q}
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                ${optsHTML}
+                            </div>
+                            <div class="flex items-center space-x-3 pt-2">
+                                <button onclick="checkDrillAnswer('${cat}', ${idx}, ${item.correct})" class="px-4 py-1.5 bg-stone-900 text-white dark:bg-stone-800 dark:text-stone-200 text-xs font-bold rounded-lg hover:bg-stone-800 transition">
+                                    Verify Answer
+                                </button>
+                                <span id="drill_feedback_${cat}_${idx}" class="hidden text-xs font-semibold"></span>
+                            </div>
+                            <div id="drill_exp_${cat}_${idx}" class="hidden text-xs bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 text-stone-600 dark:text-stone-300">
+                                <strong>Reference Explanation:</strong> ${item.exp}
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        function checkDrillAnswer(cat, idx, correctIdx) {
+            const selected = document.querySelector(`input[name="drill_${cat}_${idx}"]:checked`);
+            const feedbackEl = document.getElementById(`drill_feedback_${cat}_${idx}`);
+            const expEl = document.getElementById(`drill_exp_${cat}_${idx}`);
+
+            feedbackEl.classList.remove("hidden");
+            expEl.classList.remove("hidden");
+
+            if (!selected) {
+                feedbackEl.innerText = "Please select an answer first.";
+                feedbackEl.className = "text-xs font-semibold text-amber-600";
+                return;
+            }
+
+            const chosenVal = parseInt(selected.value);
+            if (chosenVal === correctIdx) {
+                feedbackEl.innerText = "Correct! Well done.";
+                feedbackEl.className = "text-xs font-semibold text-emerald-600";
+            } else {
+                feedbackEl.innerText = "Incorrect. Review the explanation below.";
+                feedbackEl.className = "text-xs font-semibold text-rose-600";
             }
         }
 
@@ -1091,11 +1852,11 @@
             part1Questions.forEach((q, idx) => {
                 p1Container.innerHTML += `
                     <div class="py-4 space-y-2">
-                        <div class="text-sm font-medium text-main">
+                        <div class="text-sm font-medium text-stone-800 dark:text-stone-100">
                             <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
                         </div>
                         <input type="text" id="${q.id}" oninput="updateProgressBar()" placeholder="Type your answer here..." 
-                               class="w-full sm:w-80 px-3 py-1.5 text-sm bg-stone-50 dark:bg-stone-900 border border-theme rounded-lg focus:ring-1 focus:ring-red-800 outline-none transition font-medium text-main">
+                               class="w-full sm:w-80 px-3 py-1.5 text-sm border border-theme rounded-lg focus:ring-1 focus:ring-red-800 outline-none transition font-medium">
                     </div>
                 `;
             });
@@ -1106,17 +1867,17 @@
             part2Questions.forEach((q, idx) => {
                 p2Container.innerHTML += `
                     <div class="p-4 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl space-y-3">
-                        <div class="text-sm font-medium text-main">
+                        <div class="text-sm font-medium text-stone-800 dark:text-stone-100">
                             <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
                         </div>
                         <div class="flex space-x-4">
                             <label class="inline-flex items-center space-x-2 cursor-pointer text-sm">
                                 <input type="radio" name="${q.id}" value="true" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
-                                <span class="font-semibold text-emerald-700">Right (True)</span>
+                                <span class="font-semibold text-emerald-700 dark:text-emerald-400">Right (True)</span>
                             </label>
                             <label class="inline-flex items-center space-x-2 cursor-pointer text-sm">
                                 <input type="radio" name="${q.id}" value="false" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
-                                <span class="font-semibold text-rose-700">Wrong (False)</span>
+                                <span class="font-semibold text-rose-700 dark:text-rose-400">Wrong (False)</span>
                             </label>
                         </div>
                     </div>
@@ -1132,14 +1893,14 @@
                     optionsHTML += `
                         <label class="flex items-center space-x-3 p-2.5 rounded-lg border border-theme bg-white dark:bg-stone-950 hover:bg-stone-50 dark:hover:bg-stone-900 cursor-pointer transition text-sm">
                             <input type="radio" name="${q.id}" value="${optIdx}" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
-                            <span class="font-medium text-main"><span class="font-mono text-stone-400 font-bold">${String.fromCharCode(65 + optIdx)}.</span> ${opt}</span>
+                            <span class="font-medium text-stone-800 dark:text-stone-100"><span class="font-mono text-stone-400 font-bold">${String.fromCharCode(65 + optIdx)}.</span> ${opt}</span>
                         </label>
                     `;
                 });
 
                 p3Container.innerHTML += `
                     <div class="space-y-3">
-                        <div class="text-sm font-semibold text-main">
+                        <div class="text-sm font-semibold text-stone-800 dark:text-stone-100">
                             <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1155,12 +1916,12 @@
             part4Questions.forEach((q, idx) => {
                 p4Container.innerHTML += `
                     <div class="space-y-3">
-                        <div class="text-sm font-semibold text-main">
+                        <div class="text-sm font-semibold text-stone-800 dark:text-stone-100">
                             <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
                         </div>
                         <textarea id="${q.id}" oninput="updateProgressBar()" rows="4" placeholder="Draft your concise answer here (Keywords evaluated)..." 
-                                  class="w-full p-3 text-sm bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-1 focus:ring-red-800 outline-none transition font-medium text-main"></textarea>
-                        <div class="text-[11px] text-muted italic bg-highlight p-2 rounded"><strong>Rubric criteria:</strong> ${q.rubric}</div>
+                                  class="w-full p-3 text-sm border border-theme rounded-xl focus:ring-1 focus:ring-red-800 outline-none transition font-medium"></textarea>
+                        <div class="text-[11px] text-stone-500 dark:text-stone-400 italic bg-highlight p-2 rounded"><strong>Rubric criteria:</strong> ${q.rubric}</div>
                     </div>
                 `;
             });
@@ -1174,14 +1935,14 @@
                     optionsHTML += `
                         <label class="flex items-center space-x-3 p-3 rounded-xl border border-theme bg-white dark:bg-stone-950 hover:bg-stone-50 dark:hover:bg-stone-900 cursor-pointer transition text-sm">
                             <input type="radio" name="${q.id}" value="${optIdx}" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
-                            <span class="font-medium text-main"><span class="font-mono text-stone-400 font-bold">${String.fromCharCode(65 + optIdx)}.</span> ${opt}</span>
+                            <span class="font-medium text-stone-800 dark:text-stone-100"><span class="font-mono text-stone-400 font-bold">${String.fromCharCode(65 + optIdx)}.</span> ${opt}</span>
                         </label>
                     `;
                 });
 
                 p5Container.innerHTML += `
                     <div class="space-y-4">
-                        <div class="text-sm font-bold text-main">
+                        <div class="text-sm font-bold text-stone-800 dark:text-stone-100">
                             <span class="text-red-900 dark:text-amber-400 font-mono">BONUS Q.</span> ${q.text}
                         </div>
                         <div class="flex justify-center py-4 bg-highlight rounded-xl border border-theme">
@@ -1215,34 +1976,6 @@
                     </div>
                 `;
             });
-        }
-
-        function toggleStudyMode() {
-            const welcome = document.getElementById("welcome-screen");
-            const study = document.getElementById("study-guide-screen");
-            const exam = document.getElementById("exam-screen");
-            const results = document.getElementById("results-screen");
-
-            if (study.classList.contains("hidden")) {
-                // Open study guide
-                welcome.classList.add("hidden");
-                exam.classList.add("hidden");
-                results.classList.add("hidden");
-                study.classList.remove("hidden");
-                document.getElementById("study-mode-btn").innerHTML = `<i class="fa-solid fa-home"></i><span class="hidden sm:inline">Home Portal</span>`;
-            } else {
-                // Close study guide
-                study.classList.add("hidden");
-                document.getElementById("study-mode-btn").innerHTML = `<i class="fa-solid fa-book-open"></i><span class="hidden sm:inline">Reference Materials</span>`;
-                
-                if (examSubmitted) {
-                    results.classList.remove("hidden");
-                } else if (startEpoch > 0) {
-                    exam.classList.remove("hidden");
-                } else {
-                    welcome.classList.remove("hidden");
-                }
-            }
         }
 
         function getExamStatus() {
@@ -1319,7 +2052,7 @@
             }
         }
 
-        function startExamination() {
+        function startStandardExam() {
             const nameInput = document.getElementById("student-name").value.trim();
             if (nameInput === "") {
                 const notification = document.createElement("div");
@@ -1346,6 +2079,8 @@
 
             // UI Transitions
             document.getElementById("welcome-screen").classList.add("hidden");
+            document.getElementById("study-guide-screen").classList.add("hidden");
+            document.getElementById("training-hub-screen").classList.add("hidden");
             document.getElementById("exam-screen").classList.remove("hidden");
             document.getElementById("exam-timer-wrapper").classList.remove("hidden");
             
@@ -1396,6 +2131,17 @@
             document.getElementById("confirm-modal").classList.add("hidden");
         }
 
+        // Custom Confirm Reset Methods to prevent browser dialog boxes
+        function triggerResetConfirm() {
+            document.getElementById("reset-confirm-modal").classList.remove("hidden");
+        }
+
+        function closeResetConfirmModal() {
+            document.getElementById("reset-confirm-modal").classList.add("hidden");
+        }
+    </script>
+
+    <script>
         function gradeExam() {
             closeConfirmModal();
             clearInterval(timerInterval);
@@ -1423,14 +2169,14 @@
                 verificationHTML += `
                     <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
                         <div class="flex items-start justify-between">
-                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-medium text-stone-800 dark:text-stone-100"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
                             <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+1.0 Mark' : '0.0 Marks'}</span>
                         </div>
                         <div class="mt-2 flex flex-wrap gap-2">
-                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Your Answer: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAns || 'No Answer'}</strong></span>
-                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Correct: <strong class="text-emerald-700">${q.answer}</strong></span>
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-stone-800 dark:text-stone-100">Your Answer: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAns || 'No Answer'}</strong></span>
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-stone-800 dark:text-stone-100">Correct: <strong class="text-emerald-700">${q.answer}</strong></span>
                         </div>
-                        <div class="mt-2 text-[11px] text-muted leading-relaxed bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme">
+                        <div class="mt-2 text-[11px] text-stone-500 dark:text-stone-400 leading-relaxed bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme">
                             <strong>Verification Sourced:</strong> ${q.explanation}
                         </div>
                     </div>
@@ -1451,14 +2197,14 @@
                 verificationHTML += `
                     <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
                         <div class="flex items-start justify-between">
-                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-medium text-stone-800 dark:text-stone-100"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
                             <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+1.0 Mark' : '0.0 Marks'}</span>
                         </div>
                         <div class="mt-2 flex flex-wrap gap-2">
-                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Your Answer: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAns === null ? 'No Answer' : (userAns ? 'True' : 'False')}</strong></span>
-                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Correct: <strong class="text-emerald-700">${q.correct ? 'True' : 'False'}</strong></span>
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-stone-800 dark:text-stone-100">Your Answer: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAns === null ? 'No Answer' : (userAns ? 'True' : 'False')}</strong></span>
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-stone-800 dark:text-stone-100">Correct: <strong class="text-emerald-700">${q.correct ? 'True' : 'False'}</strong></span>
                         </div>
-                        <div class="mt-2 text-[11px] text-muted leading-relaxed bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme">
+                        <div class="mt-2 text-[11px] text-stone-500 dark:text-stone-400 leading-relaxed bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme">
                             <strong>Verification Sourced:</strong> ${q.explanation}
                         </div>
                     </div>
@@ -1482,14 +2228,14 @@
                 verificationHTML += `
                     <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
                         <div class="flex items-start justify-between">
-                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-medium text-stone-800 dark:text-stone-100"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
                             <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+1.0 Mark' : '0.0 Marks'}</span>
                         </div>
-                        <div class="mt-2 flex flex-col space-y-1 bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme text-main">
+                        <div class="mt-2 flex flex-col space-y-1 bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme text-stone-800 dark:text-stone-100">
                             <span>Your Choice: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAnsStr}</strong></span>
                             <span>Correct Choice: <strong class="text-emerald-700">${correctAnsStr}</strong></span>
                         </div>
-                        <div class="mt-2 text-[11px] text-muted leading-relaxed">
+                        <div class="mt-2 text-[11px] text-stone-500 dark:text-stone-400 leading-relaxed">
                             <strong>Verification Sourced:</strong> ${q.explanation}
                         </div>
                     </div>
@@ -1529,14 +2275,14 @@
                 verificationHTML += `
                     <div class="p-3.5 rounded-xl border ${passedKeywordThreshold ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
                         <div class="flex items-start justify-between">
-                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-medium text-stone-800 dark:text-stone-100"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
                             <span class="font-bold shrink-0 ${passedKeywordThreshold ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">+${qScore.toFixed(1)} / 5.0 Marks</span>
                         </div>
-                        <div class="mt-2 space-y-1.5 bg-white/60 dark:bg-stone-800/40 p-3 rounded border border-theme text-main">
-                            <div class="text-main leading-relaxed italic">" ${userAns || 'No Answer Submitted'} "</div>
-                            <div class="text-[10px] text-muted font-mono">Matched Evaluated Keywords: [ ${matchingKeywords.join(', ') || 'None'} ]</div>
+                        <div class="mt-2 space-y-1.5 bg-white/60 dark:bg-stone-800/40 p-3 rounded border border-theme text-stone-800 dark:text-stone-100">
+                            <div class="leading-relaxed italic">" ${userAns || 'No Answer Submitted'} "</div>
+                            <div class="text-[10px] text-stone-400 font-mono">Matched Evaluated Keywords: [ ${matchingKeywords.join(', ') || 'None'} ]</div>
                         </div>
-                        <div class="mt-2 text-[11px] text-muted leading-relaxed bg-stone-100/50 dark:bg-stone-900/50 p-2.5 rounded border border-theme">
+                        <div class="mt-2 text-[11px] text-stone-500 dark:text-stone-400 leading-relaxed bg-stone-100/50 dark:bg-stone-900/50 p-2.5 rounded border border-theme">
                             <strong>Reference Syllabus Answer Rubric:</strong> ${q.explanation}
                         </div>
                     </div>
@@ -1560,14 +2306,14 @@
                 verificationHTML += `
                     <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
                         <div class="flex items-start justify-between">
-                            <span class="font-medium text-main"><strong class="font-mono">Bonus Q.</strong> ${q.text}</span>
+                            <span class="font-medium text-stone-800 dark:text-stone-100"><strong class="font-mono">Bonus Q.</strong> ${q.text}</span>
                             <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+2.0 Extra Marks' : '0.0 Marks'}</span>
                         </div>
-                        <div class="mt-2 flex flex-col space-y-1 bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme text-main">
+                        <div class="mt-2 flex flex-col space-y-1 bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme text-stone-800 dark:text-stone-100">
                             <span>Your Choice: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAnsStr}</strong></span>
                             <span>Correct Choice: <strong class="text-emerald-700">${correctAnsStr}</strong></span>
                         </div>
-                        <div class="mt-2 text-[11px] text-muted leading-relaxed">
+                        <div class="mt-2 text-[11px] text-stone-500 dark:text-stone-400 leading-relaxed">
                             <strong>Verification Sourced:</strong> ${q.explanation}
                         </div>
                     </div>
@@ -1614,14 +2360,13 @@
 
         // Return to welcome page
         function restartPortal() {
-            if (confirm("Are you sure you want to exit the current assessment sheet and return to the main portal?")) {
-                examSubmitted = false;
-                startEpoch = 0;
-                document.getElementById("student-name").value = "";
-                document.getElementById("results-screen").classList.add("hidden");
-                document.getElementById("welcome-screen").classList.remove("hidden");
-                renderQuestions();
-            }
+            closeResetConfirmModal();
+            examSubmitted = false;
+            startEpoch = 0;
+            document.getElementById("student-name").value = "";
+            document.getElementById("results-screen").classList.add("hidden");
+            document.getElementById("welcome-screen").classList.remove("hidden");
+            renderQuestions();
         }
     </script>
 </body>
