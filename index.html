@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imperial Chinese Studies - Examination Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables to handle perfect themes even when Tailwind config script is restricted in VS Code */
+        :root {
+            --primary-burgundy: #6b1515;
+            --primary-burgundy-dark: #4a0c0c;
+            --imperial-gold: #cfa832;
+            --imperial-gold-light: #f5e4b3;
+            
+            /* Light theme colors */
+            --bg-paper: #fbf9f5;
+            --bg-card: #ffffff;
+            --border-color: #e5e0d4;
+            --text-main: #2d2a26;
+            --text-muted: #6e675f;
+            --tag-bg: #f4efe2;
+            --highlight-bg: #fdfaf2;
+        }
+
+        .dark-mode {
+            /* Dark theme colors */
+            --bg-paper: #0f0e0d;
+            --bg-card: #181715;
+            --border-color: #2e2b26;
+            --text-main: #e8e3dc;
+            --text-muted: #b0a79d;
+            --tag-bg: #2a251f;
+            --highlight-bg: #1e1a14;
+        }
+
+        body {
+            background-color: var(--bg-paper) !important;
+            color: var(--text-main) !important;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Standardized class rules to override Tailwind for absolute styling safety */
+        .app-bg { background-color: var(--bg-paper); }
+        .card-bg { background-color: var(--bg-card); border-color: var(--border-color); }
+        .text-main { color: var(--text-main); }
+        .text-muted { color: var(--text-muted); }
+        .border-theme { border-color: var(--border-color); }
+        .bg-tag { background-color: var(--tag-bg); }
+        .bg-highlight { background-color: var(--highlight-bg); }
+
+        /* Custom scrollbar matching the imperial theme */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--primary-burgundy);
+            border-radius: 3px;
+        }
+
+        /* Seamless parchment paper visual texture */
+        .paper-bg {
+            background-image: radial-gradient(rgba(107, 21, 21, 0.03) 1px, transparent 0), radial-gradient(rgba(107, 21, 21, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+
+        /* Elegant deep burgundy header rules */
+        .burgundy-banner {
+            background: linear-gradient(135deg, var(--primary-burgundy-dark) 0%, var(--primary-burgundy) 100%) !important;
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+<body class="paper-bg text-stone-800 min-h-screen flex flex-col font-sans selection:bg-red-200 selection:text-red-900">
+
+    <!-- Top Decorative Chinese Lattice Style Border -->
+    <div class="h-2 bg-gradient-to-r from-red-950 via-amber-500 to-red-950 w-full"></div>
+
+    <!-- Header Navigation -->
+    <header class="card-bg border-b border-theme sticky top-0 z-40 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-red-900 text-amber-400 p-2.5 rounded-lg shadow-md border border-amber-500/20">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <div>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-wider text-red-900 dark:text-amber-400 block" style="font-family: 'Cinzel', serif;">CHINESE STUDIES</span>
+                    <span class="block text-[10px] sm:text-xs uppercase tracking-widest text-muted font-semibold">National Comprehensive Exam Portal</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <!-- Theme switch button -->
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-lg hover:bg-stone-200 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition" title="Toggle Theme Mode">
+                    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+                
+                <button onclick="toggleStudyMode()" id="study-mode-btn" class="flex items-center space-x-2 px-3 py-2 text-xs sm:text-sm font-semibold text-stone-700 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-200 dark:hover:bg-stone-700 rounded-lg transition">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span class="hidden sm:inline">Reference Materials</span>
+                </button>
+                <div class="h-6 w-[1px] bg-stone-200 dark:bg-stone-800"></div>
+                <div id="exam-timer-wrapper" class="hidden flex items-center space-x-2 px-3 py-1.5 bg-red-50 border border-red-200 rounded-lg text-red-900 font-mono font-bold">
+                    <i class="fa-regular fa-clock animate-pulse"></i>
+                    <span id="exam-timer">60:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+
+        <!-- Page A: Welcome / Registration Screen -->
+        <section id="welcome-screen" class="space-y-8 max-w-3xl mx-auto w-full my-auto transition-all duration-500 transform opacity-100">
+            <div class="card-bg rounded-2xl shadow-xl border border-theme overflow-hidden">
+                <div class="burgundy-banner p-8 text-center relative overflow-hidden">
+                    <div class="absolute -right-16 -bottom-16 opacity-10 text-stone-200 pointer-events-none">
+                        <i class="fa-solid fa-dragon text-[15rem]"></i>
+                    </div>
+                    <div class="inline-block px-3 py-1 bg-white/10 text-amber-300 rounded-full text-[10px] font-semibold uppercase tracking-widest mb-4 border border-amber-300/30">
+                        Official Curriculum Syllabus
+                    </div>
+                    <h1 class="font-serif text-3xl sm:text-4xl font-extrabold text-white tracking-wide" style="font-family: 'Cinzel', serif;">COMPREHENSIVE EXAMINATION</h1>
+                    <p class="text-stone-200 mt-2 max-w-xl mx-auto text-sm sm:text-base">
+                        Evaluated directly from certified study sources <span class="text-amber-300 font-semibold">"rev.pdf"</span> and <span class="text-amber-300 font-semibold">"Review (the final one).pdf"</span>.
+                    </p>
+                </div>
+
+                <div class="p-8 space-y-6">
+                    <div class="bg-highlight border border-theme rounded-xl p-5 space-y-3">
+                        <h3 class="text-main font-bold text-base flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-info text-amber-500"></i>
+                            <span>Official Examination Scoring Criteria</span>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-muted">
+                            <div class="flex justify-between border-b border-theme pb-1">
+                                <span>Part 1: Fill in the Blanks</span>
+                                <strong class="text-main">35 Marks (35 Qs)</strong>
+                            </div>
+                            <div class="flex justify-between border-b border-theme pb-1">
+                                <span>Part 2: Right or Wrong</span>
+                                <strong class="text-main">25 Marks (25 Qs)</strong>
+                            </div>
+                            <div class="flex justify-between border-b border-theme pb-1">
+                                <span>Part 3: Multiple Choice</span>
+                                <strong class="text-main">20 Marks (20 Qs)</strong>
+                            </div>
+                            <div class="flex justify-between border-b border-theme pb-1">
+                                <span>Part 4: Short Answer Questions</span>
+                                <strong class="text-main">20 Marks (4 Qs)</strong>
+                            </div>
+                            <div class="flex justify-between sm:col-span-2 text-red-800 dark:text-amber-400 font-semibold pt-1">
+                                <span>Part 5: Visual Bonus Question</span>
+                                <span>+2 Marks (Page 9 Illustrations)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Information Formulation -->
+                    <div class="space-y-4">
+                        <div>
+                            <label for="student-name" class="block text-sm font-semibold text-muted mb-1">Candidate Full Name</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-stone-400">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </span>
+                                <input type="text" id="student-name" placeholder="Enter your full name to start" class="w-full pl-10 pr-4 py-3 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-2 focus:ring-red-800 focus:border-red-800 outline-none transition text-main font-medium">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="exam-timer-duration" class="block text-sm font-semibold text-muted mb-1">Time Limit</label>
+                                <select id="exam-timer-duration" class="w-full px-3 py-3 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-2 focus:ring-red-800 outline-none text-main">
+                                    <option value="60">60 Minutes (Standard)</option>
+                                    <option value="45">45 Minutes (Express)</option>
+                                    <option value="999">No Time Limit (Practice)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-muted mb-1">Syllabus Dossier</label>
+                                <button onclick="toggleStudyMode()" class="w-full px-4 py-3 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-main font-semibold rounded-xl text-center transition flex items-center justify-center space-x-2 border border-theme">
+                                    <i class="fa-solid fa-book"></i>
+                                    <span>Read Study Guide First</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="startExamination()" class="w-full py-4 bg-red-900 hover:bg-red-950 text-amber-300 font-bold text-lg rounded-xl shadow-lg transition-all flex items-center justify-center space-x-3 border-b-4 border-red-950">
+                        <span>LAUNCH EXAMINATION SYSTEM</span>
+                        <i class="fa-solid fa-circle-play text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page B: Study Materials / Reference Guide (Verbatim Lesson Reader) -->
+        <section id="study-guide-screen" class="hidden space-y-6 transition-all duration-300">
+            <div class="card-bg rounded-2xl p-6 sm:p-8 shadow-lg border border-theme">
+                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-theme pb-5 mb-6 gap-4">
+                    <div>
+                        <div class="flex items-center space-x-2 text-red-800 dark:text-amber-400 font-bold text-sm uppercase tracking-wider">
+                            <span class="w-2.5 h-2.5 bg-amber-500 rounded-full"></span>
+                            <span>Comprehensive Academic Notes</span>
+                        </div>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-main mt-1">Interactive Learning Syllabus</h2>
+                        <p class="text-muted text-xs sm:text-sm mt-1">This Textbook holds the entire text of <code class="font-bold">rev.pdf</code> and <code class="font-bold">Review (the final one).pdf</code>. Study thoroughly before beginning the exam.</p>
+                    </div>
+                    <button onclick="toggleStudyMode()" class="px-5 py-2.5 bg-stone-900 text-white dark:bg-amber-500 dark:text-stone-950 hover:bg-stone-800 dark:hover:bg-amber-400 font-bold rounded-xl text-sm transition self-start flex items-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Return to Main Portal</span>
+                    </button>
+                </div>
+
+                <!-- Live Document Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-stone-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" id="lesson-search-input" onkeyup="searchLessons()" placeholder="Search terms (e.g. 'Sui', 'Qin', 'm mooncakes', 'opium')..." class="w-full pl-10 pr-4 py-2.5 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl outline-none focus:ring-1 focus:ring-red-800 transition text-sm text-main">
+                    </div>
+                </div>
+
+                <!-- Book Selector Tabs -->
+                <div class="flex overflow-x-auto pb-2 border-b border-theme gap-2 custom-scrollbar">
+                    <button onclick="switchStudyBook('book1')" id="book-tab-1" class="px-4 py-2 text-sm font-bold rounded-lg bg-red-900 text-white whitespace-nowrap">
+                        <i class="fa-solid fa-file-pdf mr-1"></i> Document 1: rev.pdf Summary
+                    </button>
+                    <button onclick="switchStudyBook('book2')" id="book-tab-2" class="px-4 py-2 text-sm font-bold rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 whitespace-nowrap">
+                        <i class="fa-solid fa-file-pdf mr-1"></i> Document 2: Review (the final one).pdf
+                    </button>
+                </div>
+
+                <!-- Document Verbatim Viewports -->
+                <div class="pt-6">
+                    <!-- Book 1 Context: rev.pdf verbatim lessons -->
+                    <div id="study-book-1" class="book-viewport space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="book1-lessons-grid">
+                            <!-- Populated in JavaScript verbatim from rev.pdf -->
+                        </div>
+                    </div>
+
+                    <!-- Book 2 Context: Review (the final one).pdf verbatim lessons -->
+                    <div id="study-book-2" class="book-viewport hidden space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="book2-lessons-grid">
+                            <!-- Populated in JavaScript verbatim from the final review.pdf -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page C: Real-Time Examination Board -->
+        <section id="exam-screen" class="hidden grid grid-cols-1 lg:grid-cols-4 gap-8 transition-all duration-300">
+            <!-- Left Side / Navigation Bar (Sticky helper for students) -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="card-bg rounded-xl p-5 shadow-md border border-theme space-y-4 sticky top-24">
+                    <h3 class="font-serif font-bold text-red-900 dark:text-amber-400 border-b border-theme pb-2 text-base uppercase tracking-wider flex items-center justify-between" style="font-family: 'Cinzel', serif;">
+                        <span>EXAM OUTLINE</span>
+                        <i class="fa-solid fa-list-check text-stone-400"></i>
+                    </h3>
+                    <div class="space-y-2 text-xs">
+                        <button onclick="scrollToSection('sec-part1')" class="w-full text-left px-3 py-2 rounded-lg bg-red-50 dark:bg-red-950/30 text-red-900 dark:text-amber-400 font-semibold border-l-4 border-red-900 hover:bg-red-100/50 transition flex justify-between">
+                            <span>Part 1: Blanks</span>
+                            <span id="p1-badge" class="font-mono text-[10px] bg-red-900 text-white px-1.5 py-0.5 rounded">0/35</span>
+                        </button>
+                        <button onclick="scrollToSection('sec-part2')" class="w-full text-left px-3 py-2 rounded-lg text-muted hover:bg-stone-50 dark:hover:bg-stone-900 transition flex justify-between">
+                            <span>Part 2: True/False</span>
+                            <span id="p2-badge" class="font-mono text-[10px] bg-stone-200 dark:bg-stone-700 text-muted px-1.5 py-0.5 rounded">0/25</span>
+                        </button>
+                        <button onclick="scrollToSection('sec-part3')" class="w-full text-left px-3 py-2 rounded-lg text-muted hover:bg-stone-50 dark:hover:bg-stone-900 transition flex justify-between">
+                            <span>Part 3: MCQ</span>
+                            <span id="p3-badge" class="font-mono text-[10px] bg-stone-200 dark:bg-stone-700 text-muted px-1.5 py-0.5 rounded">0/20</span>
+                        </button>
+                        <button onclick="scrollToSection('sec-part4')" class="w-full text-left px-3 py-2 rounded-lg text-muted hover:bg-stone-50 dark:hover:bg-stone-900 transition flex justify-between">
+                            <span>Part 4: Short Answer</span>
+                            <span id="p4-badge" class="font-mono text-[10px] bg-stone-200 dark:bg-stone-700 text-muted px-1.5 py-0.5 rounded">0/4</span>
+                        </button>
+                        <button onclick="scrollToSection('sec-part5')" class="w-full text-left px-3 py-2 rounded-lg text-muted hover:bg-stone-50 dark:hover:bg-stone-900 transition flex justify-between">
+                            <span>Part 5: Bonus Question</span>
+                            <span id="p5-badge" class="font-mono text-[10px] bg-stone-200 dark:bg-stone-700 text-muted px-1.5 py-0.5 rounded">0/1</span>
+                        </button>
+                    </div>
+
+                    <div class="pt-4 border-t border-theme">
+                        <div class="text-xs text-muted font-medium">Global Completion</div>
+                        <div class="w-full bg-stone-200 dark:bg-stone-800 h-2.5 rounded-full mt-1.5 overflow-hidden">
+                            <div id="exam-global-progress" class="bg-gradient-to-r from-red-600 to-red-950 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                        <div class="text-[10px] text-right text-muted mt-1 font-mono font-bold" id="progress-percentage">0% Answered</div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button onclick="confirmSubmitExam()" class="w-full py-3 bg-red-900 hover:bg-red-950 text-white font-bold text-sm rounded-lg transition shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>SUBMIT ANSWERS</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-3 space-y-10">
+                <div class="card-bg rounded-2xl p-6 sm:p-8 shadow-md border border-theme relative">
+                    <div class="flex items-center justify-between border-b border-theme pb-4 mb-6">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-red-900 dark:text-amber-400 font-bold">Liaoning Normal Academic Review</span>
+                            <h2 class="text-xl sm:text-2xl font-serif font-extrabold text-main mt-1" style="font-family: 'Cinzel', serif;">Official Written Exam</h2>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-semibold text-muted">Examinee</span>
+                            <span class="block text-sm font-bold text-red-800 dark:text-amber-400" id="display-student-name">Candidate Name</span>
+                        </div>
+                    </div>
+
+                    <!-- PART 1: FILL IN THE BLANKS (35 MARKS) -->
+                    <div id="sec-part1" class="space-y-6 scroll-mt-24">
+                        <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-serif font-bold text-lg">PART I</span>
+                                <span class="text-stone-300 font-light text-sm">|</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide">FILL IN THE BLANKS</span>
+                            </div>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">35 Marks (35 Qs)</span>
+                        </div>
+                        <p class="text-xs text-muted italic">Enter the single correct word or exact numbers in the text boxes. Letter casing does not matter.</p>
+
+                        <div id="part1-questions-container" class="divide-y divide-theme">
+                            <!-- Injected programmatically -->
+                        </div>
+                    </div>
+
+                    <!-- PART 2: RIGHT OR WRONG (25 MARKS) -->
+                    <div id="sec-part2" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
+                        <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-serif font-bold text-lg">PART II</span>
+                                <span class="text-stone-300 font-light text-sm">|</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide">RIGHT OR WRONG (TRUE/FALSE)</span>
+                            </div>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">25 Marks (25 Qs)</span>
+                        </div>
+                        <p class="text-xs text-muted italic">Determine whether the following statements are historically and geographically correct (True) or incorrect (False).</p>
+
+                        <div id="part2-questions-container" class="space-y-4 pt-2">
+                            <!-- Injected programmatically -->
+                        </div>
+                    </div>
+
+                    <!-- PART 3: CHOOSE THE RIGHT ANSWER (20 MARKS) -->
+                    <div id="sec-part3" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
+                        <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-serif font-bold text-lg">PART III</span>
+                                <span class="text-stone-300 font-light text-sm">|</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide">CHOOSE THE RIGHT ANSWER</span>
+                            </div>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">20 Marks (20 Qs)</span>
+                        </div>
+                        <p class="text-xs text-muted italic">Select the single correct option for each question based on the reference PDF documents.</p>
+
+                        <div id="part3-questions-container" class="space-y-6 pt-2">
+                            <!-- Injected programmatically -->
+                        </div>
+                    </div>
+
+                    <!-- PART 4: ANSWER QUESTIONS (20 MARKS) -->
+                    <div id="sec-part4" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
+                        <div class="burgundy-banner p-4 rounded-xl text-amber-300 flex justify-between items-center shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-serif font-bold text-lg">PART IV</span>
+                                <span class="text-stone-300 font-light text-sm">|</span>
+                                <span class="text-xs sm:text-sm font-semibold tracking-wide">SHORT ANSWER QUESTIONS</span>
+                            </div>
+                            <span class="text-xs sm:text-sm font-bold bg-white/10 px-2.5 py-1 rounded border border-white/20">20 Marks (4 Qs)</span>
+                        </div>
+                        <p class="text-xs text-muted italic">Compose concise, complete textual responses. Key historical vocabulary words will be evaluated upon submission.</p>
+
+                        <div id="part4-questions-container" class="space-y-6 pt-2">
+                            <!-- Injected programmatically -->
+                        </div>
+                    </div>
+
+                    <!-- PART 5: BONUS QUESTION (+2 MARKS) -->
+                    <div id="sec-part5" class="space-y-6 pt-10 scroll-mt-24 border-t-2 border-dashed border-theme">
+                        <div class="bg-gradient-to-r from-amber-500 to-yellow-600 p-4 rounded-xl text-stone-900 flex justify-between items-center shadow-sm">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-serif font-bold text-lg">PART V</span>
+                                <span class="text-stone-950 font-light text-sm">|</span>
+                                <span class="text-xs sm:text-sm font-bold tracking-wide">VISUAL BONUS QUESTION</span>
+                            </div>
+                            <span class="text-xs sm:text-sm font-bold bg-black/10 px-2.5 py-1 rounded border border-black/10">+2 Extra Marks (1 Q)</span>
+                        </div>
+                        <p class="text-xs text-muted italic">Analyze the visual recreation of the Page 9 Leaf Illustrations from the study dossier to earn your extra credit.</p>
+
+                        <div id="part5-questions-container" class="space-y-6 pt-2">
+                            <!-- Injected programmatically -->
+                        </div>
+                    </div>
+
+                    <!-- Bottom Action Bar -->
+                    <div class="pt-10 border-t border-theme mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="text-muted text-sm">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-500 mr-1"></i> Ensure all sections are answered before submitting.
+                        </div>
+                        <button onclick="confirmSubmitExam()" class="px-8 py-4 bg-red-900 hover:bg-red-950 text-white font-bold text-lg rounded-xl shadow-lg transition flex items-center space-x-3 border-b-4 border-red-950">
+                            <span>SUBMIT COMPLETED EXAM</span>
+                            <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page D: Grading / Results & Explanatory Screen -->
+        <section id="results-screen" class="hidden space-y-8 max-w-4xl mx-auto w-full transition-all duration-500">
+            <div class="card-bg rounded-2xl shadow-xl border border-theme overflow-hidden">
+                <!-- Golden/Red Banner -->
+                <div class="burgundy-banner p-8 text-center text-white relative">
+                    <div class="absolute inset-0 opacity-5 pointer-events-none">
+                        <i class="fa-solid fa-award text-[12rem] absolute -right-10 -bottom-10"></i>
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-amber-300 font-bold">Comprehensive Exam Score Report</span>
+                    <h2 class="font-serif text-3xl font-bold mt-1">Official Academic Assessment</h2>
+                    
+                    <div class="mt-6 inline-flex flex-col sm:flex-row items-center justify-center gap-6 bg-white/5 border border-white/10 p-6 rounded-2xl">
+                        <div class="text-center sm:border-r sm:border-white/10 sm:pr-8">
+                            <span class="text-xs text-stone-300 uppercase tracking-widest block">Final Score</span>
+                            <div class="text-4xl sm:text-5xl font-mono font-bold text-amber-300 mt-1" id="final-score-raw">0.0 / 100</div>
+                        </div>
+                        <div class="text-center sm:border-r sm:border-white/10 sm:pr-8">
+                            <span class="text-xs text-stone-300 uppercase tracking-widest block">Percentage</span>
+                            <div class="text-4xl sm:text-5xl font-mono font-bold text-white mt-1" id="final-score-percentage">0%</div>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-xs text-stone-300 uppercase tracking-widest block">Evaluation Result</span>
+                            <div class="text-xl sm:text-2xl font-bold mt-1.5 px-4 py-1.5 rounded-full inline-block" id="evaluation-badge">PASS</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-xs text-stone-300">
+                        Candidate Name: <strong class="text-white" id="results-candidate-name">N/A</strong> &nbsp;|&nbsp; 
+                        Time Elapsed: <strong class="text-white" id="results-time-elapsed">0 mins</strong>
+                    </div>
+                </div>
+
+                <div class="p-6 sm:p-8 space-y-8">
+                    <!-- Subsection scores -->
+                    <div class="bg-highlight border border-theme p-5 rounded-xl">
+                        <h3 class="font-serif font-bold text-main text-base mb-4 flex items-center space-x-2">
+                            <i class="fa-solid fa-chart-pie text-red-900"></i>
+                            <span>Detailed Breakdown by Part</span>
+                        </h3>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
+                                <span class="text-xs text-muted block font-medium">Part I: Blanks</span>
+                                <strong class="text-main text-base font-mono block mt-1" id="score-p1">0 / 35</strong>
+                            </div>
+                            <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
+                                <span class="text-xs text-muted block font-medium">Part II: T/F</span>
+                                <strong class="text-main text-base font-mono block mt-1" id="score-p2">0 / 25</strong>
+                            </div>
+                            <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
+                                <span class="text-xs text-muted block font-medium">Part III: MCQs</span>
+                                <strong class="text-main text-base font-mono block mt-1" id="score-p3">0 / 20</strong>
+                            </div>
+                            <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center">
+                                <span class="text-xs text-muted block font-medium">Part IV: Short Ans</span>
+                                <strong class="text-main text-base font-mono block mt-1" id="score-p4">0 / 20</strong>
+                            </div>
+                            <div class="bg-stone-50 dark:bg-stone-900 p-3 border border-theme rounded-lg text-center col-span-2 md:col-span-1 bg-amber-500/10 border-amber-500/30">
+                                <span class="text-xs text-amber-500 block font-semibold">Part V: Bonus</span>
+                                <strong class="text-amber-500 text-base font-mono block mt-1" id="score-p5">0 / 2</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exam review details -->
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between border-b border-theme pb-3">
+                            <h3 class="font-serif font-bold text-lg text-main flex items-center space-x-2">
+                                <i class="fa-solid fa-clipboard-question text-stone-400"></i>
+                                <span>Verification & Answer Key Sheet</span>
+                            </h3>
+                            <div class="flex items-center space-x-2 text-xs">
+                                <span class="flex items-center space-x-1 text-emerald-600 font-semibold">
+                                    <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                                    <span>Correct</span>
+                                </span>
+                                <span class="flex items-center space-x-1 text-rose-600 font-semibold ml-3">
+                                    <span class="w-2 h-2 bg-rose-500 rounded-full"></span>
+                                    <span>Incorrect / Incomplete</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Verification items -->
+                        <div class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar border border-theme rounded-xl p-3 bg-highlight" id="results-questions-verification">
+                            <!-- Injected dynamically with precise score tags and explanations derived from review notes -->
+                        </div>
+                    </div>
+
+                    <!-- Reset Options -->
+                    <div class="pt-6 border-t border-theme flex flex-col sm:flex-row gap-4 justify-between">
+                        <button onclick="restartPortal()" class="px-6 py-3 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-main font-bold rounded-lg transition flex items-center justify-center space-x-2 border border-theme">
+                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                            <span>Return to Main Portal</span>
+                        </button>
+                        <button onclick="window.print()" class="px-6 py-3 bg-red-900 hover:bg-red-950 text-amber-300 font-bold rounded-lg transition flex items-center justify-center space-x-2 shadow">
+                            <i class="fa-solid fa-print"></i>
+                            <span>Print Score Report</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Confirming Submission -->
+    <div id="confirm-modal" class="hidden fixed inset-0 bg-stone-950/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="card-bg rounded-2xl max-w-md w-full p-6 shadow-2xl border border-theme space-y-4">
+            <div class="text-center text-red-800 dark:text-amber-400 text-4xl">
+                <i class="fa-solid fa-file-circle-exclamation animate-bounce"></i>
+            </div>
+            <h3 class="font-serif font-bold text-xl text-main text-center">Submit Examination Sheet?</h3>
+            <p class="text-sm text-muted text-center">
+                Are you sure you want to finish and submit your exam paper? You will not be able to revise your answers after submission.
+            </p>
+            <div id="unanswered-warning" class="hidden bg-rose-50 border border-rose-200 rounded-lg p-3 text-xs text-rose-700 font-semibold space-y-1">
+                <i class="fa-solid fa-triangle-exclamation mr-1 text-rose-500"></i>
+                <span>You have unanswered questions remaining!</span>
+            </div>
+            <div class="flex gap-3 pt-2">
+                <button onclick="closeConfirmModal()" class="w-1/2 py-2.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-main font-semibold rounded-lg text-sm transition border border-theme">
+                    Keep Editing
+                </button>
+                <button onclick="gradeExam()" class="w-1/2 py-2.5 bg-red-900 hover:bg-red-950 text-white font-semibold rounded-lg text-sm transition">
+                    Yes, Grade My Exam
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Decorative Lattice and Info -->
+    <footer class="bg-stone-900 text-stone-400 py-8 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+            <p class="font-serif text-sm text-stone-300">Imperial Chinese Studies Evaluation System</p>
+            <p class="text-xs text-stone-500">&copy; 2026 Academic Department. Study Guide Verbatim Database Powered.</p>
+        </div>
+    </footer>
+
+    <!-- CODE SCRIPT -->
+    <script>
+        // Verbatim lessons derived precisely from rev.pdf (100 items)
+        const book1Lessons = [
+            { num: "1", text: "China is located in Eastern Asia, on the west coast of the Pacific Ocean. With vast land area of about 9.6 million square kilometers, it is second only to Russia and Canada in overall land area. It is the third largest country in the world and the largest country in Asia. If you travel all around China, the distance you have to cover would be equivalent to the entire surface area of Europe." },
+            { num: "2", text: "China's territory is vividly portrayed as a golden rooster, and its head to east, its tail to west. It is the main habitat for Chinese nation." },
+            { num: "3", text: "Distance between east and west of China is about 5,200 kilometers, spanning 5 time zones." },
+            { num: "4", text: "China's border is about 22,800 kilometers long and has 14 neighboring countries: North Korea, Mongolia, Russia, Kazakhstan, Kyrgyzstan, Tajikistan, Afghanistan, Pakistan, India, Nepal, Bhutan, Myanmar, Laos, and Vietnam." },
+            { num: "5", text: "China's ocean area is also very broad, with a total coastline of about 18,000 kilometers. From north to south, China's territorial waters (four seas) are connected and have abundant natural resources. There are more than 7,600 large and small islands in this vast sea area. Among them, Taiwan is China's largest island." },
+            { num: "6", text: "China has 34 provincial-level administrative regions, including 23 provinces, 5 ethnic autonomous regions, 4 municipalities and 2 special administrative regions." },
+            { num: "7", text: "China is the most populous country in the world. As of 2024, China has a population of 1.408 billion people, accounting for the 18% of the world's population." },
+            { num: "8", text: "The distribution of China's population is uneven, with the majority living in the east and a smaller population living in the west." },
+            { num: "9", text: "In recent years, due to the accelerated economic development of China's cities, the urban population has grown rapidly." },
+            { num: "10", text: "China is a unified multi-ethnic country. There are 56 ethnic groups living and practicing a policy of national equality, solidarity and mutual assistance. The Han people have the largest population, accounting for 91.5% of the total population." },
+            { num: "11", text: "China's topography is high in the west and low in the east." },
+            { num: "12", text: "The Himalayas---8844.43 meters above sea level, the highest mountain in the world." },
+            { num: "13", text: "The watershed area of the Yangtze River is 1.8 million square kilometers, accounting for about 20% of China's total land area. The length of the Yangtze River is more than 6,300 kilometers, making it the third largest river in the world and the longest river in Asia." },
+            { num: "14", text: "The Yellow River is the mother river of the Chinese nation and bears witness to the origin of the Chinese civilization. It is the second longest river in China." },
+            { num: "15", text: "Beijing is the capital of the People's Republic of China. It is located in the northern part of China." },
+            { num: "16", text: "Tian'anmen Square, which is the center of the capital city of the People's Republic of China, is the landmark of Beijing." },
+            { num: "17", text: "Beijing has a rich history, as represented by the Forbidden City. The Forbidden City in Beijing, or the Beijing Palace Museum, is located in the center of Beijing City." },
+            { num: "18", text: "Today's Shanghai has become China's largest port city, and Shanghai Port is one of the busiest ports in the world." },
+            { num: "19", text: "Chinese people often say that 'Two thousand years of history depends on Xi'an, one thousand years on Beijing, and one hundred years of history depends on Shanghai.'" },
+            { num: "20", text: "Since Hong Kong's return to China in 1997, the rule of law system has been perfected, social security is good, and economic growth has been stable. It has the reputation of 'the Pearl of the Orient'." },
+            { num: "21", text: "Known as the 'Ice City,' Harbin is famous for its spectacular Ice and Snow Festival, which features massive, intricately carved ice sculptures and attracts visitors from around the globe." },
+            { num: "22", text: "Jinzhou is the central city in the western region of Liaoning, with a history of more than 2100 years, and was named in the Liao Dynasty." },
+            { num: "23", text: "There are many important cities in southern Tibet, of which Lhasa is the capital of Tibet Autonomous Region and the political, economic, cultural, religious and transportation center of Tibet. Lhasa is more than 3,500 meters above sea level. The air is thin, clean and sunny. It is called 'City of Sunlight'." },
+            { num: "24", text: "The Great Wall was a military defense project built in ancient China and is also a spiritual symbol of the unity of the Chinese people." },
+            { num: "25", text: "The Chinese call the Great Wall 'the Thousand-Mile Long Wall'. The total length of the existing Great Wall is 21,196.18 kilometers, which is distributed among 15 provinces, cities, and autonomous regions in China." },
+            { num: "26", text: "Among the world's major ancient civilizations, the ancient Babylonian, Egyptian, and Indian civilizations have gradually disappeared in history. Only the Chinese civilization continues to this day." },
+            { num: "27", text: "In 221 BC, the state of Qin finally unified the entire China by defeating all the other six states in the past ten years. Qin (221 BC to 206 BC), China's first unified feudal dynasty, was established by the emperor Qin Shihuang. He took many measures to consolidate his rule." },
+            { num: "28", text: "The unification of the Qin Dynasty was embodied in many aspects: unification of legal system, measurement units of length, volume and weight, currency-gold or circular square-hole copper money, and written scripts (small seal scripts)." },
+            { num: "29", text: "In only 15 years, the reign of the Qin Dynasty came to an end. After the death of Emperor Qin Shihuang in 210 BC, the second emperor didn't manage the country well. In 207 BC, the peasant leader Xiang Yu's army defeated the Army of Qin and another leader Liu Bang swept into the capital, ending the Qin Dynasty." },
+            { num: "30", text: "The strength of the Han Dynasty made the Chinese people no longer known as 'Qin People', but as 'Han People'." },
+            { num: "31", text: "China is home to 56 ethnic groups, of which the largest group by far is the Han. Their written and spoken language is what we call Chinese-Hànyŭ (汉语). The name comes from the title of the Han Dynasty." },
+            { num: "32", text: "In 105 BC, the envoys of the Han Dynasty came to Parthia (in today's Iran) and presented beautiful silk to the King. This marked the formal establishment of the Silk Road connecting China in the east with the Roman Empire in the west." },
+            { num: "33", text: "Cai Lun of the Han dynasty invented papermaking. It is one of the four great inventions of ancient China." },
+            { num: "34", text: "The foundation of the Imperial Examination System was the most influential contribution in the Sui Dynasty." },
+            { num: "35", text: "As the most prosperous dynasty in ancient Chinese history, Tang enlarged its territory greatly and made great achievements in politics, economy, military, culture and diplomacy." },
+            { num: "36", text: "Wu Zetian, the only empress in Chinese history created Wu Zhou Dynasty, which is a dynasty most adhering to moral principles: never cede territory or pay indemnities, never escape, never beg for peace, never make peace by marriage." },
+            { num: "37", text: "Tang Dynasty was an open dynasty. Chang'an (now Xi'an) the capital was one of the centers of economic and cultural exchanges. More than 200 countries and regions had contact with the Tang Dynasty." },
+            { num: "38", text: "The word 'overseas students' originated in the Tang Dynasty. In order to absorb Chinese advanced culture, the Japanese and Silla governments sent overseas students to Tang." },
+            { num: "39", text: "The Tang Dynasty has a tremendous influence on the world. Foreigners call Chinese 'Tang people'. Chinatown is called Táng Rén Jiē. Being fat was considered beautiful." },
+            { num: "40", text: "The prosperity of the domestic economy and international trade made the Song Dynasty the richest dynasty in Chinese history." },
+            { num: "41", text: "The Song Dynasty lasted more than 300 years, and its overthrow was due to foreign invasion. It was the only dynasty that did not die directly in civil strife." },
+            { num: "42", text: "The Yuan Dynasty (1271-1368), the first unified dynasty established by the ethnic minority-Mongolia, has prosperous economy and owns the vastest territory in the world." },
+            { num: "43", text: "Zhu Di, the third emperor of the Ming Dynasty (1368-1644), sent the explorer Zheng He to the 'Western Oceans' in 1405. In the next 28 years, Zheng He sailed seven times." },
+            { num: "44", text: "The purposes of Zheng He's voyages were Diplomacy (showing strength & political influence) and Trade (overseas exchanges & foreign trade)." },
+            { num: "45", text: "Established by Manchu people, Qing was China's final feudal dynasty. From 1872 to 1875, they sent 120 students to study in the United States." },
+            { num: "46", text: "The policy of closing the door to the outside world in the Qing Dynasty was typical isolationism, causing China to lag severely behind Western countries." },
+            { num: "47", text: "In the 1770s, Britain began selling opium to China. In 1839, anti-smoking efforts successfully destroyed existing opium, prompting Britain to launch the First Opium War in June 1840." },
+            { num: "48", text: "The Qing government surrendered and signed unequal treaties. Hong Kong and Macau were ceded to Britain and Portugal respectively." },
+            { num: "49", text: "The revolution that overthrew the Qing was called the Xinhai Revolution because 1911 was a year of Xinhai." },
+            { num: "50", text: "The May 4th Movement organized by students directly led to the birth of the Communist Party of China. May 4th is celebrated as Youth Day." },
+            { num: "51", text: "Japan established the puppet state of Manchuria with Puyi as the puppet emperor, serving as the primary base for Japanese aggression." },
+            { num: "52", text: "On August 15, 1945, Japan announced unconditional surrender, officially signed on September 2, ending 14 years of the War of Resistance." },
+            { num: "53", text: "After WWII, the Civil War between the KMT and CPC lasted three years. The Liaoshen Campaign liberated the entire Northeast region." },
+            { num: "54", text: "On October 1, 1949, Chairman Mao Zedong declared the founding of the People's Republic of China from Tian'anmen Rostrum in Beijing." },
+            { num: "55", text: "China's national flag is the Five-Starred Red Flag: red for revolution, the big star for the CPC, and four small stars for the four classes." },
+            { num: "56", text: "The Chinese national emblem appears on passports, ID cards, lawyer's licenses, embassies, courts, RMB, and police caps." },
+            { num: "57", text: "Foreign policy adheres to 5 principles: respect for sovereignty, non-aggression, non-interference, equality, and peaceful coexistence." },
+            { num: "58", text: "Policy toward Hong Kong and Macao is 'One Country, Two Systems'." },
+            { num: "59", text: "Reform and Opening up started in 1978 under Deng Xiaoping, establishing a successful socialist market economy." },
+            { num: "60", text: "The new 'Four Great Inventions' include high-speed rail, mobile payment, bicycle sharing, and E-commerce." },
+            { num: "61", text: "Private schools in China started from Confucius, who is called the first real teacher." },
+            { num: "62", text: "Confucius urged people to cultivate themselves, live in harmony, and think for each other." },
+            { num: "63", text: "Mencius' mother moved their house three times for a good environment, illustrating that environment plays a crucial role in growth." },
+            { num: "64", text: "President Xi Jinping has paid great attention to the cultivation of strong moral character in education and a people-centered approach." },
+            { num: "65", text: "Confucius' milestones: Planting feet at thirty; no perplexities at forty; knowing the will of Heaven at fifty; listening obediently at sixty; following one's heart at seventy." },
+            { num: "66", text: "Confucius' principle: 'Do not do to others what you do not want others to do to yourself.'" },
+            { num: "67", text: "Core of Confucianism is Rite (lǐ) and Benevolence (rén). Rites are external, benevolence is inner essence." },
+            { num: "68", text: "The ancient universe has two forces: Yang (bright, active, hot) and Yin (dark, passive, cold). Health is balance." },
+            { num: "69", text: "Lao Zi, founder of Daoism, believed opposites transform into each other. (Fable: The Old Man and His Lost Horse)." },
+            { num: "70", text: "Legalists' thought made the Qin dynasty strong because it addressed realistic Warring States issues." },
+            { num: "71", text: "The Art of War discusses how to win battles, but discourages rulers and generals from going to war." },
+            { num: "72", text: "There has never been a dominant state religion in China." },
+            { num: "73", text: "Chinese folk beliefs view everything with a deity in charge (mountain, river, flower, tree gods, money gods)." },
+            { num: "74", text: "Xuanzang, Tang monk, obtained 600 sets of scriptures in India. His trip inspired the classic novel Journey to the West." },
+            { num: "75", text: "The major religions are Buddhism, Daoism, Islam, Catholicism, and Protestantism. Only Daoism is native." },
+            { num: "76", text: "Religious policy includes freedom of belief, state administration by law, and independence." },
+            { num: "77", text: "Foreigners must perform collective religious activities in registered places; missionary work outside is strictly prohibited." },
+            { num: "78", text: "Chinese language and characters used by the Han people are the common national language." },
+            { num: "79", text: "The government works hard to protect and preserve the languages of ethnic minorities." },
+            { num: "80", text: "Chinese is the most used language globally and an official language in Singapore and Malaysia." },
+            { num: "81", text: "Putonghua is the standardized language legally used all over China. The northern dialect sounds closest." },
+            { num: "82", text: "Putonghua is one of the six working languages of the United Nations." },
+            { num: "83", text: "Many authentic phrases with fixed meanings in Chinese have been handed down from ancient times." },
+            { num: "84", text: "The earliest characters are Jiaguwen, drawn like pictures on tortoise shells and animal bones." },
+            { num: "85", text: "Phonetic-semantic compounds account for over 90% of all Chinese characters." },
+            { num: "86", text: "Traditional Chinese characters are still used in calligraphy and ancient books." },
+            { num: "87", text: "China is a predominantly agricultural society, and agriculture has heavily influenced traditional festivals." },
+            { num: "88", text: "The '24 solar terms' are known as the 'fifth great invention of China' to guide agricultural activities." },
+            { num: "89", text: "Syllabus festivals are national, regional, or specific to certain ethnic groups." },
+            { num: "90", text: "The Spring Festival, called Chunjie, is the most important and popular Chinese holiday." },
+            { num: "91", text: "On New Year's Eve, people stick the character 'Happiness' (Fu) upside down on doors because it means 'arriving'." },
+            { num: "92", text: "Peach wood was used in ancient times as charms against evils hung on doors to guard homes." },
+            { num: "93", text: "Today, Spring Festival is celebrated globally by Chinese people." },
+            { num: "94", text: "Jiaozi are eaten during Spring Festival, Winter Solstice, and other major solar transitions." },
+            { num: "95", text: "The Lantern Festival falls on the 15th day of the first lunar month. Yuanxiao's roundness symbolizes reunion." },
+            { num: "96", text: "The Dragon Boat Festival falls on the fifth day of the fifth lunar month." },
+            { num: "97", text: "Dragon Boat Festival commemorates the patriotic poet Qu Yuan, featuring races and Zongzi." },
+            { num: "98", text: "The Mid-Autumn Festival falls on the 15th day of the eighth lunar month. Mooncakes symbolize reunion." },
+            { num: "99", text: "Among the eight great regional cuisines, Huaiyang cuisine is often used in state banquets." },
+            { num: "100", text: "Guangdong cuisine is the best-known outside China. Sichuan cuisine is famous for hot and spicy dishes." }
+        ];
+
+        // Verbatim lessons derived precisely from Review (the final one).pdf (73 items)
+        const book2Lessons = [
+            { num: "1", text: "The four ancient civilizations of the world: ancient China, India, Egypt, and Babylon." },
+            { num: "2", text: "The Qin Dynasty (221 BC-206 BC), China's first unified feudal dynasty, was founded by Qin Shi Huang, who unified the written language, currency, weights, and measures of the empire, and ordered the construction of the Great Wall." },
+            { num: "3", text: "The terra cotta army was discovered near the Chinese city Xi'an, in the Shaanxi province, dating back to around 210 B.C." },
+            { num: "4", text: "With the Silk Road established during the Han Dynasty, economic and cultural exchanges between China and the West grew increasingly close." },
+            { num: "5", text: "The seismograph is an ancient Chinese instrument that makes a record of seismic waves caused by earthquakes." },
+            { num: "6", text: "The Tang dynasty was the most prosperous dynasty in Chinese history. The term 'overseas students' originated in this era." },
+            { num: "7", text: "Wu Zetian (624-705) was the only orthodox female emperor in Chinese history, a remarkable female figure in the Tang Dynasty." },
+            { num: "8", text: "Zheng He, a court eunuch of the Ming Dynasty, led seven voyages to the Western Seas with the world's largest fleet, utilizing the compass." },
+            { num: "9", text: "The Qing government signed a host of unequal treaties, ceding territories and paying reparations. The 1911 Xinhai Revolution overthrew the Qing." },
+            { num: "10", text: "Puyi was the last emperor of the Qing Dynasty and of Chinese history, who later became a puppet of the Japanese in Manchuria." },
+            { num: "11", text: "The closed-door policy adopted in the Qing Dynasty was typical isolationism, causing China to lag behind Western nations in overall strength." },
+            { num: "12", text: "In the 1770s, Britain sold opium to China, causing massive physical, mental, and economic harm, triggering the Opium War in June 1840." },
+            { num: "13", text: "The foundation of the Imperial Examination System was the most influential contribution of the Sui Dynasty." },
+            { num: "14", text: "Private clan schools were the main form of education in ancient China. Since 1949, public schools form the majority." },
+            { num: "15", text: "The three basic characteristics of compulsory education in China are compulsory, charitable, and uniformed." },
+            { num: "16", text: "Difference between public and private education is the different sources of funds. Private schools rely entirely on their own funds." },
+            { num: "17", text: "The Open University of China features easy access, flexible study times, and has no upper age limit." },
+            { num: "18", text: "National Higher Education Self-taught Examination allows successful students to apply for bachelor's, master's, or doctoral degrees." },
+            { num: "19", text: "Confucius Institutes are an important global means to learn the Chinese language, culture, and contemporary China." },
+            { num: "20", text: "Xi'an, Nanjing, Beijing, and Luoyang are recognized as China's Four Great Ancient Capitals." },
+            { num: "21", text: "In 1919, China's proposals at the Paris Peace Conference were rejected, triggering the May Fourth student protest and paving the way for the CPC." },
+            { num: "22", text: "The War of Resistance against Japanese Aggression began in 1931 and ended with Japan's unconditional surrender in 1945." },
+            { num: "23", text: "After Japan's surrender, the Chinese Civil War broke out between the CPC and the Kuomintang (KMT)." },
+            { num: "24", text: "October 1, 1949 marks the founding of the People's Republic of China. Golden Week is a statutory seven-day holiday." },
+            { num: "25", text: "Both Hong Kong and Macao are SARs of China, operating under the 'One Country, Two Systems' policy." },
+            { num: "26", text: "The Reform and Opening-up policy was launched in 1978 under Deng Xiaoping, establishing a sound socialist market economy." },
+            { num: "27", text: "In 2020, China achieved comprehensive poverty alleviation, becoming the first country in the world to do so." },
+            { num: "28", text: "The Four Great Inventions are the compass, gunpowder, paper-making, and printing. Modern ones are high-speed rail, mobile payments, shared bikes, and e-commerce." },
+            { num: "29", text: "Gunpowder was stumbled upon by accident by ancient alchemists attempting to concoct elixirs of immortality." },
+            { num: "30", text: "The Capital of China is Beijing. The Five-Starred Red Flag represents the CPC (large star) and four revolutionary classes (small stars)." },
+            { num: "31", text: "Chinese is the most used language globally, an official language of Singapore and Malaysia, and Putonghua is one of the six UN languages." },
+            { num: "32", text: "Putonghua standardizes Beijing pronunciation as standard, the northern dialect as basic, and modern vernacular as grammatical norm." },
+            { num: "33", text: "China pays special attention to the protection of regional dialects so they are not lost." },
+            { num: "34", text: "Oracle bone inscriptions, or Jiaguwen, are the earliest characters. Pictophonetic characters make up over 80% of characters." },
+            { num: "35", text: "Spring Festival customs include staying up late (shousui), couplets, pasting 'Fu' upside down, red envelopes, eating jiaozi and fish (yu/surplus)." },
+            { num: "36", text: "Lantern Festival falls on the 15th day of the 1st lunar month. Activities include lantern viewing, Tangyuan, and lantern riddles." },
+            { num: "37", text: "Dragon is a symbol of auspiciousness and good fortune in China since ancient times." },
+            { num: "38", text: "Among the 24 solar terms, Summer Solstice has the longest daytime, Winter Solstice has the shortest, and Equinoxes have equal day and night." },
+            { num: "39", text: "Dragon Boat Festival on May 5th (Lunar) commemorates Qu Yuan, featuring races, Zongzi, five-color thread, and wormwood." },
+            { num: "40", text: "The Mid-Autumn Festival is on the 15th day of the eighth lunar month. Mooncakes symbolize family reunion." },
+            { num: "41", text: "Huaiyang cuisine is used in state banquets, Guangdong cuisine is best known outside China, and Sichuan cuisine is famous for hot & spicy." },
+            { num: "42", text: "A popular folk belief dictates that a particular animal organ is beneficial to the same organ of the human body." },
+            { num: "43", text: "Confucius is respected as the earliest great educator, first real teacher, philosopher, and thinker in China." },
+            { num: "44", text: "Confucianism has long been the mainstream of Chinese ideology, politics, and culture." },
+            { num: "45", text: "In Confucius' philosophy, heaven is the origin of all lives and all moral values." },
+            { num: "46", text: "Confucius' famous moral principle is: 'Do not do to others what you do not want others to do to you.'" },
+            { num: "47", text: "Mencius believed that human nature was good when a person was born." },
+            { num: "48", text: "Sun Tzu's Art of War discusses how to win battles but strongly discourages rulers and generals from going to war." },
+            { num: "49", text: "China's vast land area of 9.6 million sq km is third globally and the largest entirely in Asia." },
+            { num: "50", text: "China's territory is portrayed as a golden rooster, with its head to the east and tail to the west." },
+            { num: "51", text: "The Yangtze River (Changjiang) is the longest in China. The Yellow River is the second longest and the 'Mother River'." },
+            { num: "52", text: "The 14 adjacent land border countries include Russia, North Korea, India, Pakistan, Vietnam, etc." },
+            { num: "53", text: "China's three major industries are Agriculture, Industry, and the Tertiary (service) Industry." },
+            { num: "54", text: "The 'four major banks' are BOC, ABC, ICBC, and CCB." },
+            { num: "55", text: "President Xi Jinping advocates for a people-centered development: of, by, and for the people." },
+            { num: "56", text: "From 1953 to 2025, China completed 14 successive 'five-year plans'." },
+            { num: "57", text: "The east-west span of China is around 5,200 km, covering 5 time zones." },
+            { num: "58", text: "China has over 7,600 islands, of which Taiwan Island is the largest." },
+            { num: "59", text: "As of 2025, China's population is estimated at 1.40489 billion, mostly living in the east." },
+            { num: "60", text: "Accelerated economic development has caused a rapid increase in the urban population." },
+            { num: "61", text: "China has 56 nationalities with the Han as the largest, while minorities maintain unique languages and traditions." },
+            { num: "62", text: "Beijing is the capital. Shanghai is the largest port and commercial city. Harbin is famous for its Ice and Snow Festival." },
+            { num: "63", text: "Mencius held that extending parental care to all the elderly and children in the world would spread benevolence." },
+            { num: "64", text: "Xi Jinping stresses that morality is the foundation of national prosperity, and cultivating morality is the most vital task." },
+            { num: "65", text: "There is no state-dominant religion in China." },
+            { num: "66", text: "Chinese folk beliefs generally lack complete doctrines and canonical scriptures." },
+            { num: "67", text: "Taoism is the only major religion originating in China." },
+            { num: "68", text: "Confucians believe that one's body (hair and skin) is a gift from parents, making self-harm unfilial." },
+            { num: "69", text: "The Hui nationality is one of the main ethnic groups practicing Islam in China." },
+            { num: "70", text: "The five main recognized religions are Buddhism, Taoism, Islam, Catholicism, and Protestantism." },
+            { num: "71", text: "Freedom of religious belief guarantees citizens the right to choose, change, or practice any religion or sect." },
+            { num: "72", text: "Foreigners must perform collective religious activities in registered venues; missionary work is strictly forbidden outside." },
+            { num: "73", text: "Most Chinese festivals are closely linked to agricultural culture because farming has been the core mode of production." }
+        ];
+
+        // Global variables
+        let candidateName = "";
+        let timerSeconds = 3600; // 60 mins default
+        let timerInterval = null;
+        let examSubmitted = false;
+        let isPracticeMode = false;
+        let startEpoch = 0;
+
+        // Structured Question Banks Sourced precisely from review materials
+        const part1Questions = [
+            { id: "p1_1", text: "China is located in Eastern Asia, on the west coast of the ________ Ocean.", answer: "Pacific", explanation: "From rev.pdf: 'China is located in Eastern Asia, on the west coast of the Pacific Ocean.'" },
+            { id: "p1_2", text: "China's territory is vividly portrayed as a golden ________, with its head facing east.", answer: "rooster", explanation: "From rev.pdf: 'China's territory is vividly portrayed as a golden rooster, and its head to east...'" },
+            { id: "p1_3", text: "The distance between the east and west of China is about ________ kilometers.", answer: "5200", explanation: "From rev.pdf: 'Distance between east and west of China is about 5,200 kilometers...'" },
+            { id: "p1_4", text: "China has ________ neighboring countries sharing its land border.", answer: "14", explanation: "From rev.pdf: 'China's border is about 22,800 kilometers long and has 14 neighboring countries.'" },
+            { id: "p1_5", text: "Among China's islands, ________ is China's largest island.", answer: "Taiwan", explanation: "From rev.pdf: 'There are more than 7,600 large and small islands... Taiwan is China's largest island.'" },
+            { id: "p1_6", text: "China is officially comprised of ________ provincial-level administrative regions.", answer: "34", explanation: "From rev.pdf: 'China has 34 provincial-level administrative regions...'" },
+            { id: "p1_7", text: "The largest ethnic group in China by population is the ________ people.", answer: "Han", explanation: "From rev.pdf: 'The Han people have the largest population, accounting for 91.5% of the total population.'" },
+            { id: "p1_8", text: "The highest mountain in the world, the Himalayas, is ________ meters above sea level.", answer: "8844.43", explanation: "From rev.pdf: 'The Himalayas---8844.43 meters above sea level, the highest mountain in the world.'" },
+            { id: "p1_9", text: "The longest river in Asia and third largest globally is the ________ River.", answer: "Yangtze", explanation: "From rev.pdf: 'The length of the Yangtze River is more than 6,300 kilometers... the longest river in Asia.'" },
+            { id: "p1_10", text: "The ________ River is considered the 'Mother River' of the Chinese nation.", answer: "Yellow", explanation: "From rev.pdf: 'The Yellow River is the mother river of the Chinese nation and bears witness to the origin of the Chinese civilization.'" },
+            { id: "p1_11", text: "The economic hub and famous port city, ________, is China's largest industrial and commercial city.", answer: "Shanghai", explanation: "From Review (the final one).pdf: 'Shanghai has become China's largest port city... also China's largest industrial and commercial city.'" },
+            { id: "p1_12", text: "Since its return in 1997, Hong Kong has held the reputation of the 'Pearl of the ________'.", answer: "Orient", explanation: "From rev.pdf: 'Since Hong Kong's return to China in 1997... It has the reputation of the Pearl of the Orient.'" },
+            { id: "p1_13", text: "Known as the 'Ice City', the city of ________ is famous for its Ice and Snow Festival.", answer: "Harbin", explanation: "From rev.pdf: 'Known as the Ice City, Harbin is famous for its spectacular Ice and Snow Festival...'" },
+            { id: "p1_14", text: "Lhasa, the capital of Tibet, is called the 'City of ________' because of its clean, thin, and sunny air.", answer: "Sunlight", explanation: "From rev.pdf: 'Lhasa is more than 3,500 meters above sea level... It is called City of Sunlight.'" },
+            { id: "p1_15", text: "The terra cotta warriors were constructed around ________ B.C. to accompany the first Emperor of China.", answer: "210", explanation: "From rev.pdf: 'Around 210 B.C. The terra cotta warriors were constructed to accompany the first emperor of China, Qin Shi Huang...'" },
+            { id: "p1_16", text: "The first unified feudal dynasty in Chinese history was the ________ Dynasty.", answer: "Qin", explanation: "From Review (the final one).pdf: 'The Qin Dynasty (221 BC-206 BC), China's first unified feudal dynasty...'" },
+            { id: "p1_17", text: "Papermaking was invented by ________ during the Han Dynasty.", answer: "Cai Lun", explanation: "From rev.pdf: 'Cai Lun of the Han dynasty invented papermaking. It is one of the four great inventions...'" },
+            { id: "p1_18", text: "The foundation of the Imperial Examination System was the most influential contribution of the ________ Dynasty.", answer: "Sui", explanation: "From rev.pdf: 'The foundation of the Imperial Examination System was the most influential contribution in the Sui Dynasty.'" },
+            { id: "p1_19", text: "The only orthodox female emperor in Chinese history was ________.", answer: "Wu Zetian", explanation: "From rev.pdf: 'Wu Zetian, the only empress in Chinese history created Wu Zhou Dynasty...'" },
+            { id: "p1_20", text: "In the Tang Dynasty, being ________ was considered the ideal standard of physical beauty.", answer: "fat", explanation: "From rev.pdf: 'Being fat was considered beautiful in this dynasty.'" },
+            { id: "p1_21", text: "The first unified dynasty established by an ethnic minority (Mongolia) was the ________ Dynasty.", answer: "Yuan", explanation: "From rev.pdf: 'The Yuan Dynasty (1271-1368), the first unified dynasty established by the ethnic minority-Mongolia...'" },
+            { id: "p1_22", text: "Zheng He was sent on his famous voyages to the Western Seas by the ________ Dynasty.", answer: "Ming", explanation: "From rev.pdf: 'Zhu Di (Ming Chengzu), the third emperor of the Ming Dynasty (1368-1644), sent... Zheng He...'" },
+            { id: "p1_23", text: "The isolationist 'closed-door' policy was adopted during the ________ Dynasty, causing China to lag behind Western nations.", answer: "Qing", explanation: "From Review (the final one).pdf: 'The closed-door policy adopted in the Qing Dynasty was typical isolationism.'" },
+            { id: "p1_24", text: "In June 1840, Great Britain started the First ________ War against China.", answer: "Opium", explanation: "From rev.pdf: 'In June 1840, a British fleet came to Guangdong and started the First Opium War against China.'" },
+            { id: "p1_25", text: "The 1911 revolution that overthrew the imperial rule of the Qing is called the ________ Revolution.", answer: "Xinhai", explanation: "From rev.pdf: 'The revolution that overthrew the rule of the Qing Dynasty was called the Xinhai Revolution...'" },
+            { id: "p1_26", text: "The May Fourth Movement, a student protest, paved the way for the founding of the ________ Party of China.", answer: "Communist", explanation: "From Review (the final one).pdf: 'The May Fourth Movement... paved the way for the founding and growth of the Communist Party of China.'" },
+            { id: "p1_27", text: "Puyi, the last emperor of China, was set up by Japan as a puppet ruler of ________.", answer: "Manchuria", explanation: "From rev.pdf: 'Japan established the pro-Japanese regime of Manchuria... the emperor was Puyi... but Puyi was only a puppet...'" },
+            { id: "p1_28", text: "The military campaign that successfully liberated the entire Northeast region during the Civil War was the ________ Campaign.", answer: "Liaoshen", explanation: "From rev.pdf: 'Liaoshen (Liaoxi-Shenyang) Campaign liberated the entire Northeast region of China.'" },
+            { id: "p1_29", text: "The People's Republic of China was officially founded on October 1st, ________.", answer: "1949", explanation: "From rev.pdf: 'On October 1, 1949, Chairman Mao Zedong declared the founding of People's Republic of China...'" },
+            { id: "p1_30", text: "Deng Xiaoping initiated the epoch-defining policy of ________ and Opening-up in 1978.", answer: "Reform", explanation: "From rev.pdf: 'The great policy of Reform and Opening up started in 1978 led by Deng Xiaoping...'" },
+            { id: "p1_31", text: "In 2020, China historically achieved comprehensive ________ alleviation.", answer: "poverty", explanation: "From Review (the final one).pdf: 'In 2020, China achieved comprehensive poverty alleviation, becoming the first country in the world to do so.'" },
+            { id: "p1_32", text: "The natively home-grown religion of China is ________.", answer: "Daoism", explanation: "From rev.pdf: 'Out of these religions, only Daoism is home-grown.' (Taoism also accepted programmatically)" },
+            { id: "p1_33", text: "The earliest known Chinese characters are called Oracle Bone Inscriptions or ________.", answer: "Jiaguwen", explanation: "From Review (the final one).pdf: 'Oracle bone inscriptions, also known as Jiaguwen, are the earliest known Chinese characters...'" },
+            { id: "p1_34", text: "The round shape of mooncakes eaten during the Mid-Autumn Festival symbolizes family ________.", answer: "reunion", explanation: "From Review (the final one).pdf: 'Mooncakes are the traditional festival food, whose round shape symbolizes family reunion.'" },
+            { id: "p1_35", text: "The '24 solar terms' are known as the '________ great invention of China'.", answer: "fifth", explanation: "From rev.pdf: 'The 24 solar terms... is known as the fifth great invention of China.'" }
+        ];
+
+        const part2Questions = [
+            { id: "p2_1", text: "China ranks second in terms of overall land area in the world, behind only Russia and Canada.", correct: true, explanation: "From rev.pdf: '[China] is second only to Russia and Canada in overall land area. It is the third largest country in the world...'" },
+            { id: "p2_2", text: "China's vast territory spans 3 distinct time zones.", correct: false, explanation: "From rev.pdf: 'Distance between east and west of China is about 5,200 kilometers, spanning 5 time zones.'" },
+            { id: "p2_3", text: "The majority of China's population is distributed in the western region.", correct: false, explanation: "From rev.pdf: 'The distribution of China's population is uneven, with the majority living in the east and a smaller population living in the west.'" },
+            { id: "p2_4", text: "The Yellow River is considered the longest river in Asia.", correct: false, explanation: "From rev.pdf: 'The Yangtze River is the longest river in Asia. The Yellow River is the second longest in China.'" },
+            { id: "p2_5", text: "The say 'Two thousand years of history depends on Xi'an, one thousand years on Beijing, and one hundred years on Shanghai.'", correct: true, explanation: "From rev.pdf: 'Chinese people often say that Two thousand years of history depends on Xi'an...'" },
+            { id: "p2_6", text: "The Great Wall is officially distributed across 15 provinces, cities, and autonomous regions.", correct: true, explanation: "From rev.pdf: 'The total length of the existing Great Wall is 21,196.18 kilometers, which is distributed among 15 provinces...'" },
+            { id: "p2_7", text: "Among the world's ancient civilizations, only the Chinese civilization has continued continuously to this day.", correct: true, explanation: "From rev.pdf: 'Among the world's major ancient civilizations... Only the Chinese civilization continues to this day.'" },
+            { id: "p2_8", text: "Qin Shi Huang unified weights, currency, measurements, and Small Seal scripts to consolidate his rule.", correct: true, explanation: "From rev.pdf: 'The unification of the Qin Dynasty was embodied in: legal system, measurements, currency, and small seal scripts.'" },
+            { id: "p2_9", text: "The name 'Han people' originated from a powerful ancient Chinese emperor named Han Wudi.", correct: false, explanation: "From rev.pdf: 'The name comes from the title of the Han Dynasty.'" },
+            { id: "p2_10", text: "Zhang Qian successfully pioneered the Silk Road during his Two Missions to the West.", correct: true, explanation: "From rev.pdf: 'As the pioneer of the Silk Road, Zhang Qian's Two Missions to the West opened trade routes...'" },
+            { id: "p2_11", text: "Wu Zetian created the Wu Zhou Dynasty and adhered to strict principles like never ceding territory.", correct: true, explanation: "From rev.pdf: 'Wu Zetian, the only empress in Chinese history created Wu Zhou Dynasty, which is a dynasty most adhering to moral principles...'" },
+            { id: "p2_12", text: "The term 'overseas students' originated during the Ming Dynasty when Zheng He brought travelers back.", correct: false, explanation: "From rev.pdf: 'The word overseas students originated in the Tang Dynasty.'" },
+            { id: "p2_13", text: "The Song Dynasty lasted for more than 300 years and was entirely overthrown due to internal civil peasant rebellions.", correct: false, explanation: "From rev.pdf: 'The Song Dynasty... was the only dynasty that did not die directly in civil strife. Its overthrow was due to foreign invasion.'" },
+            { id: "p2_14", text: "Qing was China's final feudal dynasty, established by the Manchu people.", correct: true, explanation: "From rev.pdf: 'Established by Manchu people, Qing was China's final feudal dynasty.'" },
+            { id: "p2_15", text: "The First Opium War started in June 1840 when a British fleet sailed to Guangdong.", correct: true, explanation: "From rev.pdf: 'In June 1840, a British fleet came to Guangdong and started the First Opium War against China.'" },
+            { id: "p2_16", text: "Under the unequal treaties, Hong Kong was ceded to Portugal and Macau was ceded to Britain.", correct: false, explanation: "From rev.pdf: 'Hong Kong and Macau were respectively ceded to Britain and Portugal.' (Hong Kong to Britain, Macau to Portugal)" },
+            { id: "p2_17", text: "China's Youth Day on May 4th derives from the historic May Fourth Movement of 1919.", correct: true, explanation: "From Review (the final one).pdf: 'China's Youth Day (May 4th) derives from the historic May Fourth Movement of 1919.'" },
+            { id: "p2_18", text: "The big star on the Chinese flag represents the CPC, while the four small stars represent the four revolutionary classes.", correct: true, explanation: "From rev.pdf: 'The big star represents the Communist Party of China, and the four small stars represent the four classes.'" },
+            { id: "p2_19", text: "China has an official state religion which has been dominant for centuries.", correct: false, explanation: "From rev.pdf: 'There has never been a religion, native or foreign, that is dominant over all population in China. In other words, there is no so-called state religion...'" },
+            { id: "p2_20", text: "Mencius held that human nature is fundamentally bad at birth and needs continuous correction.", correct: false, explanation: "From Review (the final one).pdf: 'Mencius believed that human nature was good when a person was born.'" },
+            { id: "p2_21", text: "Confucian philosophy states that the human body (including hair and skin) is a sacred gift from parents, making self-harm unfilial.", correct: true, explanation: "From Review (the final one).pdf: 'Confucians believe that one's body (including hair and skin) is a gift from parents. To harm it is unfilial.'" },
+            { id: "p2_22", text: "The five elements in ancient Chinese thought are metal, wood, water, fire, and air.", correct: false, explanation: "From rev.pdf: 'The five elements are metal, wood, water, fire and earth.'" },
+            { id: "p2_23", text: "Sun Tzu's 'The Art of War' strongly encourages rulers to aggressively engage in foreign military expansion.", correct: false, explanation: "From rev.pdf: 'The Art of War, is a book which discusses how to win battles, but it discourages the rulers or generals to go to war.'" },
+            { id: "p2_24", text: "Collective religious activities of foreign citizens in China must generally be held in registered places.", correct: true, explanation: "From rev.pdf: '...collective religious activities of religious citizens should generally be held in registered places of religious activities.'" },
+            { id: "p2_25", text: "The Vernal Equinox and Autumnal Equinox are the two days when day and night are of equal length.", correct: true, explanation: "From Review (the final one).pdf: 'The Vernal Equinox and the Autumnal Equinox are the two days when day and night are equally long.'" }
+        ];
+
+        const part3Questions = [
+            {
+                id: "p3_1",
+                text: "Which of the following countries does NOT share a direct land border with China?",
+                options: ["Mongolia", "Russia", "Japan", "Vietnam"],
+                correct: 2,
+                explanation: "From rev.pdf: Neighboring land countries are: North Korea, Mongolia, Russia, Kazakhstan, Kyrgyzstan, Tajikistan, Afghanistan, Pakistan, India, Nepal, Bhutan, Myanmar, Laos, and Vietnam. Japan is an ocean neighbor, not land."
+            },
+            {
+                id: "p3_2",
+                text: "What percentage of the global population resides in China as of the 2024 metric?",
+                options: ["12%", "15%", "18%", "22%"],
+                correct: 2,
+                explanation: "From rev.pdf: 'China has a population of 1.408 billion people, accounting for the 18% of the world's population.'"
+            },
+            {
+                id: "p3_3",
+                text: "Where is the Forbidden City (Beijing Palace Museum) geographically located?",
+                options: ["Northern suburbs of Beijing", "Center of Beijing City", "Near Tian'anmen Square East", "Southern District"],
+                correct: 1,
+                explanation: "From rev.pdf: 'The Forbidden City in Beijing... is located in the center of Beijing City.'"
+            },
+            {
+                id: "p3_4",
+                text: "How many voyages did the court eunuch Zheng He lead to the 'Western Oceans'?",
+                options: ["5 voyages", "7 voyages", "9 voyages", "12 voyages"],
+                correct: 1,
+                explanation: "From rev.pdf: 'In the next 28 years, Zheng He sailed to the \"Western Oceans\" seven times.'"
+            },
+            {
+                id: "p3_5",
+                text: "What is the historical origin of China's modern student celebration 'Youth Day' on May 4th?",
+                options: ["The Xinhai Revolution", "The May Fourth Movement of 1919", "The founding of the CPC in 1921", "The War of Liberation"],
+                correct: 1,
+                explanation: "From Review (the final one).pdf: 'China's Youth Day (May 4th) derives from the historic May Fourth Movement of 1919.'"
+            },
+            {
+                id: "p3_6",
+                text: "Which of the following is NOT part of the 'New Four Great Inventions' of modern China?",
+                options: ["Mobile Payment", "Bicycle Sharing", "E-Commerce", "E-Scooters"],
+                correct: 3,
+                explanation: "From rev.pdf: 'China's new \"Four Great Inventions\" include high-speed rail, mobile payment, bicycle sharing and E-commerce.'"
+            },
+            {
+                id: "p3_7",
+                text: "In Confucius' view, at what age does a person 'know the will of Heaven'?",
+                options: ["Thirty", "Forty", "Fifty", "Sixty"],
+                correct: 2,
+                explanation: "From rev.pdf: 'Knowing the will of Heaven at fifty...'"
+            },
+            {
+                id: "p3_8",
+                text: "What are the two core concepts of Confucianism?",
+                options: ["Yin and Yang", "Rite (礼) and Benevolence (仁)", "Legalism and Nature", "Dao and Rites"],
+                correct: 1,
+                explanation: "From rev.pdf: 'The core thought of Confucianism is rite 礼 and benevolence 仁.'"
+            },
+            {
+                id: "p3_9",
+                text: "Who is the representative philosopher of Daoism who spoke of the transformation of opposites?",
+                options: ["Confucius", "Mencius", "Lao Zi", "Sun Tzu"],
+                correct: 2,
+                explanation: "From rev.pdf: 'Lao Zi is the representative personage of Daoism.'"
+            },
+            {
+                id: "p3_10",
+                text: "Which school of thought address the realistic issues of the Warring States and made the Qin Dynasty strong?",
+                options: ["The Confucians", "The Legalists", "The Daoists", "The Mohists"],
+                correct: 1,
+                explanation: "From rev.pdf: 'It was the Legalists' thought that made Qin dynasty strong because the Legalists' doctrine addressed the most realistic issue...'"
+            },
+            {
+                id: "p3_11",
+                text: "What famous classic novel was inspired by Xuanzang's 20-year journey to translate Buddhist scriptures?",
+                options: ["Romance of the Three Kingdoms", "Dream of the Red Chamber", "Water Margin", "Journey to the West"],
+                correct: 3,
+                explanation: "From rev.pdf: 'Journey to the West was a novel based on his trip to India.'"
+            },
+            {
+                id: "p3_12",
+                text: "Which of the following are recognized as China's 'Four Great Ancient Capitals'?",
+                options: ["Beijing, Shanghai, Xi'an, Guangzhou", "Xi'an, Nanjing, Beijing, Luoyang", "Beijing, Harbin, Lhasa, Xi'an", "Luoyang, Jinzhou, Shanghai, Nanjing"],
+                correct: 1,
+                explanation: "From Review (the final one).pdf: 'Xi'an, Nanjing, Beijing and Luoyang are recognized as China's Four Great Ancient Capitals.'"
+            },
+            {
+                id: "p3_13",
+                text: "What are the three basic characteristics of China's compulsory education?",
+                options: ["Free, Private, Optional", "Compulsory, Charitable, Uniformed", "Standardized, Public, Competitive", "Charitable, Uniformed, Optional"],
+                correct: 1,
+                explanation: "From Review (the final one).pdf: 'The three basic characteristics of compulsory education in China are compulsory, charitable and uniformed.'"
+            },
+            {
+                id: "p3_14",
+                text: "What is the key functional difference between public and private education in China?",
+                options: ["Curriculum content", "Sources of funding", "Holiday structures", "Age limitations"],
+                correct: 1,
+                explanation: "From Review (the final one).pdf: 'Difference between public and private education is the different sources of funds.'"
+            },
+            {
+                id: "p3_15",
+                text: "Which of the following is NOT one of the 'four major banks' of China?",
+                options: ["Agricultural Bank of China (ABC)", "China Construction Bank (CCB)", "People's Bank of China (PBOC)", "Bank of China (BOC)"],
+                correct: 2,
+                explanation: "From Review (the final one).pdf: 'Bank of China (BOC), Agricultural Bank of China (ABC), Industrial and Commercial Bank of China (ICBC), and China Construction Bank (CCB)... are the four major banks.'"
+            },
+            {
+                id: "p3_16",
+                text: "How many successive 'five-year plans' did China complete from 1953 to 2025?",
+                options: ["10 plans", "12 plans", "14 plans", "15 plans"],
+                correct: 2,
+                explanation: "From Review (the final one).pdf: 'From 1953 to 2025, China completed 14 successive \"five-year plans\"...'"
+            },
+            {
+                id: "p3_17",
+                text: "Which traditional regional cuisine is most widely used in prestigious state banquets?",
+                options: ["Sichuan Cuisine", "Guangdong Cuisine", "Huaiyang Cuisine", "Hunan Cuisine"],
+                correct: 2,
+                explanation: "From Review (the final one).pdf: 'Huaiyang cuisine is often used in state banquets.'"
+            },
+            {
+                id: "p3_18",
+                text: "Why is the custom of eating animal internal organs popular in Chinese food culture?",
+                options: ["It was historically cheaper for farmers", "A belief that a particular animal organ benefits the corresponding human organ", "It is linked strictly to ancient Buddhist dietary laws", "To preserve meat from spoiling"],
+                correct: 1,
+                explanation: "From Review (the final one).pdf: 'It is a popular belief that a particular animal organ is beneficial to the same organ of the human body...'"
+            },
+            {
+                id: "p3_19",
+                text: "Which major holiday has the 'Golden Week' seven-day statutory vacation in China?",
+                options: ["Spring Festival", "National Day (October 1)", "Mid-Autumn Festival", "Dragon Boat Festival"],
+                correct: 1,
+                explanation: "From Review (the final one).pdf: 'October 1, 1949, marks the founding of the People's Republic of China (PRC), China's National Day. Statutorily, the country observes a seven-day holiday... referred to as Golden Week.'"
+            },
+            {
+                id: "p3_20",
+                text: "According to the Chinese proverb '近朱者赤近墨者黑' (related to Mencius' mother), what is the English equivalent?",
+                options: ["A bird in the hand is worth two in the bush", "He that lies down with dogs must rise up with fleas", "Beauty lies in the eye of the beholder", "Knowledge is wealth"],
+                correct: 1,
+                explanation: "From rev.pdf: 'There is a Chinese saying “近朱者赤近墨者黑”, meaning \"He that lies down with dogs must rise up with flea\".'"
+            }
+        ];
+
+        const part4Questions = [
+            {
+                id: "p4_1",
+                text: "Explain the policy of 'One Country, Two Systems' as applied to Hong Kong and Macao.",
+                rubric: "Must mention terms like 'special administrative', 'sovereignty', 'laws' or 'capitalist system/economy'.",
+                keywords: ["system", "hong kong", "macao", "sovereignty", "special", "economy", "law", "return"],
+                explanation: "From notes: After returning to China, Hong Kong and Macao operate under 'One Country, Two Systems', maintaining high autonomy, separate legal systems, and stable economic structures under Chinese sovereignty."
+            },
+            {
+                id: "p4_2",
+                text: "Describe the consequences of the 'closed-door' policy (isolationism) adopted during the Qing Dynasty.",
+                rubric: "Must note terms like 'isolation', 'lagged behind', 'backward', 'no trade/exchanges'.",
+                keywords: ["lag", "isolate", "backward", "restrict", "exchange", "technology", "military", "economy"],
+                explanation: "From notes: The closed-door policy restricted economic and scientific exchanges. It made people unaware of changes, causing the Qing Dynasty to lag severely behind Western countries in military, science, and overall development."
+            },
+            {
+                id: "p4_3",
+                text: "Explain the connection and difference between Rites (礼) and Benevolence (仁) in Confucianism.",
+                rubric: "Rites are external expression; Benevolence is inner essence. Together they achieve social harmony.",
+                keywords: ["external", "inner", "essence", "harmony", "love", "care", "moral", "thought", "rite", "benevolence"],
+                explanation: "From notes: Rites (lǐ) are the external form of benevolence, and Benevolence (rén) is the inner essence of rites. With benevolence, people voluntarily act in accordance with rites rather than seeing them as a constraint."
+            },
+            {
+                id: "p4_4",
+                text: "State the three basic characteristics of compulsory education in China.",
+                rubric: "Must list exactly: compulsory, charitable, and uniformed.",
+                keywords: ["compulsory", "charitable", "uniformed", "uniform"],
+                explanation: "From Review (the final one).pdf: 'The three basic characteristics of compulsory education in China are compulsory, charitable and uniformed.'"
+            }
+        ];
+
+        const part5Questions = [
+            {
+                id: "p5_1",
+                text: "Analyze 'Illustration A' from Page 9 of the study dossier. A man with zipped lips refuses a cup of bitter herbal tea labeled '黄连' (Huanglian). State the exact allegorical saying represented and explain its meaning.",
+                options: [
+                    "The monk opens an umbrella — lawless and without boundaries.",
+                    "A mute person takes a dose of bitter medicine — they cannot say it is bitter. (Meaning: suffering silently without complaining).",
+                    "Mice go to the street — everybody shouts and beats them. (Meaning: universally hated).",
+                    "Eating vinegar — being highly jealous in romantic affairs."
+                ],
+                correct: 1,
+                explanation: "From rev.pdf (Page 9): The illustration represents the figurative allegorical saying: 'A mute person takes a dose of bitter medicine—they can't say it is bitter'. It symbolises experiencing grief or hardship but being unable to complain to others."
+            }
+        ];
+
+        // On document load
+        window.onload = function() {
+            renderVerbatimLessons();
+            renderQuestions();
+        };
+
+        function toggleDarkMode() {
+            const body = document.body;
+            const icon = document.getElementById("theme-icon");
+            body.classList.toggle("dark-mode");
+            
+            if (body.classList.contains("dark-mode")) {
+                icon.className = "fa-solid fa-sun text-lg";
+            } else {
+                icon.className = "fa-solid fa-moon text-lg";
+            }
+        }
+
+        // Render textbook summary lessons dynamically
+        function renderVerbatimLessons() {
+            const book1Grid = document.getElementById("book1-lessons-grid");
+            const book2Grid = document.getElementById("book2-lessons-grid");
+
+            book1Grid.innerHTML = "";
+            book1Lessons.forEach(l => {
+                book1Grid.innerHTML += `
+                    <div class="lesson-card p-4 rounded-xl border border-theme bg-stone-50 dark:bg-stone-900 shadow-sm hover:shadow transition" data-text="${l.text.toLowerCase()}">
+                        <span class="inline-block px-2 py-0.5 rounded bg-red-900 text-white font-mono text-[10px] font-bold mb-2">Rule #${l.num}</span>
+                        <p class="text-xs sm:text-sm text-main leading-relaxed font-medium">${l.text}</p>
+                    </div>
+                `;
+            });
+
+            book2Grid.innerHTML = "";
+            book2Lessons.forEach(l => {
+                book2Grid.innerHTML += `
+                    <div class="lesson-card p-4 rounded-xl border border-theme bg-stone-50 dark:bg-stone-900 shadow-sm hover:shadow transition" data-text="${l.text.toLowerCase()}">
+                        <span class="inline-block px-2 py-0.5 rounded bg-amber-500 text-stone-950 font-mono text-[10px] font-bold mb-2">Item #${l.num}</span>
+                        <p class="text-xs sm:text-sm text-main leading-relaxed font-medium">${l.text}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Search through curriculum summaries
+        function searchLessons() {
+            const query = document.getElementById("lesson-search-input").value.trim().toLowerCase();
+            const cards = document.querySelectorAll(".lesson-card");
+            
+            cards.forEach(card => {
+                const text = card.getAttribute("data-text");
+                if (text.includes(query)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        // Switch between the two source PDFs
+        function switchStudyBook(bookId) {
+            document.getElementById("book-tab-1").className = "px-4 py-2 text-sm font-bold rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 whitespace-nowrap";
+            document.getElementById("book-tab-2").className = "px-4 py-2 text-sm font-bold rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 whitespace-nowrap";
+            
+            document.getElementById("study-book-1").classList.add("hidden");
+            document.getElementById("study-book-2").classList.add("hidden");
+
+            if (bookId === 'book1') {
+                document.getElementById("book-tab-1").className = "px-4 py-2 text-sm font-bold rounded-lg bg-red-900 text-white whitespace-nowrap";
+                document.getElementById("study-book-1").classList.remove("hidden");
+            } else {
+                document.getElementById("book-tab-2").className = "px-4 py-2 text-sm font-bold rounded-lg bg-red-900 text-white whitespace-nowrap";
+                document.getElementById("study-book-2").classList.remove("hidden");
+            }
+        }
+
+        function renderQuestions() {
+            // Render Part 1
+            const p1Container = document.getElementById("part1-questions-container");
+            p1Container.innerHTML = "";
+            part1Questions.forEach((q, idx) => {
+                p1Container.innerHTML += `
+                    <div class="py-4 space-y-2">
+                        <div class="text-sm font-medium text-main">
+                            <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
+                        </div>
+                        <input type="text" id="${q.id}" oninput="updateProgressBar()" placeholder="Type your answer here..." 
+                               class="w-full sm:w-80 px-3 py-1.5 text-sm bg-stone-50 dark:bg-stone-900 border border-theme rounded-lg focus:ring-1 focus:ring-red-800 outline-none transition font-medium text-main">
+                    </div>
+                `;
+            });
+
+            // Render Part 2
+            const p2Container = document.getElementById("part2-questions-container");
+            p2Container.innerHTML = "";
+            part2Questions.forEach((q, idx) => {
+                p2Container.innerHTML += `
+                    <div class="p-4 bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl space-y-3">
+                        <div class="text-sm font-medium text-main">
+                            <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
+                        </div>
+                        <div class="flex space-x-4">
+                            <label class="inline-flex items-center space-x-2 cursor-pointer text-sm">
+                                <input type="radio" name="${q.id}" value="true" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
+                                <span class="font-semibold text-emerald-700">Right (True)</span>
+                            </label>
+                            <label class="inline-flex items-center space-x-2 cursor-pointer text-sm">
+                                <input type="radio" name="${q.id}" value="false" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
+                                <span class="font-semibold text-rose-700">Wrong (False)</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render Part 3
+            const p3Container = document.getElementById("part3-questions-container");
+            p3Container.innerHTML = "";
+            part3Questions.forEach((q, idx) => {
+                let optionsHTML = "";
+                q.options.forEach((opt, optIdx) => {
+                    optionsHTML += `
+                        <label class="flex items-center space-x-3 p-2.5 rounded-lg border border-theme bg-white dark:bg-stone-950 hover:bg-stone-50 dark:hover:bg-stone-900 cursor-pointer transition text-sm">
+                            <input type="radio" name="${q.id}" value="${optIdx}" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
+                            <span class="font-medium text-main"><span class="font-mono text-stone-400 font-bold">${String.fromCharCode(65 + optIdx)}.</span> ${opt}</span>
+                        </label>
+                    `;
+                });
+
+                p3Container.innerHTML += `
+                    <div class="space-y-3">
+                        <div class="text-sm font-semibold text-main">
+                            <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            ${optionsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render Part 4
+            const p4Container = document.getElementById("part4-questions-container");
+            p4Container.innerHTML = "";
+            part4Questions.forEach((q, idx) => {
+                p4Container.innerHTML += `
+                    <div class="space-y-3">
+                        <div class="text-sm font-semibold text-main">
+                            <span class="text-red-900 dark:text-amber-400 font-bold font-mono">Q${idx + 1}.</span> ${q.text}
+                        </div>
+                        <textarea id="${q.id}" oninput="updateProgressBar()" rows="4" placeholder="Draft your concise answer here (Keywords evaluated)..." 
+                                  class="w-full p-3 text-sm bg-stone-50 dark:bg-stone-900 border border-theme rounded-xl focus:ring-1 focus:ring-red-800 outline-none transition font-medium text-main"></textarea>
+                        <div class="text-[11px] text-muted italic bg-highlight p-2 rounded"><strong>Rubric criteria:</strong> ${q.rubric}</div>
+                    </div>
+                `;
+            });
+
+            // Render Part 5 (Bonus)
+            const p5Container = document.getElementById("part5-questions-container");
+            p5Container.innerHTML = "";
+            part5Questions.forEach((q, idx) => {
+                let optionsHTML = "";
+                q.options.forEach((opt, optIdx) => {
+                    optionsHTML += `
+                        <label class="flex items-center space-x-3 p-3 rounded-xl border border-theme bg-white dark:bg-stone-950 hover:bg-stone-50 dark:hover:bg-stone-900 cursor-pointer transition text-sm">
+                            <input type="radio" name="${q.id}" value="${optIdx}" onchange="updateProgressBar()" class="form-radio text-red-900 focus:ring-red-900 h-4 w-4">
+                            <span class="font-medium text-main"><span class="font-mono text-stone-400 font-bold">${String.fromCharCode(65 + optIdx)}.</span> ${opt}</span>
+                        </label>
+                    `;
+                });
+
+                p5Container.innerHTML += `
+                    <div class="space-y-4">
+                        <div class="text-sm font-bold text-main">
+                            <span class="text-red-900 dark:text-amber-400 font-mono">BONUS Q.</span> ${q.text}
+                        </div>
+                        <div class="flex justify-center py-4 bg-highlight rounded-xl border border-theme">
+                            <div class="flex flex-col items-center space-y-2">
+                                <span class="text-xs font-semibold uppercase text-stone-500">Exhibit Visual Reference</span>
+                                <svg class="w-48 h-48 border-2 border-amber-500 rounded-xl bg-cyan-50 shadow" viewBox="0 0 200 200">
+                                    <circle cx="100" cy="100" r="80" fill="#e0f2fe" stroke="#d4af37" stroke-width="2"/>
+                                    <path d="M70,70 Q100,60 130,70 Q135,110 130,130 Q100,150 70,130 Q65,110 70,70 Z" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+                                    <path d="M68,75 Q100,50 132,75 Q135,60 125,50 Q100,45 75,50 Q65,60 68,75 Z" fill="#1e293b"/>
+                                    <circle cx="62" cy="100" r="10" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+                                    <circle cx="138" cy="100" r="10" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+                                    <path d="M78,92 Q85,87 90,94" stroke="#78350f" stroke-width="2.5" fill="none"/>
+                                    <path d="M110,94 Q115,87 122,92" stroke="#78350f" stroke-width="2.5" fill="none"/>
+                                    <rect x="72" y="112" width="56" height="14" rx="7" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+                                    <line x1="72" y1="119" x2="128" y2="119" stroke="#475569" stroke-width="2"/>
+                                    <line x1="88" y1="114" x2="88" y2="124" stroke="#475569" stroke-width="1.5"/>
+                                    <line x1="104" y1="114" x2="104" y2="124" stroke="#475569" stroke-width="1.5"/>
+                                    <line x1="120" y1="114" x2="120" y2="124" stroke="#475569" stroke-width="1.5"/>
+                                    <rect x="123" y="115" width="8" height="8" rx="2" fill="#1e293b"/>
+                                    <path d="M60,150 Q55,130 50,130 Q45,130 46,140 Q40,128 35,132 Q32,135 38,144 Q30,138 27,143 Q25,147 34,154 L44,162" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+                                    <rect x="135" y="145" width="36" height="24" rx="3" fill="#ffffff" stroke="#1e293b" stroke-width="2"/>
+                                    <path d="M171,150 Q178,153 171,160" stroke="#1e293b" stroke-width="2" fill="none"/>
+                                    <text x="141" y="160" font-family="'Noto Serif SC', serif" font-weight="bold" font-size="8" fill="#b91c1c">黄连</text>
+                                    <text x="146" y="118" font-family="'Noto Serif SC', serif" font-weight="bold" font-size="12" fill="#1e293b" opacity="0.8">苦</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            ${optionsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleStudyMode() {
+            const welcome = document.getElementById("welcome-screen");
+            const study = document.getElementById("study-guide-screen");
+            const exam = document.getElementById("exam-screen");
+            const results = document.getElementById("results-screen");
+
+            if (study.classList.contains("hidden")) {
+                // Open study guide
+                welcome.classList.add("hidden");
+                exam.classList.add("hidden");
+                results.classList.add("hidden");
+                study.classList.remove("hidden");
+                document.getElementById("study-mode-btn").innerHTML = `<i class="fa-solid fa-home"></i><span class="hidden sm:inline">Home Portal</span>`;
+            } else {
+                // Close study guide
+                study.classList.add("hidden");
+                document.getElementById("study-mode-btn").innerHTML = `<i class="fa-solid fa-book-open"></i><span class="hidden sm:inline">Reference Materials</span>`;
+                
+                if (examSubmitted) {
+                    results.classList.remove("hidden");
+                } else if (startEpoch > 0) {
+                    exam.classList.remove("hidden");
+                } else {
+                    welcome.classList.remove("hidden");
+                }
+            }
+        }
+
+        function getExamStatus() {
+            let answeredP1 = 0;
+            let answeredP2 = 0;
+            let answeredP3 = 0;
+            let answeredP4 = 0;
+            let answeredP5 = 0;
+
+            // Part 1
+            part1Questions.forEach(q => {
+                const val = document.getElementById(q.id).value.trim();
+                if (val !== "") answeredP1++;
+            });
+
+            // Part 2
+            part2Questions.forEach(q => {
+                const el = document.querySelector(`input[name="${q.id}"]:checked`);
+                if (el) answeredP2++;
+            });
+
+            // Part 3
+            part3Questions.forEach(q => {
+                const el = document.querySelector(`input[name="${q.id}"]:checked`);
+                if (el) answeredP3++;
+            });
+
+            // Part 4
+            part4Questions.forEach(q => {
+                const val = document.getElementById(q.id).value.trim();
+                if (val !== "") answeredP4++;
+            });
+
+            // Part 5
+            part5Questions.forEach(q => {
+                const el = document.querySelector(`input[name="${q.id}"]:checked`);
+                if (el) answeredP5++;
+            });
+
+            const totalAnswered = answeredP1 + answeredP2 + answeredP3 + answeredP4 + answeredP5;
+            const totalQuestions = part1Questions.length + part2Questions.length + part3Questions.length + part4Questions.length + part5Questions.length;
+
+            return {
+                p1: answeredP1,
+                p2: answeredP2,
+                p3: answeredP3,
+                p4: answeredP4,
+                p5: answeredP5,
+                totalAnswered,
+                totalQuestions
+            };
+        }
+
+        function updateProgressBar() {
+            const status = getExamStatus();
+
+            // Badges
+            document.getElementById("p1-badge").innerText = `${status.p1}/35`;
+            document.getElementById("p2-badge").innerText = `${status.p2}/25`;
+            document.getElementById("p3-badge").innerText = `${status.p3}/20`;
+            document.getElementById("p4-badge").innerText = `${status.p4}/4`;
+            document.getElementById("p5-badge").innerText = `${status.p5}/1`;
+
+            // Global percentage progress
+            const pct = Math.round((status.totalAnswered / status.totalQuestions) * 100);
+            document.getElementById("exam-global-progress").style.width = `${pct}%`;
+            document.getElementById("progress-percentage").innerText = `${pct}% Answered`;
+        }
+
+        function scrollToSection(secId) {
+            const el = document.getElementById(secId);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function startExamination() {
+            const nameInput = document.getElementById("student-name").value.trim();
+            if (nameInput === "") {
+                const notification = document.createElement("div");
+                notification.className = "fixed bottom-5 right-5 bg-red-900 text-white p-4 rounded-xl shadow-lg border border-red-950 text-sm font-semibold z-50 animate-bounce";
+                notification.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> Please enter your name to register for the exam.`;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 4000);
+                return;
+            }
+
+            candidateName = nameInput;
+            document.getElementById("display-student-name").innerText = candidateName;
+            document.getElementById("results-candidate-name").innerText = candidateName;
+
+            const durationSelect = document.getElementById("exam-timer-duration").value;
+            if (durationSelect === "999") {
+                isPracticeMode = true;
+                document.getElementById("exam-timer-wrapper").innerHTML = `<i class="fa-solid fa-infinity text-red-900"></i> <span class="text-xs uppercase font-bold text-red-900 ml-1">Practice Mode</span>`;
+            } else {
+                isPracticeMode = false;
+                timerSeconds = parseInt(durationSelect) * 60;
+                startTimer();
+            }
+
+            // UI Transitions
+            document.getElementById("welcome-screen").classList.add("hidden");
+            document.getElementById("exam-screen").classList.remove("hidden");
+            document.getElementById("exam-timer-wrapper").classList.remove("hidden");
+            
+            startEpoch = Date.now();
+            updateProgressBar();
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    gradeExam();
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById("exam-timer").innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            
+            if (timerSeconds < 300) {
+                const wrapper = document.getElementById("exam-timer-wrapper");
+                wrapper.classList.remove("bg-red-50", "border-red-200", "text-red-900");
+                wrapper.classList.add("bg-rose-100", "border-rose-300", "text-rose-800", "animate-pulse");
+            }
+        }
+
+        function confirmSubmitExam() {
+            const status = getExamStatus();
+            const warningEl = document.getElementById("unanswered-warning");
+
+            if (status.totalAnswered < status.totalQuestions) {
+                warningEl.classList.remove("hidden");
+                warningEl.querySelector("span").innerText = `You have left ${status.totalQuestions - status.totalAnswered} questions unanswered!`;
+            } else {
+                warningEl.classList.add("hidden");
+            }
+
+            document.getElementById("confirm-modal").classList.remove("hidden");
+        }
+
+        function closeConfirmModal() {
+            document.getElementById("confirm-modal").classList.add("hidden");
+        }
+
+        function gradeExam() {
+            closeConfirmModal();
+            clearInterval(timerInterval);
+            examSubmitted = true;
+
+            let scoreP1 = 0;
+            let scoreP2 = 0;
+            let scoreP3 = 0;
+            let scoreP4 = 0;
+            let scoreP5 = 0;
+
+            const verificationContainer = document.getElementById("results-questions-verification");
+            verificationContainer.innerHTML = "";
+
+            let verificationHTML = `<div class="space-y-4">
+                <h4 class="font-serif font-bold text-red-900 dark:text-amber-400 border-b border-theme pb-1 text-sm uppercase">Part I: Fill in the Blanks (35 Marks)</h4>`;
+
+            part1Questions.forEach((q, idx) => {
+                const userAns = document.getElementById(q.id).value.trim();
+                const isCorrect = (userAns.toLowerCase() === q.answer.toLowerCase()) || 
+                                  (q.id === "p1_32" && q.answer.toLowerCase() === "daoism" && userAns.toLowerCase() === "taoism");
+                
+                if (isCorrect) scoreP1++;
+
+                verificationHTML += `
+                    <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
+                        <div class="flex items-start justify-between">
+                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+1.0 Mark' : '0.0 Marks'}</span>
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Your Answer: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAns || 'No Answer'}</strong></span>
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Correct: <strong class="text-emerald-700">${q.answer}</strong></span>
+                        </div>
+                        <div class="mt-2 text-[11px] text-muted leading-relaxed bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme">
+                            <strong>Verification Sourced:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            verificationHTML += `</div>`;
+
+            verificationHTML += `<div class="space-y-4 mt-6">
+                <h4 class="font-serif font-bold text-red-900 dark:text-amber-400 border-b border-theme pb-1 text-sm uppercase">Part II: Right or Wrong (25 Marks)</h4>`;
+
+            part2Questions.forEach((q, idx) => {
+                const checkedRadio = document.querySelector(`input[name="${q.id}"]:checked`);
+                const userAns = checkedRadio ? (checkedRadio.value === "true") : null;
+                const isCorrect = (userAns === q.correct);
+
+                if (isCorrect) scoreP2++;
+
+                verificationHTML += `
+                    <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
+                        <div class="flex items-start justify-between">
+                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+1.0 Mark' : '0.0 Marks'}</span>
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Your Answer: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAns === null ? 'No Answer' : (userAns ? 'True' : 'False')}</strong></span>
+                            <span class="px-2 py-0.5 rounded bg-white dark:bg-stone-900 border border-theme text-main">Correct: <strong class="text-emerald-700">${q.correct ? 'True' : 'False'}</strong></span>
+                        </div>
+                        <div class="mt-2 text-[11px] text-muted leading-relaxed bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme">
+                            <strong>Verification Sourced:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            verificationHTML += `</div>`;
+
+            verificationHTML += `<div class="space-y-4 mt-6">
+                <h4 class="font-serif font-bold text-red-900 dark:text-amber-400 border-b border-theme pb-1 text-sm uppercase">Part III: Choose the Right Answer (20 Marks)</h4>`;
+
+            part3Questions.forEach((q, idx) => {
+                const checkedRadio = document.querySelector(`input[name="${q.id}"]:checked`);
+                const userAnsIdx = checkedRadio ? parseInt(checkedRadio.value) : null;
+                const isCorrect = (userAnsIdx === q.correct);
+
+                if (isCorrect) scoreP3++;
+
+                const userAnsStr = userAnsIdx !== null ? q.options[userAnsIdx] : "No Answer";
+                const correctAnsStr = q.options[q.correct];
+
+                verificationHTML += `
+                    <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
+                        <div class="flex items-start justify-between">
+                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+1.0 Mark' : '0.0 Marks'}</span>
+                        </div>
+                        <div class="mt-2 flex flex-col space-y-1 bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme text-main">
+                            <span>Your Choice: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAnsStr}</strong></span>
+                            <span>Correct Choice: <strong class="text-emerald-700">${correctAnsStr}</strong></span>
+                        </div>
+                        <div class="mt-2 text-[11px] text-muted leading-relaxed">
+                            <strong>Verification Sourced:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            verificationHTML += `</div>`;
+
+            verificationHTML += `<div class="space-y-4 mt-6">
+                <h4 class="font-serif font-bold text-red-900 dark:text-amber-400 border-b border-theme pb-1 text-sm uppercase">Part IV: Short Answer Questions (20 Marks)</h4>`;
+
+            part4Questions.forEach((q, idx) => {
+                const userAns = document.getElementById(q.id).value.trim();
+                let matchingKeywords = [];
+                
+                q.keywords.forEach(kw => {
+                    if (userAns.toLowerCase().includes(kw.toLowerCase())) {
+                        matchingKeywords.push(kw);
+                    }
+                });
+
+                let qScore = 0;
+                if (userAns === "") {
+                    qScore = 0;
+                } else if (matchingKeywords.length >= 4) {
+                    qScore = 5.0;
+                } else if (matchingKeywords.length >= 2) {
+                    qScore = 3.5;
+                } else if (matchingKeywords.length >= 1) {
+                    qScore = 2.0;
+                } else {
+                    qScore = 1.0; 
+                }
+
+                scoreP4 += qScore;
+                const passedKeywordThreshold = qScore >= 3.5;
+
+                verificationHTML += `
+                    <div class="p-3.5 rounded-xl border ${passedKeywordThreshold ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
+                        <div class="flex items-start justify-between">
+                            <span class="font-medium text-main"><strong class="font-mono">Q${idx + 1}.</strong> ${q.text}</span>
+                            <span class="font-bold shrink-0 ${passedKeywordThreshold ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">+${qScore.toFixed(1)} / 5.0 Marks</span>
+                        </div>
+                        <div class="mt-2 space-y-1.5 bg-white/60 dark:bg-stone-800/40 p-3 rounded border border-theme text-main">
+                            <div class="text-main leading-relaxed italic">" ${userAns || 'No Answer Submitted'} "</div>
+                            <div class="text-[10px] text-muted font-mono">Matched Evaluated Keywords: [ ${matchingKeywords.join(', ') || 'None'} ]</div>
+                        </div>
+                        <div class="mt-2 text-[11px] text-muted leading-relaxed bg-stone-100/50 dark:bg-stone-900/50 p-2.5 rounded border border-theme">
+                            <strong>Reference Syllabus Answer Rubric:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            verificationHTML += `</div>`;
+
+            verificationHTML += `<div class="space-y-4 mt-6">
+                <h4 class="font-serif font-bold text-amber-500 border-b border-theme pb-1 text-sm uppercase">Part V: Visual Bonus Question (2 Marks)</h4>`;
+
+            part5Questions.forEach((q, idx) => {
+                const checkedRadio = document.querySelector(`input[name="${q.id}"]:checked`);
+                const userAnsIdx = checkedRadio ? parseInt(checkedRadio.value) : null;
+                const isCorrect = (userAnsIdx === q.correct);
+
+                if (isCorrect) scoreP5 += 2; 
+
+                const userAnsStr = userAnsIdx !== null ? q.options[userAnsIdx] : "No Answer";
+                const correctAnsStr = q.options[q.correct];
+
+                verificationHTML += `
+                    <div class="p-3.5 rounded-xl border ${isCorrect ? 'border-emerald-200 bg-emerald-500/10' : 'border-rose-200 bg-rose-500/10'} text-xs">
+                        <div class="flex items-start justify-between">
+                            <span class="font-medium text-main"><strong class="font-mono">Bonus Q.</strong> ${q.text}</span>
+                            <span class="font-bold shrink-0 ${isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'}">${isCorrect ? '+2.0 Extra Marks' : '0.0 Marks'}</span>
+                        </div>
+                        <div class="mt-2 flex flex-col space-y-1 bg-white/60 dark:bg-stone-800/40 p-2 rounded border border-theme text-main">
+                            <span>Your Choice: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${userAnsStr}</strong></span>
+                            <span>Correct Choice: <strong class="text-emerald-700">${correctAnsStr}</strong></span>
+                        </div>
+                        <div class="mt-2 text-[11px] text-muted leading-relaxed">
+                            <strong>Verification Sourced:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            verificationHTML += `</div>`;
+
+            // Set verification sheet
+            verificationContainer.innerHTML = verificationHTML;
+
+            // Compute Final Tallies
+            const totalScore = scoreP1 + scoreP2 + scoreP3 + scoreP4 + scoreP5;
+            
+            // Format score rendering
+            document.getElementById("score-p1").innerText = `${scoreP1} / 35`;
+            document.getElementById("score-p2").innerText = `${scoreP2} / 25`;
+            document.getElementById("score-p3").innerText = `${scoreP3} / 20`;
+            document.getElementById("score-p4").innerText = `${scoreP4.toFixed(1)} / 20`;
+            document.getElementById("score-p5").innerText = `+${scoreP5} / 2`;
+
+            document.getElementById("final-score-raw").innerText = `${totalScore.toFixed(1)} / 100`;
+            document.getElementById("final-score-percentage").innerText = `${Math.min(100, Math.round(totalScore))}%`;
+
+            // Evaluation status
+            const badge = document.getElementById("evaluation-badge");
+            if (totalScore >= 60.0) {
+                badge.innerText = "PASS";
+                badge.className = "text-xl sm:text-2xl font-bold mt-1.5 px-6 py-1.5 rounded-full inline-block bg-emerald-600 text-white";
+            } else {
+                badge.innerText = "RE-EXAMINATION REQUIRED";
+                badge.className = "text-xl sm:text-2xl font-bold mt-1.5 px-6 py-1.5 rounded-full inline-block bg-rose-600 text-white";
+            }
+
+            const elapsedMins = Math.round((Date.now() - startEpoch) / 60000);
+            document.getElementById("results-time-elapsed").innerText = `${elapsedMins} minute(s)`;
+
+            // Screen Navigation
+            document.getElementById("exam-screen").classList.add("hidden");
+            document.getElementById("exam-timer-wrapper").classList.add("hidden");
+            document.getElementById("results-screen").classList.remove("hidden");
+            
+            document.getElementById("results-screen").scrollIntoView({ behavior: "smooth" });
+        }
+
+        // Return to welcome page
+        function restartPortal() {
+            if (confirm("Are you sure you want to exit the current assessment sheet and return to the main portal?")) {
+                examSubmitted = false;
+                startEpoch = 0;
+                document.getElementById("student-name").value = "";
+                document.getElementById("results-screen").classList.add("hidden");
+                document.getElementById("welcome-screen").classList.remove("hidden");
+                renderQuestions();
+            }
+        }
+    </script>
+</body>
+</html>
