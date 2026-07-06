@@ -1363,106 +1363,811 @@
 
         // Practice Workout Exercise Datasets
         const practiceData = {
-            geography: [
-                {
-                    q: "What is the total land area of China, and its global ranking?",
-                    opts: [
-                        "About 17 million sq km, 1st globally",
-                        "About 9.6 million sq km, 3rd globally (largest entirely in Asia)",
-                        "About 5.2 million sq km, 5th globally",
-                        "About 22.8 million sq km, 2nd globally"
-                    ],
-                    correct: 1,
-                    exp: "Sourced from rev.pdf Summary #1: China possesses about 9.6 million square kilometers, ranking 3rd in the world."
-                },
-                {
-                    q: "How many countries share a direct land border with China, and how long is this border?",
-                    opts: [
-                        "10 countries, 12,000 kilometers",
-                        "12 countries, 18,000 kilometers",
-                        "14 countries, 22,800 kilometers",
-                        "15 countries, 21,196 kilometers"
-                    ],
-                    correct: 2,
-                    exp: "Sourced from rev.pdf #4: China's border is about 22,800 kilometers long and has 14 neighboring countries."
-                },
-                {
-                    q: "What island represents China's largest island territory?",
-                    opts: ["Hainan Island", "Hong Kong Island", "Taiwan Island", "Macau Island"],
-                    correct: 2,
-                    exp: "Sourced from rev.pdf #5: 'Among them, Taiwan is China's largest island.'"
-                }
+    geography: [
+        {
+            q: "What is the total land area of China, and its global ranking?",
+            opts: [
+                "About 17 million sq km, 1st globally",
+                "About 9.6 million sq km, 3rd globally (largest entirely in Asia)",
+                "About 5.2 million sq km, 5th globally",
+                "About 22.8 million sq km, 2nd globally"
             ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Summary #1 & Review (the final one).pdf #49: China possesses about 9.6 million square kilometers, ranking 3rd in the world after Russia and Canada."
+        },
+        {
+            q: "How many countries share a direct land border with China, and how long is this border?",
+            opts: [
+                "10 countries, 12,000 kilometers",
+                "12 countries, 18,000 kilometers",
+                "14 countries, 22,800 kilometers",
+                "15 countries, 21,196 kilometers"
+            ],
+            correct: 2,
+            exp: "Sourced from rev.pdf #4 & Review (the final one).pdf #52: China's border is about 22,800 kilometers long and has 14 neighboring countries."
+        },
+        {
+            q: "What island represents China's largest island territory?",
+            opts: ["Hainan Island", "Hong Kong Island", "Taiwan Island", "Macau Island"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #5 & Review (the final one).pdf #58: 'Among them, Taiwan is China's largest island.'"
+        },
+        {
+            q: "How many provincial-level administrative regions does China have?",
+            opts: ["30", "32", "34", "36"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #6: China has 34 provincial-level administrative regions, including 23 provinces, 5 ethnic autonomous regions, 4 municipalities and 2 special administrative regions."
+        },
+        {
+            q: "What is the total length of China's coastline?",
+            opts: ["About 12,000 kilometers", "About 18,000 kilometers", "About 22,800 kilometers", "About 21,196 kilometers"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #5: China's total coastline is about 18,000 kilometers."
+        },
+        {
+            q: "How many time zones does China span from east to west?",
+            opts: ["3 time zones", "4 time zones", "5 time zones", "6 time zones"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #3: The distance between east and west of China is about 5,200 kilometers, spanning 5 time zones."
+        },
+        {
+            q: "What is the approximate east-west distance across China?",
+            opts: ["About 3,200 kilometers", "About 4,200 kilometers", "About 5,200 kilometers", "About 6,200 kilometers"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #3: Distance between east and west of China is about 5,200 kilometers."
+        },
+        {
+            q: "Which of the following is NOT one of China's four seas?",
+            opts: ["Bohai Sea", "Yellow Sea", "East China Sea", "Indian Ocean"],
+            correct: 3,
+            exp: "Sourced from rev.pdf #5: China's four seas are connected from north to south: Bohai, Yellow Sea, East China Sea, and South China Sea. Indian Ocean is not one of them."
+        },
+        {
+            q: "What is China's population as of 2025?",
+            opts: ["1.280 billion", "1.340 billion", "1.40489 billion", "1.500 billion"],
+            correct: 2,
+            exp: "Sourced from Review (the final one).pdf #59: As of 2025, China has a population of 1.40489 billion people."
+        },
+        {
+            q: "What percentage of the world's population does China account for?",
+            opts: ["About 12%", "About 15%", "About 18%", "About 22%"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #7: China has a population of 1,408 billion people, accounting for 18% of the world's population."
+        },
+        {
+            q: "Where does the majority of China's population live?",
+            opts: ["In the western part", "In the eastern part", "In the southern part", "Evenly distributed"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #8: The distribution of China's population is uneven, with the majority living in the east and a smaller population living in the west."
+        },
+        {
+            q: "How many ethnic groups are officially recognized in China?",
+            opts: ["46", "56", "66", "76"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #10 & Review (the final one).pdf #61: China is home to 56 ethnic groups."
+        },
+        {
+            q: "What percentage of China's population is Han Chinese?",
+            opts: ["81.5%", "86.5%", "91.5%", "96.5%"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #10: The Han people account for 91.5% of the total population."
+        },
+        {
+            q: "Which mountain range contains the world's highest peak?",
+            opts: ["The Kunlun Mountains", "The Himalayas", "The Tianshan Mountains", "The Qinling Mountains"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #12: The Himalayas contain Mount Everest at 8,844.43 meters above sea level, the highest mountain in the world."
+        },
+        {
+            q: "What is the height of Mount Everest (in meters)?",
+            opts: ["8,444.43 meters", "8,644.43 meters", "8,844.43 meters", "9,044.43 meters"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #12: The Himalayas - 8844.43 meters above sea level, the highest mountain in the world."
+        },
+        {
+            q: "What is the length of the Yangtze River?",
+            opts: ["About 4,300 kilometers", "About 5,300 kilometers", "Over 6,300 kilometers", "Over 7,300 kilometers"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #13: The Yangtze River is more than 6,300 kilometers long, making it the third largest river in the world and the longest river in Asia."
+        },
+        {
+            q: "What percentage of China's land area is the Yangtze River watershed?",
+            opts: ["About 10%", "About 20%", "About 30%", "About 40%"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #13: The watershed area of the Yangtze River is 1.8 million square kilometers, accounting for about 20% of China's total land area."
+        },
+        {
+            q: "Which river is known as the 'mother river' of the Chinese nation?",
+            opts: ["The Yangtze River", "The Yellow River", "The Pearl River", "The Huai River"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #14 & Review (the final one).pdf #51: The Yellow River is the mother river of the Chinese nation and the second longest river in China."
+        },
+        {
+            q: "What is China's second longest river?",
+            opts: ["The Yangtze River", "The Yellow River", "The Pearl River", "The Huai River"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #14: The Yellow River is the second longest river in China."
+        },
+        {
+            q: "Which city is the capital of the People's Republic of China?",
+            opts: ["Shanghai", "Guangzhou", "Beijing", "Xi'an"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #15 & Review (the final one).pdf #30: Beijing is the capital of the People's Republic of China."
+        },
+        {
+            q: "What is the landmark at the center of Beijing?",
+            opts: ["The Forbidden City", "Tian'anmen Square", "The Great Wall", "The Summer Palace"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #16: Tian'anmen Square is the center of the capital city and the landmark of Beijing."
+        },
+        {
+            q: "Which is China's largest port city?",
+            opts: ["Guangzhou", "Shenzhen", "Shanghai", "Tianjin"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #18 & Review (the final one).pdf #62: Shanghai has become China's largest port city, and Shanghai Port is one of the busiest ports in the world."
+        },
+        {
+            q: "Which city is known as the 'Pearl of the Orient'?",
+            opts: ["Shanghai", "Hong Kong", "Macau", "Taipei"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #20: Since Hong Kong's return to China in 1997, it has the reputation of 'the Pearl of the Orient'."
+        },
+        {
+            q: "Which city is known as the 'Ice City'?",
+            opts: ["Harbin", "Changchun", "Shenyang", "Dalian"],
+            correct: 0,
+            exp: "Sourced from rev.pdf #21 & Review (the final one).pdf #62: Harbin is known as the 'Ice City,' famous for its spectacular Ice and Snow Festival."
+        },
+        {
+            q: "Which city is known as the 'City of Sunlight'?",
+            opts: ["Lhasa", "Kunming", "Chengdu", "Lanzhou"],
+            correct: 0,
+            exp: "Sourced from rev.pdf #23: Lhasa is the capital of Tibet Autonomous Region, more than 3,500 meters above sea level with thin air, clean and sunny, called 'City of Sunlight'."
+        }
+    ],
+    // ... other categories will follow in separate messages
             dynasties: [
-                {
-                    q: "Which dynasty was China's first unified feudal dynasty, founded by Qin Shi Huang in 221 BC?",
-                    opts: ["Han Dynasty", "Sui Dynasty", "Qin Dynasty", "Tang Dynasty"],
-                    correct: 2,
-                    exp: "Sourced from Review (the final one).pdf #2: 'The Qin Dynasty (221 BC-206 BC), China's first unified feudal dynasty, was founded by Qin Shi Huang.'"
-                },
-                {
-                    q: "Which dynasty introduced the Imperial Examination System (Keju)?",
-                    opts: ["Tang Dynasty", "Sui Dynasty", "Song Dynasty", "Qing Dynasty"],
-                    correct: 1,
-                    exp: "Sourced from rev.pdf #34: 'The foundation of the Imperial Examination System was the most influential contribution in the Sui Dynasty.'"
-                },
-                {
-                    q: "Under which dynasty did the term 'overseas students' originate?",
-                    opts: ["Ming Dynasty", "Han Dynasty", "Yuan Dynasty", "Tang Dynasty"],
-                    correct: 3,
-                    exp: "Sourced from rev.pdf #38 & Review #6: 'The term \"overseas students\" originated in the Tang Dynasty.'"
-                }
-            ],
+        {
+            q: "Which dynasty was China's first unified feudal dynasty, founded by Qin Shi Huang in 221 BC?",
+            opts: ["Han Dynasty", "Sui Dynasty", "Qin Dynasty", "Tang Dynasty"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #27 & Review (the final one).pdf #2: The Qin Dynasty (221 BC-206 BC) was China's first unified feudal dynasty, founded by Qin Shi Huang."
+        },
+        {
+            q: "How long did the Qin Dynasty last?",
+            opts: ["10 years", "15 years", "20 years", "25 years"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #29: The reign of the Qin Dynasty came to an end in only 15 years."
+        },
+        {
+            q: "What was the Qin Dynasty's contribution to Chinese writing?",
+            opts: ["Created pinyin", "Unified the written language using small seal scripts", "Invented traditional characters", "Simplified Chinese characters"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #28: The Qin Dynasty unified scripts - small seal scripts, promoted cultural exchanges, used throughout the country."
+        },
+        {
+            q: "Which dynasty introduced the Imperial Examination System (Keju)?",
+            opts: ["Tang Dynasty", "Sui Dynasty", "Song Dynasty", "Qing Dynasty"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #34 & Review (the final one).pdf #13: The foundation of the Imperial Examination System was the most influential contribution in the Sui Dynasty."
+        },
+        {
+            q: "Under which dynasty did the term 'overseas students' (留学生) originate?",
+            opts: ["Ming Dynasty", "Han Dynasty", "Yuan Dynasty", "Tang Dynasty"],
+            correct: 3,
+            exp: "Sourced from rev.pdf #38 & Review (the final one).pdf #6: The term 'overseas students' originated in the Tang Dynasty."
+        },
+        {
+            q: "Which dynasty is considered the most prosperous in Chinese history?",
+            opts: ["Han Dynasty", "Tang Dynasty", "Song Dynasty", "Ming Dynasty"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #35 & Review (the final one).pdf #6: The Tang Dynasty was the most prosperous dynasty in ancient Chinese history."
+        },
+        {
+            q: "Who was the only orthodox female emperor in Chinese history?",
+            opts: ["Empress Dowager Cixi", "Wu Zetian", "Empress Lü", "Empress Cao"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #36 & Review (the final one).pdf #7: Wu Zetian was the only orthodox female emperor in Chinese history, creating the Wu Zhou Dynasty."
+        },
+        {
+            q: "What was the capital of the Tang Dynasty?",
+            opts: ["Beijing", "Luoyang", "Chang'an (now Xi'an)", "Nanjing"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #37: Chang'an (now Xi'an), the capital of the Tang Dynasty, was the political center and one of the centers of economic and cultural exchanges among Asian countries."
+        },
+        {
+            q: "How many countries and regions had contact with the Tang Dynasty?",
+            opts: ["More than 100", "More than 150", "More than 200", "More than 250"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #37: More than 200 countries and regions had contact with the Tang Dynasty."
+        },
+        {
+            q: "Which dynasty was the richest in Chinese history due to domestic economy and international trade?",
+            opts: ["Han Dynasty", "Tang Dynasty", "Song Dynasty", "Yuan Dynasty"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #40: The prosperity of the domestic economy and international trade made the Song Dynasty the richest dynasty in Chinese history."
+        },
+        {
+            q: "How long did the Song Dynasty last?",
+            opts: ["More than 100 years", "More than 200 years", "More than 300 years", "More than 400 years"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #41: The Song Dynasty lasted more than 300 years."
+        },
+        {
+            q: "What was unique about the Song Dynasty's fall?",
+            opts: ["It fell to civil war", "It fell to foreign invasion", "It fell to peasant rebellion", "It fell to economic collapse"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #41: The Song Dynasty was the only dynasty that did not die directly in civil strife; its second overthrow was due to foreign invasion."
+        },
+        {
+            q: "Which was the first unified dynasty established by an ethnic minority in China?",
+            opts: ["Liao Dynasty", "Jin Dynasty", "Yuan Dynasty", "Qing Dynasty"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #42: The Yuan Dynasty (1271-1368) was the first unified dynasty established by the ethnic minority - Mongolia."
+        },
+        {
+            q: "Who led seven voyages to the Western Seas during the Ming Dynasty?",
+            opts: ["Marco Polo", "Zheng He", "Zhang Qian", "Cai Lun"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #43 & Review (the final one).pdf #8: Zheng He led seven voyages to the Western Seas during the Ming Dynasty."
+        },
+        {
+            q: "What were the two purposes of Zheng He's voyages?",
+            opts: ["Diplomacy and trade", "War and conquest", "Religion and education", "Exploration and tourism"],
+            correct: 0,
+            exp: "Sourced from rev.pdf #44: The two purposes were diplomacy (to show strength and expand political influence) and trade (to carry out overseas exchanges and foreign trade)."
+        },
+        {
+            q: "Which dynasty was China's final feudal dynasty?",
+            opts: ["Ming Dynasty", "Yuan Dynasty", "Song Dynasty", "Qing Dynasty"],
+            correct: 3,
+            exp: "Sourced from rev.pdf #45 & Review (the final one).pdf #9: Established by Manchu people, Qing was China's final feudal dynasty."
+        },
+        {
+            q: "Who was the last emperor of China?",
+            opts: ["Emperor Guangxu", "Emperor Kangxi", "Puyi", "Emperor Qianlong"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #51 & Review (the final one).pdf #10: Puyi was the last emperor of the Qing Dynasty as well as the last emperor in Chinese history."
+        },
+        {
+            q: "How many students did the Qing government send to study in the United States between 1872 and 1875?",
+            opts: ["60 students in 2 groups", "90 students in 3 groups", "120 students in 4 groups", "150 students in 5 groups"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #45: From 1872 to 1875, the Qing government sent four groups of 120 students to study in the United States."
+        },
+        {
+            q: "What was the Qing Dynasty's policy that limited foreign exchanges?",
+            opts: ["Open-door policy", "Closed-door policy (isolationism)", "Trade liberalization", "Cultural exchange policy"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #46 & Review (the final one).pdf #11: The closed-door policy adopted in the Qing Dynasty was typical isolationism that severely restricted foreign economic, cultural and scientific exchanges."
+        },
+        {
+            q: "In what year did Britain begin selling opium to China?",
+            opts: ["1750s", "1760s", "1770s", "1780s"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #47 & Review (the final one).pdf #12: In the 1770s, Britain began to sell opium to China."
+        },
+        {
+            q: "What war started in 1840 between Britain and China?",
+            opts: ["The Second Opium War", "The First Opium War", "The Sino-Japanese War", "The Boxer Rebellion"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #47: In June 1840, a British fleet came to Guangdong and started the First Opium War against China."
+        },
+        {
+            q: "Which revolution overthrew the Qing Dynasty in 1911?",
+            opts: ["The May Fourth Movement", "The Xinhai Revolution", "The Cultural Revolution", "The Taiping Rebellion"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #49 & Review (the final one).pdf #9: The revolution that overthrew the rule of the Qing Dynasty was called the 'Xinhai Revolution' because 1911 was a year of Xinhai."
+        },
+        {
+            q: "What movement in 1919 paved the way for the founding of the Communist Party of China?",
+            opts: ["The New Culture Movement", "The May Fourth Movement", "The Hundred Days' Reform", "The Self-Strengthening Movement"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #50 & Review (the final one).pdf #21: The May 4th Movement organized by students promoted the combination of Marxism and the Chinese Workers' Movement, directly leading to the birth and development of the Communist Party of China."
+        },
+        {
+            q: "When did Japan announce its unconditional surrender in World War II?",
+            opts: ["July 15, 1945", "August 15, 1945", "September 2, 1945", "October 1, 1945"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #52: On August 15th, 1945, Japan announced an unconditional surrender. On September 2nd, Japan officially signed the surrender agreement."
+        },
+        {
+            q: "Which campaign during the Civil War liberated the entire Northeast region of China?",
+            opts: ["Huaihai Campaign", "Pingjin Campaign", "Liaoshen (Liaoxi-Shenyang) Campaign", "Yangtze River Crossing Campaign"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #53: The Liaoshen (Liaoxi-Shenyang) Campaign liberated the entire Northeast region of China."
+        }
+    ],
             philosophies: [
-                {
-                    q: "What are the two core concepts of Confucianism, acting as external expression and inner essence?",
-                    opts: [
-                        "Yin and Yang",
-                        "Rite (lǐ) and Benevolence (rén)",
-                        "Legalism and Filial piety",
-                        "The Five Elements"
-                    ],
-                    correct: 1,
-                    exp: "Sourced from rev.pdf #67: 'The core thought of Confucianism is rite (lǐ) and benevolence (rén). Rites are the external part of benevolence, and benevolence is the inner essence of rites.'"
-                },
-                {
-                    q: "Who believed that human nature is fundamentally good at birth?",
-                    opts: ["Confucius", "Lao Zi", "Mencius", "Deng Xiaoping"],
-                    correct: 2,
-                    exp: "Sourced from Review (the final one).pdf #47: 'Mencius believed that human nature was good when a person was born.'"
-                },
-                {
-                    q: "Lao Zi is the representative personage of which philosophical school?",
-                    opts: ["Confucianism", "Legalism", "Daoism (Taoism)", "Buddhism"],
-                    correct: 2,
-                    exp: "Sourced from rev.pdf #69 & Review #67: 'Lao Zi is the representative personage of Daoism. Taoism is the only major religion originating in China.'"
-                }
+        {
+            q: "What are the two core concepts of Confucianism, acting as external expression and inner essence?",
+            opts: [
+                "Yin and Yang",
+                "Rite (lǐ) and Benevolence (rén)",
+                "Legalism and Filial piety",
+                "The Five Elements"
             ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #67: 'The core thought of Confucianism is rite (lǐ) and benevolence (rén). Rites are the external part of benevolence, and benevolence is the inner essence of rites.'"
+        },
+        {
+            q: "Who is considered the first real teacher in China?",
+            opts: ["Lao Zi", "Mencius", "Confucius", "Sun Tzu"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #61 & Review (the final one).pdf #43: Confucius is respected as the earliest great educator - the first real teacher in China."
+        },
+        {
+            q: "Who believed that human nature is fundamentally good at birth?",
+            opts: ["Confucius", "Lao Zi", "Mencius", "Sun Tzu"],
+            correct: 2,
+            exp: "Sourced from Review (the final one).pdf #47: 'Mencius believed that human nature was good when a person was born.'"
+        },
+        {
+            q: "Lao Zi is the representative personage of which philosophical school?",
+            opts: ["Confucianism", "Legalism", "Daoism (Taoism)", "Buddhism"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #69 & Review (the final one).pdf #67: 'Lao Zi is the representative personage of Daoism. Taoism is the only major religion originating in China.'"
+        },
+        {
+            q: "Which philosophical school's thought made the Qin Dynasty strong?",
+            opts: ["Confucianism", "Daoism", "Mohism", "Legalism"],
+            correct: 3,
+            exp: "Sourced from rev.pdf #70: 'It was the Legalists' thought that made Qin dynasty strong because the Legalists' doctrine addressed the most realistic issue at that time.'"
+        },
+        {
+            q: "What is the famous saying of Confucius regarding treating others?",
+            opts: [
+                "An eye for an eye, a tooth for a tooth",
+                "Do not do to others what you do not want others to do to you",
+                "Live and let live",
+                "Love thy neighbor as thyself"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #66 & Review (the final one).pdf #46: A well-known principle of Confucius: 'Do not do to others what you do not want others to do to yourself.'"
+        },
+        {
+            q: "What did Mencius believe about moral cultivation?",
+            opts: [
+                "It is unnecessary for ordinary people",
+                "It is a necessity for everyone, like eating and drinking daily",
+                "It is only for scholars and officials",
+                "It comes naturally without effort"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 6: 'To Mencius, moral cultivation is a necessity for everyone, physiologically and psychologically just like all need to drink water and eat every day.'"
+        },
+        {
+            q: "What book discusses how to win battles but discourages rulers or generals from going to war?",
+            opts: [
+                "The Art of War (Sun Tzu's Military Strategies)",
+                "The Book of Changes (I Ching)",
+                "The Dao De Jing",
+                "The Analects"
+            ],
+            correct: 0,
+            exp: "Sourced from rev.pdf #71 & Review (the final one).pdf #48: 'The Art of War, is a book which discusses how to win battles, but it discourages the rulers or generals to go to war.'"
+        },
+        {
+            q: "According to Confucius, what is the origin of all lives and all moral values?",
+            opts: ["Earth", "Heaven", "Man", "Nature"],
+            correct: 1,
+            exp: "Sourced from Review (the final one).pdf #45: 'In Confucius' philosophy, heaven is the origin of all lives and all moral values.'"
+        },
+        {
+            q: "What is the Daoist concept of Yin and Yang?",
+            opts: [
+                "Two gods fighting each other",
+                "Two opposite forces that balance each other",
+                "Two different planets",
+                "Two different dynasties"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #68: 'The ancient Chinese believed that there are two forces in the universe: one is Yang, and the other is Yin. Health is achieved through balancing Yin and Yang.'"
+        },
+        {
+            q: "What are the Five Elements in Chinese philosophy?",
+            opts: [
+                "Earth, Air, Fire, Water, Spirit",
+                "Metal, Wood, Water, Fire, Earth",
+                "Gold, Silver, Copper, Iron, Tin",
+                "Sun, Moon, Stars, Wind, Rain"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #68: 'The five elements are metal, wood, water, fire and earth, either generate one another or overcome one another.'"
+        },
+        {
+            q: "What does the fable 'The Old Man and His Lost Horse' illustrate?",
+            opts: [
+                "Never give up hope",
+                "Opposite positions could be transformed into each other",
+                "Rich people are happier than poor people",
+                "Honesty is the best policy"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #69: 'Lao Zi believed that things in opposite positions could be transformed into each other. A fable spread by the Daoism scholars, 'The Old Man and His Lost Horse,' helps to further illustrate this truth.'"
+        },
+        {
+            q: "According to Confucius, when should a person no longer suffer from perplexities?",
+            opts: ["At twenty", "At thirty", "At forty", "At fifty"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #65: Confucius said: 'Planting feet firm upon ground at thirty; No longer suffering from perplexities at forty; Knowing the will of Heaven at fifty.'"
+        },
+        {
+            q: "What did Confucius mean by 'at seventy, following one's heart, not exceeding the norm'?",
+            opts: [
+                "Complete moral freedom within boundaries",
+                "Doing whatever one wants",
+                "Becoming a god",
+                "Retiring from public life"
+            ],
+            correct: 0,
+            exp: "Sourced from rev.pdf #65: 'Following ones' heart at seventy, not exceeding the norm' represents complete moral cultivation where one can act freely yet properly."
+        },
+        {
+            q: "What is the relationship between rites (lǐ) and benevolence (rén) in Confucianism?",
+            opts: [
+                "They are completely separate",
+                "Rites are the external part of benevolence, benevolence is the inner essence of rites",
+                "Rites are more important than benevolence",
+                "Benevolence is more important than rites"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #67: 'Rites are the external part of benevolence, and benevolence is the inner essence of rites. To achieve social harmony, there should be love and care among people.'"
+        },
+        {
+            q: "What did Confucius believe about one's body (including hair and skin)?",
+            opts: [
+                "It belongs to oneself to do whatever with",
+                "It is a gift from parents; harming it is unfilial",
+                "It should be shaved regularly",
+                "It has no special significance"
+            ],
+            correct: 1,
+            exp: "Sourced from Review (the final one).pdf #68: 'Confucians believe that one's body (including hair and skin) is a gift from parents. To harm it is unfilial.'"
+        },
+        {
+            q: "What is the Legalist doctrine mainly focused on?",
+            opts: [
+                "Achieving immortality",
+                "Addressing realistic political issues",
+                "Harmony with nature",
+                "Religious salvation"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #70: 'The Legalists' doctrine addressed the most realistic issue at that time.'"
+        },
+        {
+            q: "Which of the following is the only major religion originating in China?",
+            opts: ["Buddhism", "Islam", "Christianity", "Taoism (Daoism)"],
+            correct: 3,
+            exp: "Sourced from rev.pdf #75 & Review (the final one).pdf #67: 'Out of these religions, only Daoism is home-grown. Taoism is the only major religion originating in China.'"
+        },
+        {
+            q: "What is the Chinese folk belief about deities?",
+            opts: [
+                "There is only one god",
+                "Everything has a deity in charge",
+                "There are no deities",
+                "Only ancestors are worshipped"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #73: 'In the eyes of the Chinese, everything has a deity in charge. For example, there are mountain gods, river gods, flower gods, tree gods, etc.'"
+        },
+        {
+            q: "What principle did Mencius advocate for spreading benevolence?",
+            opts: [
+                "Conquer other nations",
+                "Caring for one's own parents and extending that care to all elderly; caring for one's own children and extending that care to all children",
+                "Build more schools",
+                "Collect more taxes"
+            ],
+            correct: 1,
+            exp: "Sourced from Review (the final one).pdf #63: 'Mencius held that if everyone practiced the principle of 'caring for one's own parents and extending that care to all the elderly in the world; caring for one's own children and extending that care to all children in the world,' benevolence would spread throughout society.'"
+        },
+        {
+            q: "According to Confucius, what should people do regarding their duties and position?",
+            opts: [
+                "Always seek higher positions",
+                "Do things according to their own duties and position, not go beyond power and status",
+                "Ignore social hierarchy",
+                "Only focus on personal interests"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #62: 'Confucius asserted that everyone should do things in accordance with his own duties and position, and must not go beyond his power and status. He encouraged all to cultivate themselves, live in harmony with others, think for each other, and protect the interests of the others.'"
+        },
+        {
+            q: "What did Mencius' mother do to provide him with a good education?",
+            opts: [
+                "Sent him to the best school",
+                "Moved their house three times",
+                "Hired the best tutors",
+                "Taught him herself"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 5-6: 'Mencius' mother moved their house three times in order to provide Mencius with a good' education."
+        },
+        {
+            q: "What is the main difference between Chinese folk beliefs and organized religions?",
+            opts: [
+                "Folk beliefs have more gods",
+                "Folk beliefs generally lack complete doctrines and canonical scriptures",
+                "Folk beliefs are more powerful",
+                "Folk beliefs are only practiced by the poor"
+            ],
+            correct: 1,
+            exp: "Sourced from Review (the final one).pdf #66: 'Chinese folk beliefs generally lack complete doctrines and canonical scriptures.'"
+        },
+        {
+            q: "According to Confucianism, what is the relationship between a person and their family?",
+            opts: [
+                "Family is not important",
+                "Family relationships form the foundation of social harmony",
+                "People should leave their families to seek enlightenment",
+                "Only the rich should care about family"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #62: Confucius encouraged all to 'cultivate themselves, live in harmony with others, think for each other, and protect the interests of the others,' with family relationships being the starting point."
+        },
+        {
+            q: "What did the Daoist scholars believe about things in opposite positions?",
+            opts: [
+                "They should fight each other",
+                "They could be transformed into each other",
+                "One is always superior to the other",
+                "They should never mix"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf #69: 'Lao Zi believed that things in opposite positions could be transformed into each other.'"
+        }
+    ],
             idioms: [
-                {
-                    q: "What is the true figurative meaning of the common phrase 'blowing cow skin' (吹牛皮)?",
-                    opts: [
-                        "Being highly jealous in love",
-                        "Making things extremely hard for someone",
-                        "Bragging or boasting",
-                        "Taking the blame for other people's faults"
-                    ],
-                    correct: 2,
-                    exp: "Sourced from rev.pdf Page 8 & 9: 'blow cow skin' means bragging or boasting."
-                },
-                {
-                    q: "What figurative allegorical saying does the 'mice going to the street' illustration depict?",
-                    opts: [
-                        "A mute person taking medicine — can't say it is bitter.",
-                        "The monk opening an umbrella — lawless and without hair.",
-                        "Mice go to the street — everybody shouts and beats them (universally hated).",
-                        "Blowing cow skin — bragging loudly."
-                    ],
-                    correct: 2,
-                    exp: "Sourced from rev.pdf Page 9: 'Mice go to the street—everybody shouts and beats them' describes someone or something universally hated."
-                }
-            ]
-        };
+        {
+            q: "What is the true figurative meaning of the common phrase 'blowing cow skin' (吹牛皮)?",
+            opts: [
+                "Being highly jealous in love",
+                "Making things extremely hard for someone",
+                "Bragging or boasting",
+                "Taking the blame for other people's faults"
+            ],
+            correct: 2,
+            exp: "Sourced from rev.pdf Page 8-9: 'blow cow skin' (吹牛皮) means bragging or boasting."
+        },
+        {
+            q: "What does the phrase 'giving someone tight shoes to wear' (穿小鞋) mean?",
+            opts: [
+                "Being friendly to someone",
+                "Making things hard for someone",
+                "Buying shoes for someone",
+                "Helping someone in need"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'give sb. tight shoes to wear' means making things hard for someone."
+        },
+        {
+            q: "What does 'carrying a black pot' (背黑锅) mean?",
+            opts: [
+                "Cooking dinner for everyone",
+                "Taking the blame for the fault of others",
+                "Being a chef in a restaurant",
+                "Being very wealthy"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'carry a black pot' means taking the blame for the fault of others."
+        },
+        {
+            q: "What does 'nail in the eyes, thorn in the flesh' (眼中钉，肉中刺) refer to?",
+            opts: [
+                "A painful medical condition",
+                "The most hated person",
+                "A beautiful piece of jewelry",
+                "A difficult exam question"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'nail in the eyes, thorn in the flesh' means the most hated person."
+        },
+        {
+            q: "What is the meaning of 'regardless of 3×7=21' (不管三七二十一)?",
+            opts: [
+                "Being very good at math",
+                "Regardless of consequences; in spite of anything",
+                "Being very young",
+                "Counting carefully"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'regardless of 3×7=21' means regardless of consequences; in spite of anything."
+        },
+        {
+            q: "What does 'can't hit with eight poles' (八竿子打不着) mean?",
+            opts: [
+                "Extremely distant or unrelated",
+                "Being very close friends",
+                "Being very strong",
+                "Being very tall"
+            ],
+            correct: 0,
+            exp: "Sourced from rev.pdf Page 9: 'can't hit with eight poles' means extremely distant or unrelated."
+        },
+        {
+            q: "What are the two types of allegorical sayings (歇后语) in Chinese?",
+            opts: [
+                "Positive and negative",
+                "Homophonic and figurative",
+                "Old and new",
+                "Long and short"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'There are two types of allegorical sayings: homophonic and figurative.'"
+        },
+        {
+            q: "What does 'The nephew carries a lantern' (外甥打灯笼) mean?",
+            opts: [
+                "Being lost in the dark",
+                "As before (照旧)",
+                "Being very smart",
+                "Being very young"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'The nephew carries a lantern - to light up the uncle' (照旧) pronounced the same as 'as before' in Chinese."
+        },
+        {
+            q: "What does 'The monk opens an umbrella' (和尚打伞) mean?",
+            opts: [
+                "Being very holy",
+                "Lawless (无法无天)",
+                "Being very careful",
+                "Being very generous"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'The monk opens an umbrella - no hair and no sky' ('no hair' is pronounced similar to 'lawless' in Chinese)."
+        },
+        {
+            q: "What figurative meaning does 'Mice go to the street' (老鼠过街) depict?",
+            opts: [
+                "Everyone is happy",
+                "Everybody shouts and beats them (universally hated)",
+                "Everyone is afraid",
+                "Everyone is celebrating"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'Mice go to the street - everybody shouts and beats them' describes someone or something universally hated."
+        },
+        {
+            q: "What is 'Beauty lies in lover's eye' in Chinese?",
+            opts: [
+                "情人眼里出西施",
+                "学富五车",
+                "做一天和尚撞一天钟",
+                "对牛弹琴"
+            ],
+            correct: 0,
+            exp: "Sourced from rev.pdf Page 8: 'Beauty lies in lover's eye (情人眼里出西施).'"
+        },
+        {
+            q: "What does 'be wealthy in knowledge' mean in Chinese?",
+            opts: [
+                "情人眼里出西施",
+                "学富五车",
+                "做一天和尚撞一天钟",
+                "对牛弹琴"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 8: 'be wealthy in knowledge (学富五车).'"
+        },
+        {
+            q: "What does 'Playing the lute to the cow' (对牛弹琴) mean?",
+            opts: [
+                "Making music for animals",
+                "Talking to someone who can't understand",
+                "Being a good musician",
+                "Being very kind"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 8: 'Playing the lute to the cow 对牛弹琴' means explaining something to someone who cannot understand."
+        },
+        {
+            q: "What does 'kill time when working for foreigners' mean in the context of Chinese idioms?",
+            opts: [
+                "Working very hard",
+                "Loafing on the job",
+                "Being very productive",
+                "Being a foreigner"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'kill time when working for foreigners' means loafing on the job."
+        },
+        {
+            q: "What is the earliest known form of Chinese characters called?",
+            opts: ["Pinyin", "Jiaguwen (Oracle bone inscriptions)", "Traditional characters", "Simplified characters"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #84 & Review (the final one).pdf #34: 'The earliest Chinese characters called Jiaguwen are characters like pictures drawn on the tortoise shells and animal bones.'"
+        },
+        {
+            q: "What percentage of Chinese characters are pictophonetic compounds (形声字)?",
+            opts: ["About 50%", "About 60%", "Over 80-90%", "About 30%"],
+            correct: 2,
+            exp: "Sourced from rev.pdf #85 & Review (the final one).pdf #34: 'Pictophonetic compounds account for over 90% of all the Chinese characters.'"
+        },
+        {
+            q: "Which of the following is NOT one of the four methods used to create Chinese characters?",
+            opts: ["Pictographs", "Ideographs", "Combined ideographs", "Alphabetic symbols"],
+            correct: 3,
+            exp: "Sourced from rev.pdf #85: 'Out of the four methods Chinese used to create Chinese characters - pictographs, ideographs, combined ideographs, phonetic-semantic compounds...'"
+        },
+        {
+            q: "After the simplification of Chinese characters, where are traditional characters still used?",
+            opts: ["Only in Taiwan", "In calligraphy and ancient books", "Only in Hong Kong", "They are no longer used"],
+            correct: 1,
+            exp: "Sourced from rev.pdf #86: 'After the simplification of the Chinese characters, the traditional Chinese characters are still used in the fields of calligraphy and ancient books.'"
+        },
+        {
+            q: "What does the character 妈 (mā) represent in terms of character formation?",
+            opts: ["A pictograph", "An ideograph", "A pictophonetic compound (女 + 马)", "A combined ideograph"],
+            correct: 2,
+            exp: "Sourced from Review (the final one).pdf #34: 'Pictophonetic characters are formed by combining one character's semantic component and another character's phonetic component. For example: 妈 爸 证 们 病 饱.' 妈 combines 女 (semantic) with 马 (phonetic)."
+        },
+        {
+            q: "How are allegorical sayings (歇后语) structured?",
+            opts: ["Three parts with a conclusion", "Two parts: first a metaphor, second an explanation", "One long sentence", "A question and answer"],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'An allegorical saying is divided into two parts. It is like a riddle: The first part is a metaphor, and the second part is an explanation.'"
+        },
+        {
+            q: "What does the figurative allegory 'A mute person takes a dose of bitter medicine' mean?",
+            opts: [
+                "They can't say it is bitter",
+                "They enjoy the medicine",
+                "They are very sick",
+                "They are very happy"
+            ],
+            correct: 0,
+            exp: "Sourced from rev.pdf Page 9: 'A mute person takes a dose of bitter medicine - they can't say it is bitter.'"
+        },
+        {
+            q: "What is Putonghua based on?",
+            opts: [
+                "Shanghai pronunciation, Cantonese dialect, and classical Chinese",
+                "Beijing pronunciation, northern dialect, and modern vernacular",
+                "Sichuan pronunciation, southern dialect, and ancient Chinese",
+                "Xi'an pronunciation, eastern dialect, and traditional Chinese"
+            ],
+            correct: 1,
+            exp: "Sourced from Review (the final one).pdf #32: 'The modern standard Chinese language with Beijing pronunciation as its standard pronunciation, the northern dialect as its basic dialect, and the modern vernacular as its grammatical norm.'"
+        },
+        {
+            q: "How many working languages does the United Nations have, and is Putonghua one of them?",
+            opts: [
+                "4, yes",
+                "5, no",
+                "6, yes",
+                "7, no"
+            ],
+            correct: 2,
+            exp: "Sourced from rev.pdf #82 & Review (the final one).pdf #31: 'Putonghua is also one of the six working languages of the United Nations.'"
+        },
+        {
+            q: "What did the Chinese government do to protect ethnic minority languages?",
+            opts: [
+                "Banned them",
+                "Replaced them with Putonghua",
+                "Is working hard to preserve them and protect language diversity",
+                "Made them the official languages"
+            ],
+            correct: 2,
+            exp: "Sourced from rev.pdf #79: 'The Chinese government is working hard to preserve the languages of ethnic minorities and to protect the diversity of languages.'"
+        },
+        {
+            q: "Which of the following is an example of a homophonic allegorical saying?",
+            opts: [
+                "Mice go to the street - everybody shouts and beats them",
+                "The nephew carries a lantern - as before (照旧)",
+                "A mute person takes bitter medicine - can't say it's bitter",
+                "Blowing cow skin - bragging"
+            ],
+            correct: 1,
+            exp: "Sourced from rev.pdf Page 9: 'Examples of the homophonic type: \"The nephew carries a lantern - to light up the uncle\" (pronounced the same as \"as before\" in Chinese).'"
+        }
+    ]
+};
     </script>
 
     <script>
